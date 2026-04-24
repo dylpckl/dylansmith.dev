@@ -125,12 +125,12 @@ export default function Home() {
               <div className="mt-4 text-lg font-normal text-slate-200">
                 Leading design for{" "}
                 <a
-                  href="https://multidataservices.com/"
+                  href="https://https://www.smartadvocate.com/"
                   target="_blank"
                   className="group relative underline decoration-teal-300 hover:decoration-teal-900"
                 >
                   <span className="relative z-20 group-hover:text-teal-900 ">
-                    MDS Property Management Software
+                    SmartAdvocate
                   </span>
                   {"."}
                   <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all"></span>
