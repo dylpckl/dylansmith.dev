@@ -204,7 +204,7 @@ export default function Page() {
             </Link>
             <div className="font-mono text-sm uppercase">
               <span className="font-semibold">SYS 01 {" \\"}</span>
-              <span className="ml-4">Design System</span>
+              <span className="ml-4">Site-wide UI Refresh</span>
             </div>
           </div>
           {/* Headline */}
@@ -221,9 +221,9 @@ export default function Page() {
                 measurementProps={{ edge: "bottom" }}
                 className="w-fit"
               >
-                Architecting
+                Refreshing
               </MeasuredDiv>
-              the organization&apos;s first design system
+              an enterprise product &mdash; and the design system underneath
             </h1>
           </div>
           {/* Hero Image */}
@@ -254,11 +254,11 @@ export default function Page() {
             >
               <div className="mt-6 text-lg">
                 <h2 className="text-xl">
-                  {"{TODO: 1-line problem statement}"}
+                  {"{TODO: 1-line framing — the product needed a refresh, but the org had no system to refresh it on}"}
                 </h2>
                 <p className="mt-4">
                   {
-                    "{TODO: 2-4 sentences. What was fragmented? What did one-off UI cost the org? Why did this need to exist?}"
+                    "{TODO: 2-4 sentences. Years of accumulated UI debt. Fragmented patterns across the legacy ASP.NET/DevExpress surface. Why a piecemeal rework wouldn't scale — and why the refresh and the design system had to ship together.}"
                   }
                 </p>
               </div>
@@ -270,7 +270,7 @@ export default function Page() {
             >
               <p className="mt-6 font-sans text-lg font-normal text-slate-100">
                 {
-                  "{TODO: outcome paragraph. Lead with what shipped. Include at least one concrete number — adoption %, components shipped, regressions avoided, time-to-ship reduction.}"
+                  "{TODO: outcome paragraph. The refresh was unveiled at the annual user conference. Lead with what shipped — surfaces refreshed, components in production, regressions avoided. Include at least one concrete number.}"
                 }
               </p>
             </Card>

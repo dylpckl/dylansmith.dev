@@ -1,7 +1,9 @@
-# Design System — Intake
+# Site-wide UI Refresh — Intake
 
 Page: `src/app/work/design-system/page.tsx`
 Status: scaffolded, awaiting content
+
+This case study covers the **site-wide UI refresh** — the project that produced the design system, not a specific feature. The refresh was unveiled at the annual user conference; the design system is the artifact that made it possible.
 
 Fill these in (any depth — sentences or bullets, doesn't matter). I'll polish + wire into the page.
 
@@ -10,7 +12,7 @@ Fill these in (any depth — sentences or bullets, doesn't matter). I'll polish 
 ## OVERVIEW
 
 ### timeline
-e.g. "~12 months, June 2024 – present"
+e.g. "~12 months, June 2024 – {month} 2025, unveiled at the {year} annual user conference"
 
 → ANSWER:
 
@@ -20,14 +22,14 @@ The page asks: "Style Dictionary? hand-sync? Figma variables → Tailwind config
 → ANSWER (be honest — this is a JD "plus" item; we want to claim only what's true):
 
 ### the problem (1-line + 2-4 sentences)
-What was fragmented before? What did one-off UI cost the org? Why did this need to exist?
+The product needed a refresh, but the org had no system to refresh it *on*. Frame the problem as "why the refresh and the system had to ship together."
 
 → 1-line:
 
-→ 2-4 sentences:
+→ 2-4 sentences (years of UI debt, fragmented patterns, why piecemeal wouldn't scale):
 
 ### outcome (with at least one number)
-What shipped? Adoption %, components count, regressions avoided, time-to-ship reduction.
+The refresh was unveiled at the annual user conference. Lead with what shipped: surfaces refreshed, components in production, regressions avoided, adoption.
 
 → ANSWER:
 
@@ -36,7 +38,7 @@ What shipped? Adoption %, components count, regressions avoided, time-to-ship re
 ## DESIGN PROCESS
 
 ### research — discovery
-How did you map the existing UI surface area? Audit of inconsistencies. Talking to engineers about what they kept rebuilding.
+How did you map the existing UI surface area before the refresh? Audit of inconsistencies. Talking to engineers about what they kept rebuilding.
 
 → ANSWER:
 
@@ -46,12 +48,12 @@ Which design systems did you study (Polaris, Carbon, Material, etc.)? What did y
 → ANSWER:
 
 ### ui audit — framing
-1-2 sentences on what you found across the legacy ASP.NET surface.
+1-2 sentences on what the audit found across the legacy ASP.NET surface — what was driving the need for the refresh.
 
 → ANSWER:
 
 ### ui audit — insight #1 (heading + 2-3 sentences)
-e.g. "inconsistent spacing"
+e.g. "inconsistent spacing across surfaces"
 
 → HEADING:
 → 2-3 SENTENCES:
@@ -70,12 +72,12 @@ The token layers — primitive → semantic → component. Where the source of t
 ## THE SYSTEM
 
 ### components
-Walk through the keystone components. Show variants, states, and the decisions behind them.
+The keystone components that powered the refresh. Variants, states, decisions behind them.
 
 → ANSWER:
 
 ### documented states & a11y
-How you documented interaction states + WCAG. (This is the "state modeling, demonstrated in shipped work" requirement — important.)
+How you documented interaction states + WCAG. (This is the JD's "state modeling, demonstrated in shipped work" requirement — important.)
 
 → ANSWER:
 
@@ -84,13 +86,13 @@ How you documented interaction states + WCAG. (This is the "state modeling, demo
 ## SYSTEM CONTRIBUTION
 
 ### from one-off to reusable
-1-2 concrete examples of feature work that you abstracted into reusable system primitives. Where else are they used now?
+1-2 concrete examples where one-off UI work during the refresh got abstracted into reusable system primitives. Where else are they used now?
 
 → EXAMPLE 1:
 → EXAMPLE 2:
 
 ### adoption
-How the system spread. Which teams adopted first, the contribution model, how you kept it the easy + right path.
+How the system spread beyond the refresh itself. Which teams adopted first, the contribution model, how you kept it the easy + right path.
 
 → ANSWER:
 
@@ -99,7 +101,7 @@ How the system spread. Which teams adopted first, the contribution model, how yo
 ## IMPLEMENTATION
 
 ### design intent → production code
-The legacy ASP.NET / DevExpress shipping story. Backwards-compatible CSS / JS / C#. How the system landed without regressions.
+The legacy ASP.NET / DevExpress shipping story. Backwards-compatible CSS / JS / C#. How the refresh landed without regressions.
 
 → ANSWER:
 
@@ -116,7 +118,7 @@ Drop into: `public/case-studies/design-system/`
 
 Suggested filenames (the page already references these):
 
-- [ ] `hero.png` — opening visual (full system overview, component grid, or Figma library shot)
+- [ ] `hero.png` — opening visual (refreshed surface, before/after split, or component grid)
 - [ ] `audit.png` — UI audit findings visualization
 - [ ] `tokens.png` — token architecture diagram
 - [ ] `components.png` — component grid / library
@@ -125,5 +127,7 @@ Suggested filenames (the page already references these):
 Other useful (but not yet referenced):
 
 - [ ] `confluence.png` — documentation source-of-truth shot
-- [ ] `before-after.png` — legacy vs redesigned comparison
-- [ ] anything else that helps tell the story
+- [ ] `before-after.png` — legacy surface vs refreshed surface
+- [ ] `conference.png` — anything from the user conference unveiling
+- [ ] anything else that helps tell the refresh story
+
