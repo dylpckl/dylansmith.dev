@@ -191,7 +191,7 @@ export default function Page() {
             </Link>
             <div className="font-mono text-sm uppercase">
               <span className="font-semibold">DSGN 01 {" \\"}</span>
-              <span className="ml-4">Bank Reconcillation</span>
+              <span className="ml-4">Bank Reconciliation</span>
             </div>
           </div>
           {/* Headline */}

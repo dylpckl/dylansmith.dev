@@ -44,10 +44,10 @@ export type CaseStudy = {
 
 export const CASE_STUDIES: Project[] = [
   {
-    title: "Bank Reconcilation",
+    title: "Bank Reconciliation",
     subtitle: "Redesigning an accountant's critical monthly task.",
     slug: "/work/bank-rec",
-    status: "coming soon",
+    status: "in development",
     image1: BankRec_Explorer,
     image2: BankRec_Spire,
   },
