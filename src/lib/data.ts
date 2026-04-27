@@ -64,6 +64,15 @@ export const CASE_STUDIES: Project[] = [
 
 export const DEV_PROJECTS: Project[] = [
   {
+    title: "AI Toolchain",
+    subtitle:
+      "A suite of Claude Code skills, agents, and MCP-driven workflows producing code-ready output. Adopted across teams for design system implementation and data migration.",
+    description: "",
+    slug: "/work/ai-tooling",
+    status: "in development",
+    tags: ["Claude Code", "MCP", "TypeScript", "Python"],
+  },
+  {
     title: "www.steamparty.io",
     subtitle:
       "When a couple of friends couldn't easily find which Steam games we all had in common, it was time for us to build the solution ourselves.",
