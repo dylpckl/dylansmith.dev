@@ -11,6 +11,7 @@ import {
   Sparkles,
   Recycle,
   ArrowUpRight,
+  ArrowRight,
   FileCode,
   Package,
   FileText,
@@ -368,7 +369,7 @@ export default function Home() {
               onClickModal={open("aiWorkflow")}
             />
 
-            {/* 6 — SYSTEMS THINKING (full-width, drag reveal) */}
+            {/* 6 — SYSTEMS THINKING (full-width, static one-off → reusable composition) */}
             <Tile
               label="Systems Thinking"
               labelIcon={Recycle}
@@ -379,56 +380,67 @@ export default function Home() {
                 <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
                   One-off → reusable
                 </h3>
-                <p className="max-w-[44ch] text-sm text-slate-300 lg:text-base">
+                <p className="max-w-[60ch] text-sm text-slate-300 lg:text-base">
                   Every project ships team-wide tooling, not throwaway scripts.
-                  Drag the handle to see the shift.
                 </p>
-                <div className="mt-2">
-                  <BeforeAfterReveal
-                    before={
-                      <div className="grid h-44 grid-cols-3 gap-2 bg-slate-900 p-4">
-                        {[
-                          "script.sql",
-                          "migrate.py",
-                          "deploy.sh",
-                          "fix.sql",
-                          "notes.md",
-                          "utils.py",
-                        ].map((name) => (
-                          <span
-                            key={name}
-                            className="flex items-center gap-1 rounded bg-slate-800 px-2 py-1 font-mono text-[10px] text-slate-300 ring-1 ring-slate-700"
-                          >
-                            <FileCode className="h-3 w-3 text-slate-500" />
-                            {name}
-                          </span>
-                        ))}
-                      </div>
-                    }
-                    after={
-                      <div className="flex h-44 flex-col items-center justify-center gap-2 bg-slate-900 p-4">
-                        <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
-                          <span className="flex items-center gap-2">
-                            <Package className="h-4 w-4" />
-                            migration-starter-kit
-                          </span>
-                          <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                            boilerplate
-                          </span>
-                        </span>
-                        <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
-                          <span className="flex items-center gap-2">
-                            <Terminal className="h-4 w-4" />
-                            $ db-cli migrate
-                          </span>
-                          <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                            python cli
-                          </span>
-                        </span>
-                      </div>
-                    }
+
+                <div className="mt-2 flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center">
+                  {/* Scattered files */}
+                  <div className="grid flex-1 grid-cols-3 gap-2">
+                    {[
+                      "script.sql",
+                      "migrate.py",
+                      "deploy.sh",
+                      "fix.sql",
+                      "notes.md",
+                      "utils.py",
+                    ].map((name) => (
+                      <span
+                        key={name}
+                        className="flex items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 ring-1 ring-slate-700"
+                      >
+                        <FileCode className="h-3 w-3 text-slate-500" />
+                        {name}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Arrow */}
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="hidden h-8 w-8 shrink-0 text-teal-300 lg:block"
+                    strokeWidth={2}
                   />
+                  <div
+                    aria-hidden="true"
+                    className="self-center font-mono text-xs uppercase tracking-widest text-teal-300 lg:hidden"
+                  >
+                    ↓ consolidates into
+                  </div>
+
+                  {/* Consolidated callouts */}
+                  <div className="flex shrink-0 flex-col gap-2">
+                    <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
+                      <span className="flex items-center gap-2">
+                        <Package className="h-4 w-4" />
+                        migration-starter-kit
+                      </span>
+                      <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+                        boilerplate
+                      </span>
+                    </span>
+                    <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
+                      <span className="flex items-center gap-2">
+                        <Terminal className="h-4 w-4" />
+                        $ db-cli migrate
+                      </span>
+                      <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+                        python cli
+                      </span>
+                    </span>
+                  </div>
                 </div>
+
                 <button
                   type="button"
                   onClick={open("systemsThinking")}
