@@ -310,12 +310,27 @@ export default function Home() {
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />
 
-        {/* Intro / Hero */}
+        {/* Hero */}
         <section
-          ref={introRef}
-          id="intro"
+          // ref={introRef}
+          id="hero"
           className="relative flex flex-col gap-6 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
         >
+          <figure className="relative mx-auto w-full max-w-2xl rounded-md bg-slate-900/70 px-6 py-5 text-center font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm md:px-10 md:py-6">
+            <Quote
+              aria-hidden="true"
+              className="absolute -top-5 left-1/2 h-10 w-10 -translate-x-1/2 rotate-180 fill-teal-300/20 text-teal-300/50"
+              strokeWidth={1.5}
+            />
+            <p className="text-base italic leading-relaxed text-slate-100 md:text-lg">
+              &ldquo;You don&apos;t rise to the level of your goals, you fall to
+              the level of your systems.&rdquo;
+            </p>
+            <figcaption className="mt-2 text-xs uppercase tracking-widest text-slate-400">
+              James Clear · Atomic Habits
+            </figcaption>
+          </figure>
+
           <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
             <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
               Dylan Smith
@@ -371,11 +386,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Work / Bento */}
+        {/* Intro / Bento */}
         <section
-          ref={workRef}
-          id="work"
-          className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-32"
+          ref={introRef}
+          id="intro"
+          className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
         >
           <VerticalText text="INTRO" />
           <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
@@ -515,36 +530,14 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 7 — ATOMIC HABITS QUOTE (closes the bento — philosophy lead-in to case studies) */}
-            <Tile
-              label="Atomic Habits"
-              labelIcon={Quote}
-              className="md:col-span-6 lg:col-span-12"
-              decorative
-            >
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-6 text-center md:flex-row md:gap-8 md:py-8">
-                <Quote
-                  aria-hidden="true"
-                  className="h-10 w-10 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/50 md:h-14 md:w-14"
-                  strokeWidth={1.5}
-                />
-                <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
-                  &ldquo;You don&apos;t rise to the level of your goals, you
-                  fall to the level of your systems.&rdquo;
-                </p>
-                <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
-                  James Clear
-                </span>
-              </div>
-            </Tile>
           </div>
         </section>
 
         {/* Case Studies — separate section so the large drag-reveals don't intermix with the bento */}
         <section
-          ref={caseStudiesRef}
-          id="case-studies"
-          className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6"
+          ref={workRef}
+          id="work"
+          className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pt-32"
         >
           <VerticalText text="WORK" />
           <div className="flex w-full flex-col gap-4">
