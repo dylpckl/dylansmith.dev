@@ -386,7 +386,7 @@ export default function Home() {
 
                 <div className="mt-2 flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center">
                   {/* Scattered files */}
-                  <div className="grid flex-1 grid-cols-3 gap-2">
+                  <div className="grid flex-1 grid-cols-2 gap-2">
                     {[
                       "script.sql",
                       "migrate.py",
