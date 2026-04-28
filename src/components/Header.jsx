@@ -54,7 +54,7 @@ const DesktopNavigation = (props) => {
         <NavItem href="/about">about</NavItem>
         <span className="text-xs text-slate-400">{"//"}</span>
         <a
-          href="/dylan-smith-resume.pdf"
+          href="/Dylan-Smith-Resume.pdf"
           target="_blank"
           className="p-1 font-mono text-sm text-slate-200 hover:text-teal-300 md:px-3 md:py-2"
         >
@@ -86,7 +86,7 @@ const Nav = ({ links, activeSection }) => {
 
 export function Header({ activeSection }) {
   const [mobileNavIsOpen, setMobileNavIsOpen] = useState(false);
-  let links = ["intro", "design", "develop"];
+  let links = ["intro", "work"];
 
   const handleMobileNav = () => {
     setMobileNavIsOpen(!mobileNavIsOpen);
@@ -189,7 +189,7 @@ export function Header({ activeSection }) {
         </Link>
         <Nav links={links} activeSection={activeSection} />
         <Link
-          href="/dylan-smith-resume.pdf"
+          href="/Dylan-Smith-Resume.pdf"
           target="_blank"
           className="mt-6 flex cursor-pointer gap-4 pt-6 font-mono text-sm font-semibold uppercase text-slate-200"
         >
