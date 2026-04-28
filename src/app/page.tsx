@@ -18,6 +18,7 @@ import {
   Quote,
   Terminal,
   CreditCard,
+  Layers,
 } from "lucide-react";
 
 import { SocialLink } from "@/components/SocialLink";
@@ -191,6 +192,46 @@ function MiniSystemDemo() {
           </span>
         </div>
       </div>
+    </div>
+  );
+}
+
+function ManaCurve() {
+  // Realistic mana-curve shape — 0, 1, 2, 3, 4, 5, 6, 7+ — peaks at 2-3 like a healthy commander deck.
+  const buckets = [
+    { label: "0", h: 12 },
+    { label: "1", h: 28 },
+    { label: "2", h: 64 },
+    { label: "3", h: 88 },
+    { label: "4", h: 56 },
+    { label: "5", h: 36 },
+    { label: "6", h: 20 },
+    { label: "7+", h: 14 },
+  ];
+  return (
+    <div className="mt-3 flex w-fit flex-col gap-1" aria-hidden="true">
+      <div className="flex h-16 items-end gap-1">
+        {buckets.map((b) => (
+          <div
+            key={b.label}
+            className="w-5 rounded-t-sm bg-teal-300/80 ring-1 ring-teal-300/30"
+            style={{ height: `${b.h}%` }}
+          />
+        ))}
+      </div>
+      <div className="flex gap-1">
+        {buckets.map((b) => (
+          <span
+            key={b.label}
+            className="w-5 text-center font-mono text-[9px] uppercase tracking-widest text-slate-500"
+          >
+            {b.label}
+          </span>
+        ))}
+      </div>
+      <span className="mt-1 font-mono text-[9px] uppercase tracking-widest text-slate-500">
+        mana curve · CMC distribution
+      </span>
     </div>
   );
 }
@@ -550,6 +591,54 @@ export default function Home() {
                     }
                   />
                 </div>
+              </div>
+            </Tile>
+
+            {/* 9 — RAREBREW (side project — proves React+TS/Next.js production chops) */}
+            <Tile
+              label="Side Project"
+              labelIcon={Layers}
+              className="md:col-span-6 lg:col-span-12 lg:row-span-2"
+              decorative
+            >
+              <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+                <div className="flex flex-col gap-3">
+                  <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
+                    rarebrew.gg
+                  </h3>
+                  <p className="max-w-[60ch] text-base leading-snug text-slate-300 lg:text-lg">
+                    A desktop-first PWA deckbuilder for Magic: The Gathering
+                    Commander — custom component library on design tokens,
+                    Recharts visualizations, Scryfall + EDHREC data layer.
+                  </p>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {[
+                      "React",
+                      "Next.js",
+                      "TypeScript",
+                      "TailwindCSS",
+                      "Supabase",
+                      "Recharts",
+                      "PWA",
+                    ].map((t) => (
+                      <span
+                        key={t}
+                        className="rounded bg-slate-800 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-slate-300 ring-1 ring-slate-700"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <a
+                    href="https://rarebrew.gg"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                  >
+                    Visit rarebrew.gg ↗
+                  </a>
+                </div>
+                <ManaCurve />
               </div>
             </Tile>
           </div>
