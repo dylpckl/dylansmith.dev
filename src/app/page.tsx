@@ -6,7 +6,7 @@ import Image from "next/image";
 import {
   LayoutGrid,
   Star,
-  TrendingUp,
+  Gauge,
   Users,
   Sparkles,
   Recycle,
@@ -17,6 +17,7 @@ import {
   FileText,
   Quote,
   Terminal,
+  CreditCard,
 } from "lucide-react";
 
 import { SocialLink } from "@/components/SocialLink";
@@ -34,6 +35,8 @@ import { StateChips } from "@/components/bento/StateChips";
 
 import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
 import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
+import rapidpayLegacy from "/public/case-studies/rapidpay/legacy.png";
+import rapidpaySpire from "/public/case-studies/rapidpay/spire.png";
 
 const MODAL_CONTENT: Record<string, ModalContent> = {
   designSystems: {
@@ -95,7 +98,7 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
     ),
   },
   crossFunctional: {
-    title: "Co-owning decisions",
+    title: "Collaboration",
     body: (
       <>
         <p>
@@ -192,24 +195,22 @@ function MiniSystemDemo() {
   );
 }
 
-function SpeedBars() {
+function MigrationGrid() {
+  // 12 migrations, delivery time trending down (60% faster over the run).
+  const heights = [82, 76, 70, 64, 70, 56, 48, 52, 40, 36, 32, 32];
   return (
-    <div className="mt-3 flex max-w-[220px] flex-col gap-1.5" aria-hidden="true">
-      <div className="flex items-center gap-2">
-        <span className="w-14 font-mono text-[9px] uppercase tracking-widest text-slate-500">
-          Before
-        </span>
-        <div className="h-1.5 flex-1 rounded-sm bg-slate-700" />
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="w-14 font-mono text-[9px] uppercase tracking-widest text-teal-300">
-          After
-        </span>
-        <div className="h-1.5 w-[40%] rounded-sm bg-teal-300" />
-      </div>
-      <span className="ml-16 mt-1 font-mono text-[9px] uppercase tracking-widest text-slate-500">
-        Avg turnaround across 12+ migrations
-      </span>
+    <div
+      className="mt-4 flex h-14 items-end gap-1.5"
+      aria-hidden="true"
+      title="12 concurrent migrations, delivery time trending faster"
+    >
+      {heights.map((h, i) => (
+        <div
+          key={i}
+          className="flex-1 rounded-sm bg-teal-300/80 ring-1 ring-teal-300/30"
+          style={{ height: `${h}%` }}
+        />
+      ))}
     </div>
   );
 }
@@ -338,22 +339,22 @@ export default function Home() {
               onClickModal={open("trackRecord")}
             />
 
-            {/* 3 — SMARTADVOCATE 60% with speed bars */}
+            {/* 3 — MIGRATION DELIVERY 60% with concurrent-migrations grid */}
             <StatTile
-              label="SmartAdvocate"
-              labelIcon={TrendingUp}
+              label="Migration Delivery"
+              labelIcon={Gauge}
               number="60%"
-              caption="Faster migration delivery."
+              caption="Faster turnaround across 12+ concurrent migrations."
               className="md:col-span-3 lg:col-span-4"
               onClickModal={open("smartAdvocate")}
-              visual={<SpeedBars />}
+              visual={<MigrationGrid />}
             />
 
             {/* 4 — CROSS-FUNCTIONAL */}
             <CategoryTile
               label="Cross-functional"
               labelIcon={Users}
-              headline="Co-owning decisions"
+              headline="Collaboration"
               body="Across design, engineering, and product — the work of a solo bridge."
               className="md:col-span-3 lg:col-span-4"
               onClickModal={open("crossFunctional")}
@@ -378,7 +379,7 @@ export default function Home() {
             >
               <div className="flex flex-1 flex-col gap-4">
                 <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                  One-off → reusable
+                  One-off → systems-builder
                 </h3>
                 <p className="max-w-[60ch] text-sm text-slate-300 lg:text-base">
                   Every project ships team-wide tooling, not throwaway scripts.
@@ -503,6 +504,52 @@ export default function Home() {
                 >
                   Read the case study →
                 </Link>
+              </div>
+            </Tile>
+
+            {/* 8 — RAPIDPAY (extra-large, full-width drag reveal) */}
+            <Tile
+              label="RapidPay"
+              labelIcon={CreditCard}
+              className="md:col-span-6 lg:col-span-12 lg:row-span-3"
+              decorative
+            >
+              <div className="flex flex-1 flex-col gap-4">
+                <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
+                  RapidPay
+                </h3>
+                <p className="max-w-[60ch] text-sm text-slate-300 lg:text-base">
+                  Legacy ASP payment screen redesigned for the new SmartAdvocate
+                  UI. Drag to compare.
+                </p>
+                <div className="mt-2">
+                  <BeforeAfterReveal
+                    beforeLabel="Legacy"
+                    afterLabel="Refreshed"
+                    before={
+                      <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                        <Image
+                          src={rapidpayLegacy}
+                          alt="Legacy RapidPay screen"
+                          fill
+                          className="object-cover object-top"
+                          sizes="100vw"
+                        />
+                      </div>
+                    }
+                    after={
+                      <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                        <Image
+                          src={rapidpaySpire}
+                          alt="Refreshed RapidPay screen"
+                          fill
+                          className="object-cover object-top"
+                          sizes="100vw"
+                        />
+                      </div>
+                    }
+                  />
+                </div>
               </div>
             </Tile>
           </div>

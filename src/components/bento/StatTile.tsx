@@ -29,7 +29,7 @@ export function StatTile({
         <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
           {number}
         </span>
-        <p className="mt-3 max-w-[34ch] text-sm text-slate-300 lg:text-base">
+        <p className="mt-3 max-w-[34ch] text-base leading-snug text-slate-300 lg:text-lg">
           {caption}
         </p>
       </div>
