@@ -140,15 +140,15 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
       <>
         <p>
           Teams should be able to self-serve from what I write. At
-          SmartAdvocate, that meant pairing every component, system
-          convention, and migration pattern with evergreen Confluence
-          documentation — enough context that engineers picking up the work
-          for the first time don&apos;t need to ask me to ship.
+          SmartAdvocate, that meant pairing every component, system convention,
+          and migration pattern with evergreen Confluence documentation — enough
+          context that engineers picking up the work for the first time
+          don&apos;t need to ask me to ship.
         </p>
         <p>
           Largest contributor to the internal Confluence knowledge base;
-          authored the design system reference, the migration starter-kit
-          guide, and database schema docs that outlasted any single project.
+          authored the design system reference, the migration starter-kit guide,
+          and database schema docs that outlasted any single project.
         </p>
       </>
     ),
@@ -159,8 +159,8 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
       <>
         <p>
           Every project ships team-wide tooling, not throwaway scripts. The
-          starter-kit monorepo, Python CLI, agentic workflows, and Claude
-          skills all started as &ldquo;solve this one problem,&rdquo; and were
+          starter-kit monorepo, Python CLI, agentic workflows, and Claude skills
+          all started as &ldquo;solve this one problem,&rdquo; and were
           re-shaped into team infrastructure during the same engagement.
         </p>
         <p>
@@ -206,7 +206,7 @@ function MiniSystemDemo() {
           >
             Cancel
           </span>
-          <span className="rounded-md bg-teal-400/15 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-200 ring-1 ring-teal-300/50">
+          <span className="bg-teal-400/15 rounded-md px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-200 ring-1 ring-teal-300/50">
             WCAG AA
           </span>
         </div>
@@ -302,10 +302,10 @@ export default function Home() {
     setModal(MODAL_CONTENT[key]);
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex lg:gap-12">
+    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex">
       <Header activeSection={activeSection} />
 
-      <main className="w-full pb-6 md:pb-14 lg:w-5/6 lg:pb-24">
+      <main className="w-full gap-10 pb-6 md:pb-14 lg:w-5/6 lg:pb-24">
         {/* Site-wide background layers (z stack: mountain -30, dotted -20, gradient overlay -10) */}
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />
@@ -369,16 +369,15 @@ export default function Home() {
               <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all" />
             </a>
           </div>
-
         </section>
 
         {/* Work / Bento */}
         <section
           ref={workRef}
           id="work"
-          className="relative flex flex-col px-6 pb-12 md:px-12 lg:flex-row lg:gap-6"
+          className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-32"
         >
-          <VerticalText text="work" />
+          <VerticalText text="INTRO" />
           <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
             <Tile
@@ -497,8 +496,7 @@ export default function Home() {
                     </span>
                     <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
                       <span className="flex items-center gap-2">
-                        <Terminal className="h-4 w-4" />
-                        $ db-cli migrate
+                        <Terminal className="h-4 w-4" />$ db-cli migrate
                       </span>
                       <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
                         python cli
@@ -531,8 +529,8 @@ export default function Home() {
                   strokeWidth={1.5}
                 />
                 <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
-                  &ldquo;You don&apos;t rise to the level of your goals, you fall
-                  to the level of your systems.&rdquo;
+                  &ldquo;You don&apos;t rise to the level of your goals, you
+                  fall to the level of your systems.&rdquo;
                 </p>
                 <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
                   James Clear
@@ -548,16 +546,8 @@ export default function Home() {
           id="case-studies"
           className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6"
         >
-          <VerticalText text="case studies" />
+          <VerticalText text="WORK" />
           <div className="flex w-full flex-col gap-4">
-            <div className="mb-2 flex items-baseline justify-between border-b border-slate-700/60 pb-3">
-              <h2 className="font-mono text-xs uppercase tracking-widest text-teal-300">
-                Selected Work
-              </h2>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
-                Case studies &amp; side projects
-              </span>
-            </div>
             {/* 8 — BANK REC */}
             <Tile
               label="Bank Rec"
