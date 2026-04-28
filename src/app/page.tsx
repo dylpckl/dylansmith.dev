@@ -235,9 +235,25 @@ export default function Home() {
           id="intro"
           className="relative flex flex-col gap-6 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
         >
-          <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
-            Dylan Smith
-          </span>
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
+            <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
+              Dylan Smith
+            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <SocialLink site="github" />
+              <SocialLink site="linkedin" />
+              <SocialLink site="email" />
+              <Button
+                href="/Dylan-Smith-Resume.pdf"
+                target="_blank"
+                rel="noreferrer"
+                variant="primary"
+              >
+                <FileText aria-hidden="true" />
+                Resume
+              </Button>
+            </div>
+          </div>
 
           <div className="text-lg font-normal text-slate-200">
             Leading design at{" "}
@@ -253,21 +269,6 @@ export default function Home() {
               {"."}
               <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all" />
             </a>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <SocialLink site="github" />
-            <SocialLink site="linkedin" />
-            <SocialLink site="email" />
-            <Button
-              href="/Dylan-Smith-Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              variant="primary"
-            >
-              <FileText aria-hidden="true" />
-              Resume
-            </Button>
           </div>
 
           <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
