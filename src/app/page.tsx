@@ -255,22 +255,6 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="text-lg font-normal text-slate-200">
-            Leading design at{" "}
-            <a
-              href="https://www.smartadvocate.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="group relative underline decoration-teal-300 hover:decoration-teal-900"
-            >
-              <span className="relative z-20 group-hover:text-teal-900">
-                SmartAdvocate
-              </span>
-              {"."}
-              <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all" />
-            </a>
-          </div>
-
           <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
             Designing &amp; developing{" "}
             <MeasuredDiv
@@ -287,6 +271,22 @@ export default function Home() {
               pixel-perfect
             </MeasuredDiv>{" "}
             interfaces.
+          </div>
+
+          <div className="text-lg font-normal text-slate-200">
+            Leading design at{" "}
+            <a
+              href="https://www.smartadvocate.com/"
+              target="_blank"
+              rel="noreferrer"
+              className="group relative underline decoration-teal-300 hover:decoration-teal-900"
+            >
+              <span className="relative z-20 group-hover:text-teal-900">
+                SmartAdvocate
+              </span>
+              {"."}
+              <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all" />
+            </a>
           </div>
 
           <figure className="relative mx-auto mt-8 max-w-2xl rounded-md bg-slate-900/70 px-8 py-8 text-center font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm md:px-12 md:py-10">
