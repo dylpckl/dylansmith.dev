@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import {
   LayoutGrid,
@@ -16,9 +17,9 @@ import {
   ArrowUpRight,
   FileCode,
   Package,
+  FileText,
 } from "lucide-react";
 
-import { Header } from "@/components/Header";
 import { SocialLink } from "@/components/SocialLink";
 import MeasuredDiv from "@/components/MeasuredDiv";
 import { useDimensions } from "@/lib/useDimensions";
@@ -169,35 +170,36 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
 };
 
 export default function Home() {
-  const [activeSection, setActiveSection] = useState("intro");
   const [modal, setModal] = useState<ModalContent | null>(null);
 
   const introRef = useRef<HTMLDivElement | null>(null);
-  const workRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useDimensions(introRef);
-
-  useEffect(() => {
-    const sections = [introRef, workRef];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
-        });
-      },
-      { threshold: 0.25 },
-    );
-    sections.forEach((s) => s.current && observer.observe(s.current));
-    return () => observer.disconnect();
-  }, []);
 
   const open = (key: keyof typeof MODAL_CONTENT) => () =>
     setModal(MODAL_CONTENT[key]);
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex lg:gap-12">
-      <Header activeSection={activeSection} />
+    <div className="relative mx-auto min-h-screen max-w-screen-2xl">
+      <nav className="flex items-center justify-between px-6 py-6 md:px-12">
+        <Link
+          href="/"
+          aria-label="Dylan Smith — home"
+          className="font-mono text-sm uppercase tracking-widest text-slate-300 transition hover:text-teal-300"
+        >
+          DS
+        </Link>
+        <a
+          href="/Dylan-Smith-Resume.pdf"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-2 rounded-md px-3 py-2 font-mono text-xs uppercase tracking-widest text-slate-300 ring-1 ring-slate-700 transition hover:text-teal-300 hover:ring-teal-300/60 focus:outline-none focus:ring-2 focus:ring-teal-300"
+        >
+          <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+          Resume
+        </a>
+      </nav>
 
-      <main className="w-full pb-6 md:pb-14 lg:w-5/6 lg:pb-24">
+      <main className="w-full pb-6 md:pb-14 lg:pb-24">
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
         {/* Intro / Hero */}
@@ -268,11 +270,7 @@ export default function Home() {
         </section>
 
         {/* Work / Bento */}
-        <section
-          ref={workRef}
-          id="work"
-          className="relative px-6 pb-24 md:px-12"
-        >
+        <section id="work" className="relative px-6 pb-24 md:px-12">
           <div className="grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             {/* 1 — DESIGN SYSTEMS */}
             <StatTile
