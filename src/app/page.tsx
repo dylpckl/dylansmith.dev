@@ -14,6 +14,8 @@ import {
   FileCode,
   Package,
   FileText,
+  Quote,
+  Terminal,
 } from "lucide-react";
 
 import { SocialLink } from "@/components/SocialLink";
@@ -237,39 +239,6 @@ export default function Home() {
             Dylan Smith
           </span>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <SocialLink site="github" />
-            <SocialLink site="linkedin" />
-            <SocialLink site="email" />
-            <Button
-              href="/Dylan-Smith-Resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              variant="primary"
-            >
-              <FileText aria-hidden="true" />
-              Resume
-            </Button>
-          </div>
-
-          <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
-            Designing{" "}
-            <MeasuredDiv
-              parentHeight={height}
-              parentWidth={width}
-              guideline1={true}
-              guideline1Props={{ edge: "bottom" }}
-              guideline2={true}
-              guideline2Props={{ edge: "right" }}
-              measurement={true}
-              measurementProps={{ edge: "bottom" }}
-              className="inline-block w-fit align-baseline"
-            >
-              pixel-perfect
-            </MeasuredDiv>{" "}
-            interfaces and shipping the code that runs them.
-          </div>
-
           <div className="text-lg font-normal text-slate-200">
             Leading design at{" "}
             <a
@@ -286,12 +255,50 @@ export default function Home() {
             </a>
           </div>
 
-          <figure className="max-w-xl rounded-md bg-slate-900/70 p-4 font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm">
-            <p className="italic">
+          <div className="flex flex-wrap items-center gap-3">
+            <SocialLink site="github" />
+            <SocialLink site="linkedin" />
+            <SocialLink site="email" />
+            <Button
+              href="/Dylan-Smith-Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              variant="primary"
+            >
+              <FileText aria-hidden="true" />
+              Resume
+            </Button>
+          </div>
+
+          <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
+            Designing &amp; developing{" "}
+            <MeasuredDiv
+              parentHeight={height}
+              parentWidth={width}
+              guideline1={true}
+              guideline1Props={{ edge: "bottom" }}
+              guideline2={true}
+              guideline2Props={{ edge: "right" }}
+              measurement={true}
+              measurementProps={{ edge: "bottom" }}
+              className="inline-block w-fit align-baseline"
+            >
+              pixel-perfect
+            </MeasuredDiv>{" "}
+            interfaces.
+          </div>
+
+          <figure className="relative mx-auto mt-8 max-w-2xl rounded-md bg-slate-900/70 px-8 py-8 text-center font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm md:px-12 md:py-10">
+            <Quote
+              aria-hidden="true"
+              className="absolute -top-6 left-1/2 h-12 w-12 -translate-x-1/2 rotate-180 fill-teal-300/20 text-teal-300/40"
+              strokeWidth={1.5}
+            />
+            <p className="text-base italic leading-relaxed text-slate-100 md:text-lg">
               &ldquo;You don&apos;t rise to the level of your goals, you fall to
               the level of your systems.&rdquo;
             </p>
-            <figcaption className="mt-2 text-xs uppercase tracking-widest text-slate-400">
+            <figcaption className="mt-4 text-xs uppercase tracking-widest text-slate-400">
               James Clear · Atomic Habits
             </figcaption>
           </figure>
@@ -360,11 +367,11 @@ export default function Home() {
               onClickModal={open("aiWorkflow")}
             />
 
-            {/* 6 — SYSTEMS THINKING (large, drag reveal) */}
+            {/* 6 — SYSTEMS THINKING (full-width, drag reveal) */}
             <Tile
               label="Systems Thinking"
               labelIcon={Recycle}
-              className="md:col-span-6 lg:col-span-7 lg:row-span-2"
+              className="md:col-span-6 lg:col-span-12 lg:row-span-2"
               decorative
             >
               <div className="flex flex-1 flex-col gap-4">
@@ -398,12 +405,19 @@ export default function Home() {
                       </div>
                     }
                     after={
-                      <div className="flex h-44 items-center justify-center bg-slate-900 p-4">
-                        <span className="flex items-center gap-2 rounded-lg bg-teal-400/10 px-4 py-3 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
+                      <div className="flex h-44 flex-col items-center justify-center gap-2 bg-slate-900 p-4">
+                        <span className="flex items-center gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
                           <Package className="h-4 w-4" />
                           starter-kit
                           <span className="ml-2 rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
                             team standard
+                          </span>
+                        </span>
+                        <span className="flex items-center gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
+                          <Terminal className="h-4 w-4" />
+                          $ db-cli migrate
+                          <span className="ml-2 rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+                            python cli
                           </span>
                         </span>
                       </div>
@@ -420,11 +434,11 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 7 — BANK REC (large, drag reveal: legacy → spire) */}
+            {/* 7 — BANK REC (extra-large, full-width drag reveal: legacy → spire) */}
             <Tile
               label="Bank Rec"
               labelIcon={ArrowUpRight}
-              className="md:col-span-6 lg:col-span-5 lg:row-span-2"
+              className="md:col-span-6 lg:col-span-12 lg:row-span-3"
               decorative
             >
               <div className="flex flex-1 flex-col gap-4">
@@ -440,24 +454,24 @@ export default function Home() {
                     beforeLabel="Legacy"
                     afterLabel="Refreshed"
                     before={
-                      <div className="relative h-56 w-full bg-slate-900">
+                      <div className="relative h-72 w-full bg-slate-900 md:h-96 lg:h-[480px]">
                         <Image
                           src={bankRecLegacy}
                           alt="Legacy bank reconciliation screen"
                           fill
                           className="object-cover object-top"
-                          sizes="(max-width: 1024px) 100vw, 40vw"
+                          sizes="100vw"
                         />
                       </div>
                     }
                     after={
-                      <div className="relative h-56 w-full bg-slate-900">
+                      <div className="relative h-72 w-full bg-slate-900 md:h-96 lg:h-[480px]">
                         <Image
                           src={bankRecSpire}
                           alt="Refreshed bank reconciliation screen"
                           fill
                           className="object-cover object-top"
-                          sizes="(max-width: 1024px) 100vw, 40vw"
+                          sizes="100vw"
                         />
                       </div>
                     }
