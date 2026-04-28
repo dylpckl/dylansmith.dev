@@ -386,7 +386,7 @@ export default function Home() {
 
                 <div className="mt-2 flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center">
                   {/* Scattered files */}
-                  <div className="grid flex-1 grid-cols-2 gap-2">
+                  <div className="grid w-fit grid-cols-2 gap-2">
                     {[
                       "script.sql",
                       "migrate.py",
@@ -397,9 +397,9 @@ export default function Home() {
                     ].map((name) => (
                       <span
                         key={name}
-                        className="flex items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 ring-1 ring-slate-700"
+                        className="flex w-32 items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 ring-1 ring-slate-700"
                       >
-                        <FileCode className="h-3 w-3 text-slate-500" />
+                        <FileCode className="h-3 w-3 shrink-0 text-slate-500" />
                         {name}
                       </span>
                     ))}
@@ -471,7 +471,7 @@ export default function Home() {
                     beforeLabel="Legacy"
                     afterLabel="Refreshed"
                     before={
-                      <div className="relative h-72 w-full bg-slate-900 md:h-96 lg:h-[480px]">
+                      <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
                         <Image
                           src={bankRecLegacy}
                           alt="Legacy bank reconciliation screen"
@@ -482,7 +482,7 @@ export default function Home() {
                       </div>
                     }
                     after={
-                      <div className="relative h-72 w-full bg-slate-900 md:h-96 lg:h-[480px]">
+                      <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
                         <Image
                           src={bankRecSpire}
                           alt="Refreshed bank reconciliation screen"
