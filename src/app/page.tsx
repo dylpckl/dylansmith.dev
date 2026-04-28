@@ -429,7 +429,7 @@ export default function Home() {
                         migration-starter-kit
                       </span>
                       <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                        boilerplate
+                        boilerplate repo
                       </span>
                     </span>
                     <span className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
