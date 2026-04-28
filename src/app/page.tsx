@@ -332,20 +332,6 @@ export default function Home() {
             </a>
           </div>
 
-          <figure className="relative mx-auto mt-8 max-w-2xl rounded-md bg-slate-900/70 px-8 py-8 text-center font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm md:px-12 md:py-10">
-            <Quote
-              aria-hidden="true"
-              className="absolute -top-6 left-1/2 h-12 w-12 -translate-x-1/2 rotate-180 fill-teal-300/20 text-teal-300/40"
-              strokeWidth={1.5}
-            />
-            <p className="text-base italic leading-relaxed text-slate-100 md:text-lg">
-              &ldquo;You don&apos;t rise to the level of your goals, you fall to
-              the level of your systems.&rdquo;
-            </p>
-            <figcaption className="mt-4 text-xs uppercase tracking-widest text-slate-400">
-              James Clear · Atomic Habits
-            </figcaption>
-          </figure>
         </section>
 
         {/* Work / Bento */}
@@ -358,14 +344,16 @@ export default function Home() {
               className="md:col-span-6 lg:col-span-8 lg:row-span-2"
               onClickModal={open("designSystems")}
             >
-              <div className="flex flex-1 flex-col">
-                <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
-                  2
-                </span>
-                <p className="mt-3 max-w-[40ch] text-sm text-slate-300 lg:text-base">
-                  Shipped from zero — solo practitioner bridging design and
-                  engineering at two organizations.
-                </p>
+              <div className="flex flex-1 flex-row items-start justify-between gap-6">
+                <div className="flex flex-col">
+                  <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
+                    2
+                  </span>
+                  <p className="mt-3 max-w-[40ch] text-sm text-slate-300 lg:text-base">
+                    Shipped from zero — solo practitioner bridging design and
+                    engineering at two organizations.
+                  </p>
+                </div>
                 <MiniSystemDemo />
               </div>
             </Tile>
@@ -548,7 +536,30 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 8 — RAPIDPAY (extra-large, full-width drag reveal) */}
+            {/* 8 — ATOMIC HABITS QUOTE (philosophy break between case studies) */}
+            <Tile
+              label="Atomic Habits"
+              labelIcon={Quote}
+              className="md:col-span-6 lg:col-span-12"
+              decorative
+            >
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-6 text-center md:flex-row md:gap-8 md:py-8">
+                <Quote
+                  aria-hidden="true"
+                  className="h-10 w-10 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/50 md:h-14 md:w-14"
+                  strokeWidth={1.5}
+                />
+                <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
+                  &ldquo;You don&apos;t rise to the level of your goals, you fall
+                  to the level of your systems.&rdquo;
+                </p>
+                <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
+                  James Clear
+                </span>
+              </div>
+            </Tile>
+
+            {/* 9 — RAPIDPAY (extra-large, full-width drag reveal) */}
             <Tile
               label="RapidPay"
               labelIcon={CreditCard}
