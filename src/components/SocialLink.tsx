@@ -25,24 +25,42 @@ export const LinkedInIcon = (props: any) => {
   );
 };
 
-type SocialLinkProps = {
-  site: "github" | "linkedin";
+export const EmailIcon = () => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path d="M2 6.5C2 5.12 3.12 4 4.5 4h15C20.88 4 22 5.12 22 6.5v11c0 1.38-1.12 2.5-2.5 2.5h-15C3.12 20 2 18.88 2 17.5v-11Zm2.6.06 7.4 5.55 7.4-5.55a.5.5 0 0 0-.3-.06h-14.2a.5.5 0 0 0-.3.06ZM20 8.69 12.6 14.25a1 1 0 0 1-1.2 0L4 8.69V17.5a.5.5 0 0 0 .5.5h15a.5.5 0 0 0 .5-.5V8.69Z" />
+    </svg>
+  );
 };
 
-// https://github.com/dylpckl
-// https://www.linkedin.com/in/dylanjbsmith/
+type SocialLinkProps = {
+  site: "github" | "linkedin" | "email";
+};
 
 export function SocialLink({ site }: SocialLinkProps) {
+  const href =
+    site === "github"
+      ? "https://github.com/dylpckl"
+      : site === "linkedin"
+        ? "https://www.linkedin.com/in/dylanjbsmith/"
+        : "mailto:dylanjbsmith@gmail.com";
+
+  const Icon =
+    site === "github" ? GitHubIcon : site === "linkedin" ? LinkedInIcon : EmailIcon;
+
+  const label =
+    site === "github" ? "GitHub" : site === "linkedin" ? "LinkedIn" : "Email";
+
   return (
     <a
-      href={
-        site === "github"
-          ? `https://github.com/dylpckl`
-          : `https://www.linkedin.com/in/dylanjbsmith/`
-      }
+      href={href}
+      aria-label={label}
       className="h-7 w-7 fill-slate-300 transition hover:fill-teal-300"
     >
-      {site === "github" ? <GitHubIcon /> : <LinkedInIcon />}
+      <Icon />
     </a>
   );
 }
