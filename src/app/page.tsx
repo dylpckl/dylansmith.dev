@@ -6,11 +6,7 @@ import Image from "next/image";
 import {
   LayoutGrid,
   Star,
-  Palette,
-  ToggleLeft,
-  Accessibility,
   TrendingUp,
-  Rocket,
   Users,
   Sparkles,
   Recycle,
@@ -32,7 +28,8 @@ import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
 import { MiniTokenStrip } from "@/components/bento/MiniTokenStrip";
 import { StateChips } from "@/components/bento/StateChips";
 
-import bankRecImage from "/public/case-studies/bank-rec/spire.png";
+import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
+import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
 
 const MODAL_CONTENT: Record<string, ModalContent> = {
   designSystems: {
@@ -89,25 +86,6 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
           curated migration scripts, shared tooling, CI/CD), a Python CLI for
           terminal-based DB ops and cloud deployments, and a suite of Claude
           Code skills for code-ready output. All adopted as team standards.
-        </p>
-      </>
-    ),
-  },
-  mds: {
-    title: "50% faster feature time-to-ship",
-    body: (
-      <>
-        <p>
-          At MDS I overhauled the design&rarr;engineering handoff process in
-          partnership with product owners, halving the time from spec to
-          shipped feature.
-        </p>
-        <p>
-          Tokens served as a shared source of truth between Figma and code,
-          eliminating &ldquo;does this match the design?&rdquo; review cycles.
-          User research findings (the team had no formal practice &mdash; I
-          started one) drove the redesign of the flagship product&apos;s
-          most-used page.
         </p>
       </>
     ),
@@ -169,6 +147,69 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
   },
 };
 
+function MiniSystemDemo() {
+  return (
+    <div className="mt-4 flex flex-col gap-3 rounded-lg bg-slate-900/70 p-4 ring-1 ring-slate-700 backdrop-blur-sm">
+      <div>
+        <span className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
+          Tokens
+        </span>
+        <MiniTokenStrip />
+      </div>
+      <div>
+        <span className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
+          States
+        </span>
+        <StateChips />
+      </div>
+      <div>
+        <span className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
+          Pattern
+        </span>
+        <div className="mt-2 flex flex-wrap items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="rounded-md bg-teal-300 px-3 py-1.5 text-xs font-semibold text-slate-900"
+          >
+            Save
+          </span>
+          <span
+            aria-hidden="true"
+            className="rounded-md bg-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-slate-600"
+          >
+            Cancel
+          </span>
+          <span className="rounded-md bg-teal-400/15 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-200 ring-1 ring-teal-300/50">
+            WCAG AA
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SpeedBars() {
+  return (
+    <div className="mt-3 flex max-w-[220px] flex-col gap-1.5" aria-hidden="true">
+      <div className="flex items-center gap-2">
+        <span className="w-14 font-mono text-[9px] uppercase tracking-widest text-slate-500">
+          Before
+        </span>
+        <div className="h-1.5 flex-1 rounded-sm bg-slate-700" />
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="w-14 font-mono text-[9px] uppercase tracking-widest text-teal-300">
+          After
+        </span>
+        <div className="h-1.5 w-[40%] rounded-sm bg-teal-300" />
+      </div>
+      <span className="ml-16 mt-1 font-mono text-[9px] uppercase tracking-widest text-slate-500">
+        Avg turnaround across 12+ migrations
+      </span>
+    </div>
+  );
+}
+
 export default function Home() {
   const [modal, setModal] = useState<ModalContent | null>(null);
 
@@ -180,25 +221,6 @@ export default function Home() {
 
   return (
     <div className="relative mx-auto min-h-screen max-w-screen-2xl">
-      <nav className="flex items-center justify-between px-6 py-6 md:px-12">
-        <Link
-          href="/"
-          aria-label="Dylan Smith — home"
-          className="font-mono text-sm uppercase tracking-widest text-slate-300 transition hover:text-teal-300"
-        >
-          DS
-        </Link>
-        <a
-          href="/Dylan-Smith-Resume.pdf"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2 rounded-md px-3 py-2 font-mono text-xs uppercase tracking-widest text-slate-300 ring-1 ring-slate-700 transition hover:text-teal-300 hover:ring-teal-300/60 focus:outline-none focus:ring-2 focus:ring-teal-300"
-        >
-          <FileText className="h-3.5 w-3.5" aria-hidden="true" />
-          Resume
-        </a>
-      </nav>
-
       <main className="w-full pb-6 md:pb-14 lg:pb-24">
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
 
@@ -206,38 +228,54 @@ export default function Home() {
         <section
           ref={introRef}
           id="intro"
-          className="relative flex flex-col gap-8 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
+          className="relative flex flex-col gap-6 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
         >
+          {/* Subtle dark overlay so the mountain doesn't fight the type */}
+          <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/30 via-slate-900/10 to-slate-900/70" />
+
           <span className="font-mono text-xs uppercase tracking-widest text-teal-300">
             Dylan Smith — UX Engineer
           </span>
 
-          <span className="flex flex-col font-bold tracking-tight text-slate-200">
-            <span className="text-5xl lg:text-7xl">Dylan Smith</span>
-            <span className="mt-4 flex flex-wrap items-center gap-2 text-lg font-medium lg:text-2xl">
-              Designing
-              <MeasuredDiv
-                parentHeight={height}
-                parentWidth={width}
-                guideline1={true}
-                guideline1Props={{ edge: "bottom" }}
-                guideline2={true}
-                guideline2Props={{ edge: "right" }}
-                measurement={true}
-                measurementProps={{ edge: "bottom" }}
-                className="w-fit"
-              >
-                pixel-perfect
-              </MeasuredDiv>
-              interfaces by day
-            </span>
-            <span className="mt-2 text-lg font-medium lg:text-2xl">
-              & developing them by night.
-            </span>
+          <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
+            Dylan Smith
           </span>
 
+          <div className="flex flex-wrap items-center gap-3">
+            <SocialLink site="github" />
+            <SocialLink site="linkedin" />
+            <SocialLink site="email" />
+            <a
+              href="/Dylan-Smith-Resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-md bg-teal-300 px-3 py-2 font-mono text-xs font-semibold uppercase tracking-widest text-teal-900 transition hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-slate-900"
+            >
+              <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+              Resume
+            </a>
+          </div>
+
+          <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
+            Designing{" "}
+            <MeasuredDiv
+              parentHeight={height}
+              parentWidth={width}
+              guideline1={true}
+              guideline1Props={{ edge: "bottom" }}
+              guideline2={true}
+              guideline2Props={{ edge: "right" }}
+              measurement={true}
+              measurementProps={{ edge: "bottom" }}
+              className="inline-block w-fit align-baseline"
+            >
+              pixel-perfect
+            </MeasuredDiv>{" "}
+            interfaces by day &amp; developing them by night.
+          </div>
+
           <div className="text-lg font-normal text-slate-200">
-            Leading design for{" "}
+            Leading design at{" "}
             <a
               href="https://www.smartadvocate.com/"
               target="_blank"
@@ -252,7 +290,7 @@ export default function Home() {
             </a>
           </div>
 
-          <figure className="max-w-xl border-l-2 border-teal-300/50 pl-4 font-mono text-sm text-slate-300">
+          <figure className="max-w-xl rounded-md bg-slate-900/70 p-4 font-mono text-sm text-slate-200 ring-1 ring-slate-700 backdrop-blur-sm">
             <p className="italic">
               &ldquo;You don&apos;t rise to the level of your goals, you fall to
               the level of your systems.&rdquo;
@@ -261,26 +299,29 @@ export default function Home() {
               James Clear · Atomic Habits
             </figcaption>
           </figure>
-
-          <div className="flex gap-3">
-            <SocialLink site="github" />
-            <SocialLink site="linkedin" />
-            <SocialLink site="email" />
-          </div>
         </section>
 
         {/* Work / Bento */}
         <section id="work" className="relative px-6 pb-24 md:px-12">
           <div className="grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
-            {/* 1 — DESIGN SYSTEMS */}
-            <StatTile
+            {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
+            <Tile
               label="Design Systems"
               labelIcon={LayoutGrid}
-              number="2"
-              caption="Shipped from zero — solo practitioner bridging design and engineering at two organizations."
               className="md:col-span-6 lg:col-span-8 lg:row-span-2"
               onClickModal={open("designSystems")}
-            />
+            >
+              <div className="flex flex-1 flex-col">
+                <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
+                  2
+                </span>
+                <p className="mt-3 max-w-[40ch] text-sm text-slate-300 lg:text-base">
+                  Shipped from zero — solo practitioner bridging design and
+                  engineering at two organizations.
+                </p>
+                <MiniSystemDemo />
+              </div>
+            </Tile>
 
             {/* 2 — TRACK RECORD */}
             <CategoryTile
@@ -292,81 +333,38 @@ export default function Home() {
               onClickModal={open("trackRecord")}
             />
 
-            {/* 3 — TOKENS */}
-            <CategoryTile
-              label="Tokens"
-              labelIcon={Palette}
-              headline="Color, type, spacing"
-              body="Tokens as the shared source of truth between Figma and code."
-              className="md:col-span-3 lg:col-span-4"
-              visual={<MiniTokenStrip />}
-            />
-
-            {/* 4 — STATES */}
-            <CategoryTile
-              label="States"
-              labelIcon={ToggleLeft}
-              headline="Documented variants"
-              body="Default, hover, focus, disabled — every interaction state defined."
-              className="md:col-span-3 lg:col-span-4"
-              visual={<StateChips />}
-            />
-
-            {/* 5 — A11Y */}
-            <CategoryTile
-              label="Accessibility"
-              labelIcon={Accessibility}
-              headline="Built in, not bolted on"
-              body="WCAG AA · contrast · focus order · keyboard reachable."
-              className="md:col-span-6 lg:col-span-4"
-              visual={
-                <span className="mt-2 inline-flex w-fit rounded-md bg-teal-400/15 px-2 py-1 font-mono text-xs uppercase tracking-widest text-teal-200 ring-1 ring-teal-300/50">
-                  WCAG AA
-                </span>
-              }
-            />
-
-            {/* 6 — SMARTADVOCATE 60% */}
+            {/* 3 — SMARTADVOCATE 60% with speed bars */}
             <StatTile
               label="SmartAdvocate"
               labelIcon={TrendingUp}
               number="60%"
-              caption="Faster migration delivery across 12+ concurrent projects."
+              caption="Faster migration delivery."
               className="md:col-span-3 lg:col-span-4"
               onClickModal={open("smartAdvocate")}
+              visual={<SpeedBars />}
             />
 
-            {/* 7 — MDS 50% */}
-            <StatTile
-              label="MDS"
-              labelIcon={Rocket}
-              number="50%"
-              caption="Faster feature time-to-ship after handoff process redesign."
-              className="md:col-span-3 lg:col-span-4"
-              onClickModal={open("mds")}
-            />
-
-            {/* 8 — CROSS-FUNCTIONAL */}
+            {/* 4 — CROSS-FUNCTIONAL */}
             <CategoryTile
               label="Cross-functional"
               labelIcon={Users}
               headline="Co-owning decisions"
               body="Across design, engineering, and product — the work of a solo bridge."
-              className="md:col-span-6 lg:col-span-4"
+              className="md:col-span-3 lg:col-span-4"
               onClickModal={open("crossFunctional")}
             />
 
-            {/* 9 — AI WORKFLOW */}
+            {/* 5 — AI WORKFLOW */}
             <CategoryTile
               label="AI Workflow"
               labelIcon={Sparkles}
               headline="Claude Code · MCP"
               body="Custom skills, agents, and MCP workflows. Adopted across the team."
-              className="md:col-span-6 lg:col-span-5"
+              className="md:col-span-6 lg:col-span-4"
               onClickModal={open("aiWorkflow")}
             />
 
-            {/* 10 — SYSTEMS THINKING with drag slider (decorative tile + explicit More button — outer cannot be a button because slider handle is also a button) */}
+            {/* 6 — SYSTEMS THINKING (large, drag reveal) */}
             <Tile
               label="Systems Thinking"
               labelIcon={Recycle}
@@ -426,23 +424,57 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 11 — BANK REC link */}
-            <CategoryTile
+            {/* 7 — BANK REC (large, drag reveal: legacy → spire) */}
+            <Tile
               label="Bank Rec"
               labelIcon={ArrowUpRight}
-              headline="Bank Reconciliation"
-              body="Case study — solo design under a one-week deadline. Read the deep dive →"
-              className="md:col-span-6 lg:col-span-5"
-              href="/work/bank-rec"
-              visual={
-                <Image
-                  src={bankRecImage}
-                  alt="Bank reconciliation case study preview"
-                  className="mt-3 h-32 w-full rounded-md object-cover ring-1 ring-slate-700"
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                />
-              }
-            />
+              className="md:col-span-6 lg:col-span-5 lg:row-span-2"
+              decorative
+            >
+              <div className="flex flex-1 flex-col gap-4">
+                <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
+                  Bank Reconciliation
+                </h3>
+                <p className="max-w-[40ch] text-sm text-slate-300 lg:text-base">
+                  Solo design under a one-week deadline — legacy ASP screen
+                  redesigned for the new SmartAdvocate UI. Drag to compare.
+                </p>
+                <div className="mt-2">
+                  <BeforeAfterReveal
+                    beforeLabel="Legacy"
+                    afterLabel="Refreshed"
+                    before={
+                      <div className="relative h-56 w-full bg-slate-900">
+                        <Image
+                          src={bankRecLegacy}
+                          alt="Legacy bank reconciliation screen"
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 1024px) 100vw, 40vw"
+                        />
+                      </div>
+                    }
+                    after={
+                      <div className="relative h-56 w-full bg-slate-900">
+                        <Image
+                          src={bankRecSpire}
+                          alt="Refreshed bank reconciliation screen"
+                          fill
+                          className="object-cover object-top"
+                          sizes="(max-width: 1024px) 100vw, 40vw"
+                        />
+                      </div>
+                    }
+                  />
+                </div>
+                <Link
+                  href="/work/bank-rec"
+                  className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                >
+                  Read the case study →
+                </Link>
+              </div>
+            </Tile>
           </div>
         </section>
       </main>
