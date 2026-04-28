@@ -223,7 +223,9 @@ export default function Home() {
   return (
     <div className="relative mx-auto min-h-screen max-w-screen-2xl">
       <main className="w-full pb-6 md:pb-14 lg:pb-24">
+        {/* Site-wide background layers (z stack: mountain -30, dotted -20, gradient overlay -10) */}
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />
 
         {/* Intro / Hero */}
         <section
@@ -231,9 +233,6 @@ export default function Home() {
           id="intro"
           className="relative flex flex-col gap-6 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
         >
-          {/* Subtle dark overlay so the mountain doesn't fight the type */}
-          <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/30 via-slate-900/10 to-slate-900/70" />
-
           <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
             Dylan Smith
           </span>
