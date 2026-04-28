@@ -279,10 +279,11 @@ export default function Home() {
   const [modal, setModal] = useState<ModalContent | null>(null);
   const [activeSection, setActiveSection] = useState("intro");
 
+  const heroRef = useRef<HTMLDivElement | null>(null);
   const introRef = useRef<HTMLDivElement | null>(null);
   const workRef = useRef<HTMLDivElement | null>(null);
   const caseStudiesRef = useRef<HTMLDivElement | null>(null);
-  const { width, height } = useDimensions(introRef);
+  const { width, height } = useDimensions(heroRef);
 
   useEffect(() => {
     const sections = [introRef, workRef, caseStudiesRef];
@@ -312,7 +313,7 @@ export default function Home() {
 
         {/* Hero */}
         <section
-          // ref={introRef}
+          ref={heroRef}
           id="hero"
           className="relative flex flex-col gap-6 px-6 py-12 text-slate-200 md:px-12 md:py-20 lg:py-24"
         >
