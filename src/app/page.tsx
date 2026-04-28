@@ -375,7 +375,7 @@ export default function Home() {
         <section
           ref={workRef}
           id="work"
-          className="relative flex flex-col px-6 pb-12 md:px-12 lg:flex-row lg:gap-6"
+          className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-32"
         >
           <VerticalText text="INTRO" />
           <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
