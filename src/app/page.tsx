@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 
 import { SocialLink } from "@/components/SocialLink";
+import { Button } from "@/components/Button";
 import MeasuredDiv from "@/components/MeasuredDiv";
 import { useDimensions } from "@/lib/useDimensions";
 
@@ -241,15 +242,15 @@ export default function Home() {
             <SocialLink site="github" />
             <SocialLink site="linkedin" />
             <SocialLink site="email" />
-            <a
+            <Button
               href="/Dylan-Smith-Resume.pdf"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-teal-300 px-3 py-2 font-mono text-xs font-semibold uppercase tracking-widest text-teal-900 transition hover:bg-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-slate-900"
+              variant="primary"
             >
-              <FileText className="h-3.5 w-3.5" aria-hidden="true" />
+              <FileText aria-hidden="true" />
               Resume
-            </a>
+            </Button>
           </div>
 
           <div className="max-w-3xl text-lg font-medium leading-relaxed text-slate-200 lg:text-2xl">
