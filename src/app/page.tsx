@@ -386,7 +386,7 @@ export default function Home() {
 
                 <div className="mt-2 flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
                   {/* Scattered files */}
-                  <div className="grid w-fit grid-cols-2 gap-2">
+                  <div className="grid w-fit grid-cols-3 gap-2">
                     {[
                       "script.sql",
                       "migrate.py",
@@ -394,6 +394,9 @@ export default function Home() {
                       "fix.sql",
                       "notes.md",
                       "utils.py",
+                      "backfill.sql",
+                      "audit.sql",
+                      "patches.sql",
                     ].map((name) => (
                       <span
                         key={name}
