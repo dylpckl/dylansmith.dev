@@ -423,7 +423,7 @@ export default function Home() {
 
                   {/* Consolidated callouts — grid w-fit makes both stretch to the widest's content width */}
                   <div className="grid w-fit shrink-0 grid-cols-1 gap-2">
-                    <span className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
+                    <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
                       <span className="flex items-center gap-2">
                         <Package className="h-4 w-4" />
                         migration-starter-kit
@@ -432,7 +432,7 @@ export default function Home() {
                         boilerplate repo
                       </span>
                     </span>
-                    <span className="flex items-center justify-between gap-6 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
+                    <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
                       <span className="flex items-center gap-2">
                         <Terminal className="h-4 w-4" />
                         $ db-cli migrate
