@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -19,6 +19,7 @@ import {
   Layers,
 } from "lucide-react";
 
+import { Header } from "@/components/Header";
 import { SocialLink } from "@/components/SocialLink";
 import { Button } from "@/components/Button";
 import MeasuredDiv from "@/components/MeasuredDiv";
@@ -275,16 +276,35 @@ function MigrationGrid() {
 
 export default function Home() {
   const [modal, setModal] = useState<ModalContent | null>(null);
+  const [activeSection, setActiveSection] = useState("intro");
 
   const introRef = useRef<HTMLDivElement | null>(null);
+  const workRef = useRef<HTMLDivElement | null>(null);
+  const caseStudiesRef = useRef<HTMLDivElement | null>(null);
   const { width, height } = useDimensions(introRef);
+
+  useEffect(() => {
+    const sections = [introRef, workRef, caseStudiesRef];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
+        });
+      },
+      { threshold: 0.25 },
+    );
+    sections.forEach((s) => s.current && observer.observe(s.current));
+    return () => observer.disconnect();
+  }, []);
 
   const open = (key: keyof typeof MODAL_CONTENT) => () =>
     setModal(MODAL_CONTENT[key]);
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-screen-2xl">
-      <main className="w-full pb-6 md:pb-14 lg:pb-24">
+    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex lg:gap-12">
+      <Header activeSection={activeSection} />
+
+      <main className="w-full pb-6 md:pb-14 lg:w-5/6 lg:pb-24">
         {/* Site-wide background layers (z stack: mountain -30, dotted -20, gradient overlay -10) */}
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />
@@ -352,7 +372,11 @@ export default function Home() {
         </section>
 
         {/* Work / Bento */}
-        <section id="work" className="relative px-6 pb-24 md:px-12">
+        <section
+          ref={workRef}
+          id="work"
+          className="relative px-6 pb-12 md:px-12"
+        >
           <div className="grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
             <Tile
@@ -491,11 +515,51 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 7 — BANK REC (extra-large, full-width drag reveal: legacy → spire) */}
+            {/* 7 — ATOMIC HABITS QUOTE (closes the bento — philosophy lead-in to case studies) */}
+            <Tile
+              label="Atomic Habits"
+              labelIcon={Quote}
+              className="md:col-span-6 lg:col-span-12"
+              decorative
+            >
+              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-6 text-center md:flex-row md:gap-8 md:py-8">
+                <Quote
+                  aria-hidden="true"
+                  className="h-10 w-10 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/50 md:h-14 md:w-14"
+                  strokeWidth={1.5}
+                />
+                <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
+                  &ldquo;You don&apos;t rise to the level of your goals, you fall
+                  to the level of your systems.&rdquo;
+                </p>
+                <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
+                  James Clear
+                </span>
+              </div>
+            </Tile>
+          </div>
+        </section>
+
+        {/* Case Studies — separate section so the large drag-reveals don't intermix with the bento */}
+        <section
+          ref={caseStudiesRef}
+          id="case-studies"
+          className="relative px-6 pb-24 md:px-12"
+        >
+          <div className="mb-6 flex items-baseline justify-between border-b border-slate-700/60 pb-3">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-teal-300">
+              Selected Work
+            </h2>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+              Case studies &amp; side projects
+            </span>
+          </div>
+          <div className="flex flex-col gap-4">
+            {/* 8 — BANK REC */}
             <Tile
               label="Bank Rec"
               labelIcon={ArrowUpRight}
-              className="md:col-span-6 lg:col-span-12 lg:row-span-3"
+              className=""
               decorative
             >
               <div className="flex flex-1 flex-col gap-4">
@@ -543,34 +607,11 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 8 — ATOMIC HABITS QUOTE (philosophy break between case studies) */}
-            <Tile
-              label="Atomic Habits"
-              labelIcon={Quote}
-              className="md:col-span-6 lg:col-span-12"
-              decorative
-            >
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-6 text-center md:flex-row md:gap-8 md:py-8">
-                <Quote
-                  aria-hidden="true"
-                  className="h-10 w-10 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/50 md:h-14 md:w-14"
-                  strokeWidth={1.5}
-                />
-                <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
-                  &ldquo;You don&apos;t rise to the level of your goals, you fall
-                  to the level of your systems.&rdquo;
-                </p>
-                <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
-                  James Clear
-                </span>
-              </div>
-            </Tile>
-
             {/* 9 — RAPIDPAY (extra-large, full-width drag reveal) */}
             <Tile
               label="RapidPay"
               labelIcon={CreditCard}
-              className="md:col-span-6 lg:col-span-12 lg:row-span-3"
+              className=""
               decorative
             >
               <div className="flex flex-1 flex-col gap-4">
@@ -616,7 +657,7 @@ export default function Home() {
             <Tile
               label="Side Project"
               labelIcon={Layers}
-              className="md:col-span-6 lg:col-span-12 lg:row-span-2"
+              className=""
               decorative
             >
               <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
