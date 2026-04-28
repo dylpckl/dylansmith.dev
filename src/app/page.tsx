@@ -5,10 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   LayoutGrid,
-  Star,
   Gauge,
   Users,
-  Sparkles,
   Recycle,
   ArrowUpRight,
   ArrowRight,
@@ -130,6 +128,25 @@ const MODAL_CONTENT: Record<string, ModalContent> = {
         <p>
           AI tooling isn&apos;t a side experiment &mdash; it&apos;s how the team
           ships now.
+        </p>
+      </>
+    ),
+  },
+  documentationFirst: {
+    title: "Documentation-first",
+    body: (
+      <>
+        <p>
+          Teams should be able to self-serve from what I write. At
+          SmartAdvocate, that meant pairing every component, system
+          convention, and migration pattern with evergreen Confluence
+          documentation — enough context that engineers picking up the work
+          for the first time don&apos;t need to ask me to ship.
+        </p>
+        <p>
+          Largest contributor to the internal Confluence knowledge base;
+          authored the design system reference, the migration starter-kit
+          guide, and database schema docs that outlasted any single project.
         </p>
       </>
     ),
@@ -339,7 +356,7 @@ export default function Home() {
           <div className="grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
             <Tile
-              label="Design Systems"
+              label="Design Systems shipped"
               labelIcon={LayoutGrid}
               className="md:col-span-6 lg:col-span-8 lg:row-span-2"
               onClickModal={open("designSystems")}
@@ -358,14 +375,14 @@ export default function Home() {
               </div>
             </Tile>
 
-            {/* 2 — TRACK RECORD */}
+            {/* 2 — DOCUMENTATION-FIRST (replaces Track Record + AI Workflow; col-4 row-2) */}
             <CategoryTile
-              label="Track Record"
-              labelIcon={Star}
-              headline="First-of-its-kind"
-              body="Both shipped systems were the first their organizations had ever built."
-              className="md:col-span-6 lg:col-span-4 lg:row-span-2"
-              onClickModal={open("trackRecord")}
+              label="Documentation-first"
+              labelIcon={FileText}
+              headline="Self-serve by design"
+              body="Largest contributor to the internal Confluence knowledge base — evergreen guidance on component patterns, system conventions, and implementation-ready usage."
+              className="md:col-span-6 lg:col-span-4 lg:row-span-3"
+              onClickModal={open("documentationFirst")}
             />
 
             {/* 3 — MIGRATION DELIVERY 60% with concurrent-migrations grid */}
@@ -387,16 +404,6 @@ export default function Home() {
               body="Across design, engineering, and product — the work of a solo bridge."
               className="md:col-span-3 lg:col-span-4"
               onClickModal={open("crossFunctional")}
-            />
-
-            {/* 5 — AI WORKFLOW */}
-            <CategoryTile
-              label="AI Workflow"
-              labelIcon={Sparkles}
-              headline="Claude Code · MCP"
-              body="Custom skills, agents, and MCP workflows. Adopted across the team."
-              className="md:col-span-6 lg:col-span-4"
-              onClickModal={open("aiWorkflow")}
             />
 
             {/* 6 — SYSTEMS THINKING (full-width, static one-off → reusable composition) */}
