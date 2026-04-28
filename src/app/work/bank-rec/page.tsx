@@ -117,7 +117,7 @@ const CaseStudySection = forwardRef<HTMLDivElement, CaseStudySectionProps>(
       <section
         ref={ref}
         className={cn(
-          "relative mx-auto mt-24 flex gap-12 py-12 md:px-12 md:py-20 lg:py-24 lg:pb-24",
+          "relative mx-auto mt-24 flex gap-12 px-6 py-12 md:px-12 md:py-20 lg:py-24 lg:pb-24",
           className,
         )}
       >
@@ -170,7 +170,7 @@ export default function Page() {
       <Header activeSection={activeSection} />
       <div className="w-full">
         {/* Hero */}
-        <section className="mx-auto mt-16 flex min-h-[80vh] flex-col gap-12 py-12 md:px-12 md:py-20 lg:py-24 lg:pb-24">
+        <section className="mx-auto mt-16 flex min-h-[80vh] flex-col gap-12 px-6 py-12 md:px-12 md:py-20 lg:py-24 lg:pb-24">
           {/* Back Button */}
           <div className="flex items-center gap-6 text-teal-300">
             <Link href="/#">
@@ -191,12 +191,12 @@ export default function Page() {
             </Link>
             <div className="font-mono text-sm uppercase">
               <span className="font-semibold">DSGN 01 {" \\"}</span>
-              <span className="ml-4">Bank Reconcillation</span>
+              <span className="ml-4">Bank Reconciliation</span>
             </div>
           </div>
           {/* Headline */}
           <div ref={headlineRef} className="mt-12 max-w-5xl text-slate-100">
-            <h1 className="font-sans text-6xl font-bold capitalize leading-relaxed">
+            <h1 className="font-sans text-4xl font-bold capitalize leading-relaxed md:text-6xl">
               <MeasuredDiv
                 guideline1={true}
                 guideline1Props={{ edge: "left" }}
@@ -229,7 +229,7 @@ export default function Page() {
         <CaseStudySection number={1} title="overview" ref={overviewRef}>
           {/* Container */}
           <div className="flex w-full flex-col gap-12">
-            <div className="flex gap-6">
+            <div className="flex flex-col gap-6 md:flex-row">
               {OVERVIEW_STATS.map(({ title, content, icon }, index) => (
                 <Card
                   title={title}

@@ -54,7 +54,7 @@ const DesktopNavigation = (props) => {
         <NavItem href="/about">about</NavItem>
         <span className="text-xs text-slate-400">{"//"}</span>
         <a
-          href="/Dylan-Smith-Resume.pdf"
+          href="/dylan-smith-resume.pdf"
           target="_blank"
           className="p-1 font-mono text-sm text-slate-200 hover:text-teal-300 md:px-3 md:py-2"
         >
@@ -189,7 +189,7 @@ export function Header({ activeSection }) {
         </Link>
         <Nav links={links} activeSection={activeSection} />
         <Link
-          href="/Dylan-Smith-Resume.pdf"
+          href="/dylan-smith-resume.pdf"
           target="_blank"
           className="mt-6 flex cursor-pointer gap-4 pt-6 font-mono text-sm font-semibold uppercase text-slate-200"
         >

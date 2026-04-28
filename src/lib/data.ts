@@ -44,10 +44,10 @@ export type CaseStudy = {
 
 export const CASE_STUDIES: Project[] = [
   {
-    title: "Bank Reconcilation",
+    title: "Bank Reconciliation",
     subtitle: "Redesigning an accountant's critical monthly task.",
     slug: "/work/bank-rec",
-    status: "coming soon",
+    status: "in development",
     image1: BankRec_Explorer,
     image2: BankRec_Spire,
   },
@@ -63,6 +63,15 @@ export const CASE_STUDIES: Project[] = [
 ];
 
 export const DEV_PROJECTS: Project[] = [
+  {
+    title: "AI Toolchain",
+    subtitle:
+      "A suite of Claude Code skills, agents, and MCP-driven workflows producing code-ready output. Adopted across teams for design system implementation and data migration.",
+    description: "",
+    slug: "/work/ai-tooling",
+    status: "in development",
+    tags: ["Claude Code", "MCP", "TypeScript", "Python"],
+  },
   {
     title: "www.steamparty.io",
     subtitle:

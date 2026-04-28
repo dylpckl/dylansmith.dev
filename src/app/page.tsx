@@ -125,7 +125,7 @@ export default function Home() {
               <div className="mt-4 text-lg font-normal text-slate-200">
                 Leading design for{" "}
                 <a
-                  href="https://https://www.smartadvocate.com/"
+                  href="https://www.smartadvocate.com/"
                   target="_blank"
                   className="group relative underline decoration-teal-300 hover:decoration-teal-900"
                 >

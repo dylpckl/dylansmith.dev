@@ -103,14 +103,14 @@ export default function PostIndex() {
                 </p>
                 <div>
                   <p className="text-sm mt-2">
-                    As the lead UI/UX Designer, I created the project&apos;s
-                    first design system using atomic methodology.
+                    A portfolio site focused on a journeyed user experience
+                    that showcases work and communicates thought process.
                   </p>
                   <p className="text-sm mt-2">
-                    I&apos;ve also lead the design effort from concept to
-                    production for several keystone features with thousands of
-                    daily users, including UX research, UI design, incorporating
-                    stakeholder feedback and developer collaboration.
+                    Built on a custom component library designed specifically
+                    to clearly communicate accomplishments. Combines React
+                    Server and Client components with a static data rendering
+                    strategy for optimal performance.
                   </p>
                 </div>
               </div>
