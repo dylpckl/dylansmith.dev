@@ -23,6 +23,7 @@ import { Header } from "@/components/Header";
 import { SocialLink } from "@/components/SocialLink";
 import { Button } from "@/components/Button";
 import MeasuredDiv from "@/components/MeasuredDiv";
+import VerticalText from "@/components/VerticalText";
 import { useDimensions } from "@/lib/useDimensions";
 
 import { Tile } from "@/components/bento/Tile";
@@ -375,9 +376,10 @@ export default function Home() {
         <section
           ref={workRef}
           id="work"
-          className="relative px-6 pb-12 md:px-12"
+          className="relative flex flex-col px-6 pb-12 md:px-12 lg:flex-row lg:gap-6"
         >
-          <div className="grid auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
+          <VerticalText text="work" />
+          <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
             {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
             <Tile
               label="Design Systems shipped"
@@ -544,17 +546,18 @@ export default function Home() {
         <section
           ref={caseStudiesRef}
           id="case-studies"
-          className="relative px-6 pb-24 md:px-12"
+          className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6"
         >
-          <div className="mb-6 flex items-baseline justify-between border-b border-slate-700/60 pb-3">
-            <h2 className="font-mono text-xs uppercase tracking-widest text-teal-300">
-              Selected Work
-            </h2>
-            <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
-              Case studies &amp; side projects
-            </span>
-          </div>
-          <div className="flex flex-col gap-4">
+          <VerticalText text="case studies" />
+          <div className="flex w-full flex-col gap-4">
+            <div className="mb-2 flex items-baseline justify-between border-b border-slate-700/60 pb-3">
+              <h2 className="font-mono text-xs uppercase tracking-widest text-teal-300">
+                Selected Work
+              </h2>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                Case studies &amp; side projects
+              </span>
+            </div>
             {/* 8 — BANK REC */}
             <Tile
               label="Bank Rec"
