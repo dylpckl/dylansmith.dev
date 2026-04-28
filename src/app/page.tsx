@@ -233,10 +233,6 @@ export default function Home() {
           {/* Subtle dark overlay so the mountain doesn't fight the type */}
           <div className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-slate-900/30 via-slate-900/10 to-slate-900/70" />
 
-          <span className="font-mono text-xs uppercase tracking-widest text-teal-300">
-            Dylan Smith — UX Engineer
-          </span>
-
           <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
             Dylan Smith
           </span>
@@ -271,7 +267,7 @@ export default function Home() {
             >
               pixel-perfect
             </MeasuredDiv>{" "}
-            interfaces by day &amp; developing them by night.
+            interfaces and shipping the code that runs them.
           </div>
 
           <div className="text-lg font-normal text-slate-200">
