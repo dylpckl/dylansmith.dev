@@ -368,12 +368,12 @@ export default function Home() {
               onClickModal={open("aiWorkflow")}
             />
 
-            {/* 10 — SYSTEMS THINKING with drag slider */}
+            {/* 10 — SYSTEMS THINKING with drag slider (decorative tile + explicit More button — outer cannot be a button because slider handle is also a button) */}
             <Tile
               label="Systems Thinking"
               labelIcon={Recycle}
               className="md:col-span-6 lg:col-span-7 lg:row-span-2"
-              onClickModal={open("systemsThinking")}
+              decorative
             >
               <div className="flex flex-1 flex-col gap-4">
                 <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
@@ -383,11 +383,7 @@ export default function Home() {
                   Every project ships team-wide tooling, not throwaway scripts.
                   Drag the handle to see the shift.
                 </p>
-                <div
-                  className="mt-2"
-                  onClick={(e) => e.stopPropagation()}
-                  onPointerDown={(e) => e.stopPropagation()}
-                >
+                <div className="mt-2">
                   <BeforeAfterReveal
                     before={
                       <div className="grid h-44 grid-cols-3 gap-2 bg-slate-900 p-4">
@@ -422,6 +418,13 @@ export default function Home() {
                     }
                   />
                 </div>
+                <button
+                  type="button"
+                  onClick={open("systemsThinking")}
+                  className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                >
+                  More on this →
+                </button>
               </div>
             </Tile>
 
