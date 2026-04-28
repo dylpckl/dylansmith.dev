@@ -407,17 +407,21 @@ export default function Home() {
                     }
                     after={
                       <div className="flex h-44 flex-col items-center justify-center gap-2 bg-slate-900 p-4">
-                        <span className="flex items-center gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
-                          <Package className="h-4 w-4" />
-                          starter-kit
-                          <span className="ml-2 rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                            team standard
+                        <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
+                          <span className="flex items-center gap-2">
+                            <Package className="h-4 w-4" />
+                            migration-starter-kit
+                          </span>
+                          <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+                            boilerplate
                           </span>
                         </span>
-                        <span className="flex items-center gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
-                          <Terminal className="h-4 w-4" />
-                          $ db-cli migrate
-                          <span className="ml-2 rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+                        <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
+                          <span className="flex items-center gap-2">
+                            <Terminal className="h-4 w-4" />
+                            $ db-cli migrate
+                          </span>
+                          <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
                             python cli
                           </span>
                         </span>
