@@ -420,7 +420,7 @@ export default function Home() {
 
                   {/* Consolidated callouts */}
                   <div className="flex shrink-0 flex-col gap-2">
-                    <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
+                    <span className="flex w-fit items-center gap-3 whitespace-nowrap rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50">
                       <span className="flex items-center gap-2">
                         <Package className="h-4 w-4" />
                         migration-starter-kit
@@ -429,7 +429,7 @@ export default function Home() {
                         boilerplate
                       </span>
                     </span>
-                    <span className="flex w-72 items-center justify-between gap-2 rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
+                    <span className="flex w-fit items-center gap-3 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50">
                       <span className="flex items-center gap-2">
                         <Terminal className="h-4 w-4" />
                         $ db-cli migrate
