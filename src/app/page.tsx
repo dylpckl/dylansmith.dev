@@ -378,7 +378,7 @@ export default function Home() {
             {/* 1 — FEATURE 1: DESIGN SYSTEMS (col-8 row-2) */}
             <Feature
               verb="Designed & Developed"
-              tag="Tokens · Atomic · WCAG"
+              tags={["Tokens", "Atomic", "WCAG"]}
               stat="2"
               statUnit="design systems"
               subtitle={
@@ -418,7 +418,7 @@ export default function Home() {
             {/* 4 — FEATURE 2: FASTER MIGRATIONS (full row, restructured one-off) */}
             <Feature
               verb="Faster data migrations"
-              tag="Python · Monorepo · CI/CD"
+              tags={["Python", "Monorepo", "CI/CD"]}
               stat="60%"
               statUnit="faster data migrations"
               subtitle={

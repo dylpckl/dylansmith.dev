@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 type FeatureProps = {
   verb: string;
-  tag: string;
+  tags: string[];
   stat: string;
   statUnit?: string;
   subtitle: ReactNode;
@@ -19,7 +19,7 @@ const baseClasses =
 
 export function Feature({
   verb,
-  tag,
+  tags,
   stat,
   statUnit,
   subtitle,
@@ -35,9 +35,16 @@ export function Feature({
         <span className="font-mono text-xs uppercase tracking-widest md:text-sm">
           {verb}
         </span>
-        <span className="text-right font-mono text-xs uppercase tracking-widest md:text-sm">
-          {tag}
-        </span>
+        <div className="flex flex-wrap items-start justify-end gap-1.5">
+          {tags.map((t) => (
+            <span
+              key={t}
+              className="rounded bg-slate-800 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-slate-300 ring-1 ring-slate-700"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
       </div>
 
       <div
