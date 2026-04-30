@@ -13,7 +13,11 @@ type CommonProps = {
 };
 
 type TileProps =
-  | (CommonProps & { onClickModal: () => void; href?: never; decorative?: never })
+  | (CommonProps & {
+      onClickModal: () => void;
+      href?: never;
+      decorative?: never;
+    })
   | (CommonProps & {
       href: string;
       external?: boolean;
@@ -30,8 +34,10 @@ const interactiveClasses =
 function TileHeader({ label, Icon }: { label: string; Icon?: LucideIcon }) {
   return (
     <div className="flex items-center gap-2 text-slate-400">
-      {Icon && <Icon className="h-3.5 w-3.5" aria-hidden="true" />}
-      <span className="font-mono text-xs uppercase tracking-widest">{label}</span>
+      {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
+      <span className="text-md font-mono uppercase tracking-widest">
+        {label}
+      </span>
     </div>
   );
 }

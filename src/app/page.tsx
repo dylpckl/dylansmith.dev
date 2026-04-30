@@ -4,10 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  LayoutGrid,
-  Gauge,
-  Users,
-  Recycle,
   ArrowUpRight,
   ArrowRight,
   FileCode,
@@ -17,6 +13,10 @@ import {
   Terminal,
   CreditCard,
   Layers,
+  Sparkles,
+  Compass,
+  Search,
+  Puzzle,
 } from "lucide-react";
 
 import { Header } from "@/components/Header";
@@ -28,8 +28,8 @@ import { useDimensions } from "@/lib/useDimensions";
 
 import { Tile } from "@/components/bento/Tile";
 import { StatTile } from "@/components/bento/StatTile";
-import { CategoryTile } from "@/components/bento/CategoryTile";
-import { Modal, type ModalContent } from "@/components/bento/Modal";
+import { Feature } from "@/components/bento/Feature";
+import { Support } from "@/components/bento/Support";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
 import { MiniTokenStrip } from "@/components/bento/MiniTokenStrip";
 import { StateChips } from "@/components/bento/StateChips";
@@ -38,141 +38,6 @@ import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
 import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
 import rapidpayLegacy from "/public/case-studies/rapidpay/legacy.png";
 import rapidpaySpire from "/public/case-studies/rapidpay/spire.png";
-
-const MODAL_CONTENT: Record<string, ModalContent> = {
-  designSystems: {
-    title: "Design Systems — shipped from zero",
-    body: (
-      <>
-        <p>
-          Two organizations, two production design systems brought from a blank
-          page to shipped product. At MDS, an atomic-design component library
-          serving 1,000+ daily users. At SmartAdvocate, a token-architected
-          system shipped into a legacy ASP.NET / DevExpress codebase via
-          backwards-compatible CSS, JS, and C# &mdash; no regressions across
-          existing surfaces.
-        </p>
-        <p>
-          Both systems started with a token layer (color, type, spacing,
-          elevation) as the shared source of truth between Figma and code, and
-          documented interaction states for every component. WCAG-aligned
-          accessibility was baked in from the first PR, not bolted on later.
-        </p>
-      </>
-    ),
-  },
-  trackRecord: {
-    title: "First-of-its-kind, twice",
-    body: (
-      <>
-        <p>
-          Neither MDS nor SmartAdvocate had a design system before I built one.
-          Each rollout meant evangelizing the shift across design, engineering,
-          and product &mdash; making the system the easy path AND the right
-          path.
-        </p>
-        <p>
-          That meant pairing the system with documentation, contribution
-          standards, and a real adoption story tied to live product features.
-          Twice over, the system became the team standard for new work.
-        </p>
-      </>
-    ),
-  },
-  smartAdvocate: {
-    title: "60% faster migration delivery",
-    body: (
-      <>
-        <p>
-          At SmartAdvocate I lead data conversion in parallel with design system
-          work. Across 12+ concurrent migrations, I cut average turnaround by
-          60% &mdash; not by working faster, but by treating each engagement as
-          infrastructure work.
-        </p>
-        <p>
-          I built and maintain a starter-kit monorepo (project boilerplate,
-          curated migration scripts, shared tooling, CI/CD), a Python CLI for
-          terminal-based DB ops and cloud deployments, and a suite of Claude
-          Code skills for code-ready output. All adopted as team standards.
-        </p>
-      </>
-    ),
-  },
-  crossFunctional: {
-    title: "Collaboration",
-    body: (
-      <>
-        <p>
-          The work of a solo bridge between design and engineering: tokens
-          conversation with engineering leads, handoff process design with PMs,
-          accessibility decisions made jointly with QA, user research findings
-          translated into both design and implementation choices.
-        </p>
-        <p>
-          When you&apos;re the only one in the overlap, you don&apos;t get to
-          throw work over the wall. Every decision has to make sense to both
-          sides &mdash; and ideally make both sides&apos; jobs easier.
-        </p>
-      </>
-    ),
-  },
-  aiWorkflow: {
-    title: "Claude Code · MCP",
-    body: (
-      <>
-        <p>
-          A suite of Claude Code skills, custom agents, and MCP-driven workflows
-          for code-ready output generation. Adopted across the team for both
-          design system implementation (token-to-CSS pipelines, component
-          scaffolding) and migration delivery (data shape inspection, script
-          generation).
-        </p>
-        <p>
-          AI tooling isn&apos;t a side experiment &mdash; it&apos;s how the team
-          ships now.
-        </p>
-      </>
-    ),
-  },
-  documentationFirst: {
-    title: "Documentation-first",
-    body: (
-      <>
-        <p>
-          Teams should be able to self-serve from what I write. At
-          SmartAdvocate, that meant pairing every component, system convention,
-          and migration pattern with evergreen Confluence documentation — enough
-          context that engineers picking up the work for the first time
-          don&apos;t need to ask me to ship.
-        </p>
-        <p>
-          Largest contributor to the internal Confluence knowledge base;
-          authored the design system reference, the migration starter-kit guide,
-          and database schema docs that outlasted any single project.
-        </p>
-      </>
-    ),
-  },
-  systemsThinking: {
-    title: "One-off → reusable",
-    body: (
-      <>
-        <p>
-          Every project ships team-wide tooling, not throwaway scripts. The
-          starter-kit monorepo, Python CLI, agentic workflows, and Claude skills
-          all started as &ldquo;solve this one problem,&rdquo; and were
-          re-shaped into team infrastructure during the same engagement.
-        </p>
-        <p>
-          That&apos;s the systems thinking the Atomic Habits quote points at:
-          you don&apos;t rise to the level of your goals, you fall to the level
-          of your systems. Every one-off is an opportunity to invest in the
-          system that ships the next one faster.
-        </p>
-      </>
-    ),
-  },
-};
 
 function MiniSystemDemo() {
   return (
@@ -191,24 +56,34 @@ function MiniSystemDemo() {
       </div>
       <div>
         <span className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
-          Pattern
+          Spacing
         </span>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span
-            aria-hidden="true"
-            className="rounded-md bg-teal-300 px-3 py-1.5 text-xs font-semibold text-slate-900"
-          >
-            Save
-          </span>
-          <span
-            aria-hidden="true"
-            className="rounded-md bg-slate-700 px-3 py-1.5 text-xs font-semibold text-slate-200 ring-1 ring-slate-600"
-          >
-            Cancel
-          </span>
-          <span className="bg-teal-400/15 rounded-md px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-200 ring-1 ring-teal-300/50">
-            WCAG AA
-          </span>
+        <div className="mt-3 flex flex-col gap-6" aria-hidden="true">
+          {[
+            { label: "sm", gap: "gap-1" },
+            { label: "md", gap: "gap-3" },
+            { label: "lg", gap: "gap-6" },
+          ].map(({ label, gap }) => (
+            <div key={label} className="flex items-center gap-3">
+              <span className="w-6 font-mono text-[9px] uppercase tracking-widest text-slate-500">
+                {label}
+              </span>
+              <MeasuredDiv
+                guideline1={false}
+                guideline1Props={{ edge: "bottom" }}
+                guideline2={false}
+                guideline2Props={{ edge: "bottom" }}
+                measurement={true}
+                measurementProps={{ edge: "bottom" }}
+                className="inline-flex w-fit"
+              >
+                <div className={`flex ${gap}`}>
+                  <span className="h-5 w-5 rounded-sm bg-teal-300/30 ring-1 ring-teal-300/60" />
+                  <span className="h-5 w-5 rounded-sm bg-teal-300/30 ring-1 ring-teal-300/60" />
+                </div>
+              </MeasuredDiv>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -255,28 +130,93 @@ function ManaCurve() {
   );
 }
 
-function MigrationGrid() {
-  // 12 migrations, delivery time trending down (60% faster over the run).
-  const heights = [82, 76, 70, 64, 70, 56, 48, 52, 40, 36, 32, 32];
+function ScatteredFiles() {
+  const files = [
+    "script.sql",
+    "migrate.py",
+    "deploy.sh",
+    "fix.sql",
+    "notes.md",
+    "utils.py",
+    "backfill.sql",
+    "audit.sql",
+    "patches.sql",
+  ];
+  const styleFor = (name: string) => {
+    if (name.endsWith(".sql"))
+      return {
+        cell: "bg-violet-500/10 ring-violet-300/40 text-violet-200",
+        icon: "text-violet-300",
+      };
+    if (name.endsWith(".py"))
+      return {
+        cell: "bg-pink-500/10 ring-pink-300/40 text-pink-200",
+        icon: "text-pink-300",
+      };
+    return {
+      cell: "bg-slate-800 ring-slate-700 text-slate-300",
+      icon: "text-slate-500",
+    };
+  };
   return (
-    <div
-      className="mt-4 flex h-14 items-end gap-1.5"
-      aria-hidden="true"
-      title="12 concurrent migrations, delivery time trending faster"
-    >
-      {heights.map((h, i) => (
-        <div
-          key={i}
-          className="flex-1 rounded-sm bg-teal-300/80 ring-1 ring-teal-300/30"
-          style={{ height: `${h}%` }}
-        />
-      ))}
+    <div className="grid w-fit grid-cols-3 gap-2" aria-hidden="true">
+      {files.map((name) => {
+        const s = styleFor(name);
+        return (
+          <span
+            key={name}
+            className={`flex w-32 items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[11px] ring-1 ${s.cell}`}
+          >
+            <FileCode className={`h-3 w-3 shrink-0 ${s.icon}`} />
+            {name}
+          </span>
+        );
+      })}
+    </div>
+  );
+}
+
+function OneOffConsolidation() {
+  return (
+    <div className="flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+      <ScatteredFiles />
+
+      <ArrowRight
+        aria-hidden="true"
+        className="hidden h-8 w-8 shrink-0 text-teal-300 lg:block"
+        strokeWidth={2}
+      />
+      <div
+        aria-hidden="true"
+        className="self-center font-mono text-xs uppercase tracking-widest text-teal-300 lg:hidden"
+      >
+        ↓ consolidates into
+      </div>
+
+      <div className="grid w-fit shrink-0 grid-cols-1 gap-2">
+        <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+          <span className="flex items-center gap-2">
+            <Package className="h-4 w-4" />
+            migration-starter-kit
+          </span>
+          <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+            repository
+          </span>
+        </span>
+        <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+          <span className="flex items-center gap-2">
+            <Terminal className="h-4 w-4" />$ db-cli migrate
+          </span>
+          <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
+            python cli
+          </span>
+        </span>
+      </div>
     </div>
   );
 }
 
 export default function Home() {
-  const [modal, setModal] = useState<ModalContent | null>(null);
   const [activeSection, setActiveSection] = useState("intro");
 
   const heroRef = useRef<HTMLDivElement | null>(null);
@@ -298,9 +238,6 @@ export default function Home() {
     sections.forEach((s) => s.current && observer.observe(s.current));
     return () => observer.disconnect();
   }, []);
-
-  const open = (key: keyof typeof MODAL_CONTENT) => () =>
-    setModal(MODAL_CONTENT[key]);
 
   return (
     <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex">
@@ -380,165 +317,126 @@ export default function Home() {
         >
           <VerticalText text="INTRO" />
           <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
-            {/* 0 — ATOMIC HABITS QUOTE (first row, full-width) */}
+            {/* 0 — FIRST PRINCIPLES (full-width; 3 principles) */}
             <Tile
-              label="Atomic Habits"
-              labelIcon={Quote}
+              label="First Principles"
+              labelIcon={Compass}
               className="md:col-span-6 lg:col-span-12"
               decorative
             >
-              <div className="flex flex-1 flex-col items-center justify-center gap-3 px-4 py-4 text-center md:flex-row md:gap-8 md:py-6">
-                <Quote
-                  aria-hidden="true"
-                  className="h-10 w-10 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/50 md:h-14 md:w-14"
-                  strokeWidth={1.5}
-                />
-                <p className="max-w-2xl font-mono text-base italic leading-relaxed text-slate-100 md:text-lg">
-                  &ldquo;You don&apos;t rise to the level of your goals, you
-                  fall to the level of your systems.&rdquo;
-                </p>
-                <span className="shrink-0 font-mono text-[10px] uppercase tracking-widest text-slate-400 md:text-xs">
-                  James Clear
-                </span>
-              </div>
-            </Tile>
-
-            {/* 1 — DESIGN SYSTEMS (large, with inner mini-system demo) */}
-            <Tile
-              label="Design Systems shipped"
-              labelIcon={LayoutGrid}
-              className="md:col-span-6 lg:col-span-8 lg:row-span-2"
-              onClickModal={open("designSystems")}
-            >
-              <div className="flex flex-1 flex-row items-start justify-between gap-6">
-                <div className="flex flex-col">
-                  <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
-                    2
+              <div className="grid grid-cols-1 gap-6 px-2 py-4 md:grid-cols-3 md:gap-8">
+                {/* James Clear — the systems-first quote */}
+                <div className="flex flex-col gap-3">
+                  <Quote
+                    aria-hidden="true"
+                    className="h-6 w-6 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/60"
+                    strokeWidth={1.5}
+                  />
+                  <p className="font-mono text-sm italic leading-relaxed text-slate-100 lg:text-base">
+                    &ldquo;You don&apos;t rise to the level of your goals, you
+                    fall to the level of your systems.&rdquo;
+                  </p>
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400">
+                    James Clear
                   </span>
-                  <p className="mt-3 max-w-[40ch] text-sm text-slate-300 lg:text-base">
-                    Shipped from zero — solo practitioner bridging design and
-                    engineering at two organizations.
+                </div>
+
+                {/* Details Matter */}
+                <div className="flex flex-col gap-3">
+                  <Search
+                    aria-hidden="true"
+                    className="h-6 w-6 shrink-0 text-teal-300"
+                    strokeWidth={1.5}
+                  />
+                  <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+                    Details Matter
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-300">
+                    Pixel-perfect isn&apos;t a slogan. Token-level spec,
+                    state-by-state docs, schemas worth shipping from.
                   </p>
                 </div>
-                <MiniSystemDemo />
-              </div>
-            </Tile>
 
-            {/* 2 — DOCUMENTATION-FIRST (replaces Track Record + AI Workflow; col-4 row-2) */}
-            <CategoryTile
-              label="Documentation-first"
-              labelIcon={FileText}
-              headline="Self-serve by design"
-              body="Largest contributor to the internal Confluence knowledge base — evergreen guidance on component patterns, system conventions, and implementation-ready usage."
-              className="md:col-span-6 lg:col-span-4 lg:row-span-3"
-              onClickModal={open("documentationFirst")}
-            />
-
-            {/* 3 — MIGRATION DELIVERY 60% with concurrent-migrations grid */}
-            <StatTile
-              label="Migration Delivery"
-              labelIcon={Gauge}
-              number="60%"
-              caption="Faster turnaround across 12+ concurrent migrations."
-              className="md:col-span-3 lg:col-span-4"
-              onClickModal={open("smartAdvocate")}
-              visual={<MigrationGrid />}
-            />
-
-            {/* 4 — CROSS-FUNCTIONAL */}
-            <CategoryTile
-              label="Cross-functional"
-              labelIcon={Users}
-              headline="Collaboration"
-              body="Across design, engineering, and product — the work of a solo bridge."
-              className="md:col-span-3 lg:col-span-4"
-              onClickModal={open("crossFunctional")}
-            />
-
-            {/* 6 — SYSTEMS THINKING (full-width, static one-off → reusable composition) */}
-            <Tile
-              label="Systems Thinking"
-              labelIcon={Recycle}
-              className="md:col-span-6 lg:col-span-12 lg:row-span-2"
-              decorative
-            >
-              <div className="flex flex-1 flex-col gap-4">
-                <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                  One-off → systems-builder
-                </h3>
-                <p className="max-w-[60ch] text-sm text-slate-300 lg:text-base">
-                  Every project ships team-wide tooling, not throwaway scripts.
-                </p>
-
-                <div className="mt-2 flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center lg:justify-between lg:gap-0">
-                  {/* Scattered files */}
-                  <div className="grid w-fit grid-cols-3 gap-2">
-                    {[
-                      "script.sql",
-                      "migrate.py",
-                      "deploy.sh",
-                      "fix.sql",
-                      "notes.md",
-                      "utils.py",
-                      "backfill.sql",
-                      "audit.sql",
-                      "patches.sql",
-                    ].map((name) => (
-                      <span
-                        key={name}
-                        className="flex w-32 items-center gap-1.5 rounded bg-slate-800 px-2.5 py-1.5 font-mono text-[11px] text-slate-300 ring-1 ring-slate-700"
-                      >
-                        <FileCode className="h-3 w-3 shrink-0 text-slate-500" />
-                        {name}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Arrow */}
-                  <ArrowRight
+                {/* Solutions First */}
+                <div className="flex flex-col gap-3">
+                  <Puzzle
                     aria-hidden="true"
-                    className="hidden h-8 w-8 shrink-0 text-teal-300 lg:block"
-                    strokeWidth={2}
+                    className="h-6 w-6 shrink-0 text-teal-300"
+                    strokeWidth={1.5}
                   />
-                  <div
-                    aria-hidden="true"
-                    className="self-center font-mono text-xs uppercase tracking-widest text-teal-300 lg:hidden"
-                  >
-                    ↓ consolidates into
-                  </div>
-
-                  {/* Consolidated callouts — grid w-fit makes both stretch to the widest's content width */}
-                  <div className="grid w-fit shrink-0 grid-cols-1 gap-2">
-                    <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-teal-400/10 px-4 py-2.5 font-mono text-sm text-teal-200 ring-1 ring-teal-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-                      <span className="flex items-center gap-2">
-                        <Package className="h-4 w-4" />
-                        migration-starter-kit
-                      </span>
-                      <span className="rounded bg-teal-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                        boilerplate repo
-                      </span>
-                    </span>
-                    <span className="flex flex-col items-start gap-1.5 whitespace-nowrap rounded-lg bg-orange-400/10 px-4 py-2.5 font-mono text-sm text-orange-200 ring-1 ring-orange-300/50 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-                      <span className="flex items-center gap-2">
-                        <Terminal className="h-4 w-4" />$ db-cli migrate
-                      </span>
-                      <span className="rounded bg-orange-300/20 px-1.5 py-0.5 text-[10px] uppercase tracking-widest">
-                        python cli
-                      </span>
-                    </span>
-                  </div>
+                  <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+                    Solutions First
+                  </h3>
+                  <p className="text-sm leading-relaxed text-slate-300">
+                    Solve the problem before naming the system. Systems emerge
+                    from solutions, not the other way around.
+                  </p>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={open("systemsThinking")}
-                  className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
-                >
-                  More on this →
-                </button>
               </div>
             </Tile>
 
+            {/* 1 — FEATURE 1: DESIGN SYSTEMS (col-8 row-2) */}
+            <Feature
+              verb="Designed & Developed"
+              tags={["Tokens", "Atomic", "WCAG"]}
+              stat="2"
+              statUnit="design systems"
+              subtitle={
+                <>
+                  First-of-their-kind at MDS and{" "}
+                  <a
+                    href="https://www.smartadvocate.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="underline decoration-slate-500 underline-offset-2 transition hover:decoration-teal-300"
+                  >
+                    SmartAdvocate
+                  </a>
+                  &mdash; both adopted as team standard.
+                </>
+              }
+              graphic={<MiniSystemDemo />}
+              graphicPosition="below"
+              className="md:col-span-6 lg:col-span-8 lg:row-span-2"
+            />
+
+            {/* 2 — SUPPORT A: AI tooling */}
+            <Support icon={Sparkles} className="md:col-span-3 lg:col-span-4">
+              Custom Claude skills, MCP workflows, agentic pipelines &mdash;
+              adopted team-wide.
+            </Support>
+
+            {/* 3 — SUPPORT B: Docs (stat tile) */}
+            <StatTile
+              label="Docs Contributor"
+              labelIcon={FileText}
+              number="#1"
+              caption="Patterns, conventions, schemas — the docs the engineering team ships from."
+              className="md:col-span-3 lg:col-span-4"
+            />
+
+            {/* 4 — FEATURE 2: FASTER MIGRATIONS (full row, restructured one-off) */}
+            <Feature
+              verb="Faster data migrations"
+              tags={["Python", "Monorepo", "CI/CD"]}
+              stat="60%"
+              statUnit="faster data migrations"
+              subtitle={
+                <>
+                  Cut from <strong>3 months to 2 weeks</strong> by{" "}
+                  <span className="text-teal-200">
+                    standardizing project structure
+                  </span>{" "}
+                  and building a{" "}
+                  <span className="text-orange-200">
+                    custom Python CLI package.
+                  </span>
+                </>
+              }
+              graphic={<OneOffConsolidation />}
+              graphicPosition="below"
+              className="md:col-span-6 lg:col-span-12"
+            />
           </div>
         </section>
 
@@ -698,8 +596,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      <Modal open={!!modal} onClose={() => setModal(null)} content={modal} />
     </div>
   );
 }
