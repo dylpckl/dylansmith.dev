@@ -86,7 +86,7 @@ const Nav = ({ links, activeSection }) => {
 
 export function Header({ activeSection }) {
   const [mobileNavIsOpen, setMobileNavIsOpen] = useState(false);
-  let links = ["intro", "work"];
+  let links = ["intro", "outcomes", "work"];
 
   const handleMobileNav = () => {
     setMobileNavIsOpen(!mobileNavIsOpen);

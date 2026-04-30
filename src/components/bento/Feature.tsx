@@ -2,6 +2,7 @@
 
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { Tag } from "@/components/Tag";
 
 type FeatureProps = {
   verb: string;
@@ -37,12 +38,7 @@ export function Feature({
         </span>
         <div className="flex flex-wrap items-start justify-end gap-1.5">
           {tags.map((t) => (
-            <span
-              key={t}
-              className="rounded bg-slate-800 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-slate-300 ring-1 ring-slate-700"
-            >
-              {t}
-            </span>
+            <Tag key={t}>{t}</Tag>
           ))}
         </div>
       </div>

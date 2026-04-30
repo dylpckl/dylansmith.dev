@@ -35,6 +35,6 @@ yarn-error.log*
 next-env.d.ts
 bash.exe.stackdump
 
-# Playwright MCP artifacts
+# Playwright MCP artifacts (only root-level PNGs; public/ assets stay tracked)
 .playwright-mcp/
-bento-*.png
+/*.png

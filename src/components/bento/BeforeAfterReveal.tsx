@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useCallback, useRef, useState } from "react";
+import { Tag } from "@/components/Tag";
 
 type Props = {
   before: ReactNode;
@@ -71,9 +72,12 @@ export function BeforeAfterReveal({
     >
       {/* AFTER layer (bottom) */}
       <div className="relative">
-        <div className="pointer-events-none absolute right-2 top-2 z-20 rounded bg-slate-900/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-200">
+        <Tag
+          intent="teal"
+          className="pointer-events-none absolute right-2 top-2 z-20"
+        >
           {afterLabel}
-        </div>
+        </Tag>
         {after}
       </div>
 
@@ -82,9 +86,12 @@ export function BeforeAfterReveal({
         className="absolute inset-0"
         style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}
       >
-        <div className="pointer-events-none absolute left-2 top-2 z-20 rounded bg-slate-900/70 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-orange-200">
+        <Tag
+          intent="orange"
+          className="pointer-events-none absolute left-2 top-2 z-20"
+        >
           {beforeLabel}
-        </div>
+        </Tag>
         {before}
       </div>
 

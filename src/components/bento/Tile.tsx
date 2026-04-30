@@ -4,10 +4,12 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TagGroup } from "@/components/Tag";
 
 type CommonProps = {
-  label: string;
+  label?: string;
   labelIcon?: LucideIcon;
+  tags?: string[];
   className?: string;
   children: ReactNode;
 };
@@ -31,24 +33,41 @@ const baseClasses =
 const interactiveClasses =
   "transition-all duration-300 hover:bg-slate-800 hover:ring-teal-300/60 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-teal-300";
 
-function TileHeader({ label, Icon }: { label: string; Icon?: LucideIcon }) {
+function TileHeader({
+  label,
+  Icon,
+  tags,
+}: {
+  label?: string;
+  Icon?: LucideIcon;
+  tags?: string[];
+}) {
+  const hasLabel = !!label;
+  const hasTags = !!tags && tags.length > 0;
+  if (!hasLabel && !hasTags) return null;
   return (
-    <div className="flex items-center gap-2 text-slate-400">
-      {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
-      <span className="text-md font-mono uppercase tracking-widest">
-        {label}
-      </span>
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-slate-400">
+      {hasLabel && (
+        <div className="flex items-center gap-2">
+          {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}
+          <span className="text-md font-mono uppercase tracking-widest">
+            {label}
+          </span>
+        </div>
+      )}
+      {hasTags && <TagGroup tags={tags!} />}
     </div>
   );
 }
 
 export function Tile(props: TileProps) {
-  const { label, labelIcon: Icon, className, children } = props;
+  const { label, labelIcon: Icon, tags, className, children } = props;
+  const header = <TileHeader label={label} Icon={Icon} tags={tags} />;
 
   if ("decorative" in props && props.decorative) {
     return (
       <div className={cn(baseClasses, className)}>
-        <TileHeader label={label} Icon={Icon} />
+        {header}
         {children}
       </div>
     );
@@ -64,7 +83,7 @@ export function Tile(props: TileProps) {
           rel="noreferrer"
           className={cn(baseClasses, interactiveClasses, className)}
         >
-          <TileHeader label={label} Icon={Icon} />
+          {header}
           {children}
         </a>
       );
@@ -74,7 +93,7 @@ export function Tile(props: TileProps) {
         href={props.href}
         className={cn(baseClasses, interactiveClasses, className)}
       >
-        <TileHeader label={label} Icon={Icon} />
+        {header}
         {children}
       </Link>
     );
@@ -89,7 +108,7 @@ export function Tile(props: TileProps) {
       onClick={onClick}
       className={cn(baseClasses, interactiveClasses, "w-full", className)}
     >
-      <TileHeader label={label} Icon={Icon} />
+      {header}
       {children}
     </button>
   );
