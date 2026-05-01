@@ -16,7 +16,7 @@ export function SectionLabel({ as: Tag = "span", children, className }: Props) {
       )}
     >
       {children}
-      <span aria-hidden="true" className="h-px flex-1 bg-teal-300" />
+      <span aria-hidden="true" className="h-px flex-1 bg-purple-300" />
     </Tag>
   );
 }
