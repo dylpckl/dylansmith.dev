@@ -13,6 +13,7 @@ import {
 import VerticalText from "@/components/VerticalText";
 import { TechLogo } from "@/components/TechLogo";
 import { Tag } from "@/components/Tag";
+import { SectionLabel } from "@/components/SectionLabel";
 
 type IntroProps = {
   sectionRef: RefObject<HTMLDivElement>;
@@ -84,9 +85,7 @@ function Principles() {
 
       {/* First Principles grid */}
       <div className="mt-12 md:mt-16">
-        <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-          First Principles
-        </span>
+        <SectionLabel>First Principles</SectionLabel>
         <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3 md:contents">
@@ -146,9 +145,7 @@ function Principles() {
 function Tools() {
   return (
     <div>
-      <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-        Tools &amp; Languages
-      </span>
+      <SectionLabel>Tools &amp; Languages</SectionLabel>
       <div className="mt-6 flex flex-col gap-6">
         <div className="flex flex-wrap items-center gap-x-7 gap-y-5 text-slate-300">
           {TOOLS.map((t) => (
@@ -180,9 +177,7 @@ function Tools() {
 function Practices() {
   return (
     <div>
-      <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-        Practices
-      </span>
+      <SectionLabel>Practices</SectionLabel>
       <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-3">
           <Boxes
