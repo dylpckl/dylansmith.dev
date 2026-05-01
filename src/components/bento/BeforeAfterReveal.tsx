@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useCallback, useRef, useState } from "react";
+import { ArrowLeftRight } from "lucide-react";
 import { Tag } from "@/components/Tag";
 
 type Props = {
@@ -12,7 +13,57 @@ type Props = {
   initial?: number;
 };
 
-export function BeforeAfterReveal({
+export function BeforeAfterReveal(props: Props) {
+  const { className = "" } = props;
+  return (
+    <>
+      <TapToggle {...props} className={`md:hidden ${className}`} />
+      <DragReveal {...props} className={`hidden md:block ${className}`} />
+    </>
+  );
+}
+
+function TapToggle({
+  before,
+  after,
+  beforeLabel = "Before",
+  afterLabel = "After",
+  className = "",
+}: Props) {
+  const [showAfter, setShowAfter] = useState(true);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setShowAfter((v) => !v)}
+      aria-label={`Show ${showAfter ? beforeLabel : afterLabel}`}
+      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${className}`}
+    >
+      <div className="relative">{after}</div>
+      <div
+        className="absolute inset-0 transition-opacity duration-500 ease-out motion-reduce:transition-none"
+        style={{ opacity: showAfter ? 0 : 1 }}
+        aria-hidden="true"
+      >
+        {before}
+      </div>
+      <Tag
+        intent={showAfter ? "teal" : "orange"}
+        className="pointer-events-none absolute left-2 top-2 z-20"
+      >
+        {showAfter ? afterLabel : beforeLabel}
+      </Tag>
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-slate-800/60 text-slate-300 ring-1 ring-slate-700 backdrop-blur-sm"
+      >
+        <ArrowLeftRight className="h-[18px] w-[18px]" />
+      </span>
+    </button>
+  );
+}
+
+function DragReveal({
   before,
   after,
   beforeLabel = "Before",
@@ -104,7 +155,7 @@ export function BeforeAfterReveal({
         aria-valuemax={100}
         aria-valuenow={Math.round(pos)}
         onKeyDown={onKeyDown}
-        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-teal-300 focus:outline-none ${
+        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
           dragging ? "" : "motion-safe:transition-[left] motion-safe:duration-150"
         }`}
         style={{ left: `calc(${pos}% - 2px)` }}

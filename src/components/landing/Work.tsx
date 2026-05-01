@@ -4,6 +4,7 @@ import type { RefObject } from "react";
 import Image from "next/image";
 import { ArrowUpRight, CreditCard, Layers } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
+import { SectionLabel } from "@/components/SectionLabel";
 import { TagGroup } from "@/components/Tag";
 import { Tile } from "@/components/bento/Tile";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
@@ -37,6 +38,7 @@ export function Work({ sectionRef }: WorkProps) {
     >
       <VerticalText text="WORK" />
       <div className="flex w-full flex-col gap-4">
+        <SectionLabel as="h2">Work</SectionLabel>
         {/* TODO(smartadvocate): drop legacy.png + spire.png into
             public/case-studies/smartadvocate/, uncomment the imports above,
             and uncomment this <Tile>. */}

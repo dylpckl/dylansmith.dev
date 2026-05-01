@@ -1,8 +1,9 @@
 "use client";
 
 import type { RefObject } from "react";
-import { Briefcase, FileText, Layers } from "lucide-react";
+import { Briefcase, FileText } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
+import { SectionLabel } from "@/components/SectionLabel";
 import { StatTile } from "@/components/bento/StatTile";
 import { Feature } from "@/components/bento/Feature";
 import { MiniSystemDemo } from "./visuals/MiniSystemDemo";
@@ -20,9 +21,10 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="outcomes" />
-      <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
+      <div className="flex w-full flex-col gap-6">
+        <SectionLabel as="h2">Outcomes</SectionLabel>
+        <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
         <Feature
-          verb="Designed & Developed"
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
           statUnit="design systems shipped"
@@ -42,27 +44,24 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           }
           graphic={<MiniSystemDemo />}
           graphicPosition="below"
-          className="md:col-span-6 lg:col-span-8 lg:row-span-2"
+          className="col-span-2 md:col-span-6 lg:col-span-8 lg:row-span-2"
         />
 
         <StatTile
-          label="Docs Contributor"
-          labelIcon={FileText}
+          icon={FileText}
           number="100+"
           caption="pages of documentation contributed — patterns, conventions, schemas — the docs the engineering team ships from."
           className="md:col-span-3 lg:col-span-4"
         />
 
         <StatTile
-          label="In the industry"
-          labelIcon={Briefcase}
+          icon={Briefcase}
           number="10+ yrs"
           caption="across design, development, data engineering, and support — the full software lifecycle."
           className="md:col-span-3 lg:col-span-4"
         />
 
         <Feature
-          verb="Faster data migrations"
           tags={["Python", "Monorepo", "CI/CD"]}
           stat="60%"
           statUnit="faster data migrations"
@@ -79,7 +78,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           }
           graphic={<ScriptsToToolkit />}
           graphicPosition="below"
-          className="md:col-span-6 lg:col-span-12"
+          className="col-span-2 md:col-span-6 lg:col-span-12"
         />
 
         {/* <StatTile
@@ -89,6 +88,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           caption="Daily users on keystone features I led from concept to production at MDS."
           className="md:col-span-3 lg:col-span-6"
         /> */}
+        </div>
       </div>
     </section>
   );

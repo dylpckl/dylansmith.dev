@@ -5,7 +5,7 @@ import {
   Quote,
   Search,
   Puzzle,
-  Wrench,
+  HeartHandshake,
   Boxes,
   Workflow,
   Sparkles,
@@ -13,6 +13,8 @@ import {
 import VerticalText from "@/components/VerticalText";
 import { TechLogo } from "@/components/TechLogo";
 import { Tag } from "@/components/Tag";
+import { SectionLabel } from "@/components/SectionLabel";
+import { Canvas, Ruler } from "@/components/canvas";
 
 type IntroProps = {
   sectionRef: RefObject<HTMLDivElement>;
@@ -51,6 +53,7 @@ export function Intro({ sectionRef }: IntroProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="INTRO" />
+      <h2 className="sr-only">Intro</h2>
       <div className="flex w-full flex-col gap-10 md:gap-14">
         <Principles />
         <Tools />
@@ -62,8 +65,9 @@ export function Intro({ sectionRef }: IntroProps) {
 
 function Principles() {
   return (
-    <div>
-      {/* Pull-quote callout */}
+    <div className="flex flex-col gap-6">
+      <SectionLabel>First Principles</SectionLabel>
+
       <blockquote className="flex flex-col gap-4 rounded-xl bg-slate-800/40 p-6 ring-1 ring-slate-700 backdrop-blur-sm md:flex-row md:items-start md:gap-6">
         <Quote
           aria-hidden="true"
@@ -81,55 +85,61 @@ function Principles() {
         </div>
       </blockquote>
 
-      {/* First Principles grid */}
-      <div className="mt-12 md:mt-16">
-        <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-          First Principles
-        </span>
-        <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div className="flex flex-col gap-3">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+        <Canvas className="flex flex-col gap-3">
+          <div className="flex items-center gap-3 md:contents">
             <Search
               aria-hidden="true"
               className="h-6 w-6 shrink-0 text-teal-300"
               strokeWidth={1.5}
             />
-            <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Details Matter
-            </h3>
-            <p className="text-sm leading-relaxed text-slate-300">
-              Pixel-perfect isn&apos;t a slogan. Token-level spec,
-              state-by-state docs, schemas worth shipping from.
-            </p>
+            <Ruler
+              as="h3"
+              className="w-fit font-serif text-xl font-semibold text-slate-100 lg:text-2xl"
+            >
+              <Ruler.Guideline edge="top" />
+              <Ruler.Guideline edge="bottom" />
+              <Ruler.Target edge="right" />
+              The details matter
+            </Ruler>
           </div>
+          <p className="text-sm leading-relaxed text-slate-300">
+            Small details compound over large surfaces to make a big
+            difference.
+          </p>
+        </Canvas>
 
-          <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3 md:contents">
             <Puzzle
               aria-hidden="true"
               className="h-6 w-6 shrink-0 text-teal-300"
               strokeWidth={1.5}
             />
             <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Solutions First
+              Solutions over tools
             </h3>
-            <p className="text-sm leading-relaxed text-slate-300">
-              Solve the problem before naming the system. Systems emerge from
-              solutions, not the other way around.
-            </p>
           </div>
+          <p className="text-sm leading-relaxed text-slate-300">
+            Work backwards from the blue-sky result. Systems support the
+            solution, not the other way around.
+          </p>
+        </div>
 
-          <div className="flex flex-col gap-3">
-            <Wrench
+        <div className="flex flex-col gap-3">
+          <div className="flex items-center gap-3 md:contents">
+            <HeartHandshake
               aria-hidden="true"
               className="h-6 w-6 shrink-0 text-teal-300"
               strokeWidth={1.5}
             />
             <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Tools, Not Masters
+              Be kind to your future self
             </h3>
-            <p className="text-sm leading-relaxed text-slate-300">
-              My tools exist to serve me, not the other way around.
-            </p>
           </div>
+          <p className="text-sm leading-relaxed text-slate-300">
+            Document the why and leave clever breadcrumbs.
+          </p>
         </div>
       </div>
     </div>
@@ -138,33 +148,28 @@ function Principles() {
 
 function Tools() {
   return (
-    <div>
-      <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-        Tools &amp; Languages
-      </span>
-      <div className="mt-6 flex flex-col gap-6">
-        <div className="flex flex-wrap items-center gap-x-7 gap-y-5 text-slate-300">
-          {TOOLS.map((t) => (
-            <TechLogo
-              key={t.name}
-              name={t.name}
-              label={t.label}
-              brandColor={t.brandColor}
-              size={36}
-            />
-          ))}
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          {TAGS.map((t) => (
-            <Tag
-              key={t}
-              size="md"
-              className="transition-colors hover:text-slate-100 hover:ring-slate-500"
-            >
-              {t}
-            </Tag>
-          ))}
-        </div>
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-wrap items-center gap-x-7 gap-y-5 text-slate-300">
+        {TOOLS.map((t) => (
+          <TechLogo
+            key={t.name}
+            name={t.name}
+            label={t.label}
+            brandColor={t.brandColor}
+            size={36}
+          />
+        ))}
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
+        {TAGS.map((t) => (
+          <Tag
+            key={t}
+            size="md"
+            className="transition-colors hover:text-slate-100 hover:ring-slate-500"
+          >
+            {t}
+          </Tag>
+        ))}
       </div>
     </div>
   );
@@ -173,9 +178,7 @@ function Tools() {
 function Practices() {
   return (
     <div>
-      <span className="font-mono text-xs uppercase tracking-widest text-slate-400">
-        Practices
-      </span>
+      <SectionLabel>Practices</SectionLabel>
       <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="flex flex-col gap-3">
           <Boxes

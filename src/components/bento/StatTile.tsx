@@ -3,10 +3,10 @@
 import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 import { Tile } from "./Tile";
+import { CountUp } from "@/components/CountUp";
 
 type Props = {
-  label: string;
-  labelIcon?: LucideIcon;
+  icon?: LucideIcon;
   number: string;
   caption: string;
   className?: string;
@@ -15,8 +15,7 @@ type Props = {
 };
 
 export function StatTile({
-  label,
-  labelIcon,
+  icon: Icon,
   number,
   caption,
   className,
@@ -25,10 +24,18 @@ export function StatTile({
 }: Props) {
   const inner = (
     <>
-      <div className="flex flex-1 flex-col justify-center">
-        <span className="font-sans text-3xl font-bold leading-none text-slate-100 xl:text-4xl 2xl:text-5xl">
-          {number}
-        </span>
+      <div className="flex flex-1 flex-col">
+        {Icon && (
+          <Icon
+            aria-hidden="true"
+            className="mb-3 h-6 w-6 shrink-0 text-teal-300"
+            strokeWidth={1.5}
+          />
+        )}
+        <CountUp
+          to={number}
+          className="font-sans text-3xl font-bold leading-none text-slate-100 xl:text-4xl 2xl:text-5xl"
+        />
         <p className="mt-3 max-w-[34ch] text-xs leading-snug text-slate-300 xl:text-sm 2xl:text-base">
           {caption}
         </p>
@@ -39,18 +46,13 @@ export function StatTile({
 
   if (onClickModal) {
     return (
-      <Tile
-        label={label}
-        labelIcon={labelIcon}
-        className={className}
-        onClickModal={onClickModal}
-      >
+      <Tile className={className} onClickModal={onClickModal}>
         {inner}
       </Tile>
     );
   }
   return (
-    <Tile label={label} labelIcon={labelIcon} className={className} decorative>
+    <Tile className={className} decorative>
       {inner}
     </Tile>
   );
