@@ -24,7 +24,7 @@ export function StatTile({
 }: Props) {
   const inner = (
     <>
-      <div className="flex flex-1 flex-col justify-center">
+      <div className="flex flex-1 flex-col">
         {Icon && (
           <Icon
             aria-hidden="true"
