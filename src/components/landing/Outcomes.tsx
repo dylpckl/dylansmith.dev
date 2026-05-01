@@ -1,6 +1,7 @@
 "use client";
 
 import type { RefObject } from "react";
+import { Briefcase, FileText } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
 import { SectionLabel } from "@/components/SectionLabel";
 import { StatTile } from "@/components/bento/StatTile";
@@ -47,12 +48,14 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
         />
 
         <StatTile
+          icon={FileText}
           number="100+"
           caption="pages of documentation contributed — patterns, conventions, schemas — the docs the engineering team ships from."
           className="md:col-span-3 lg:col-span-4"
         />
 
         <StatTile
+          icon={Briefcase}
           number="10+ yrs"
           caption="across design, development, data engineering, and support — the full software lifecycle."
           className="md:col-span-3 lg:col-span-4"
