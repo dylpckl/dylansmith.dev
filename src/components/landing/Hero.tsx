@@ -12,13 +12,9 @@ export function Hero() {
       id="hero"
       className="flex flex-col gap-8 px-6 py-12 text-slate-200 md:gap-10 md:px-12 md:py-20 lg:py-24"
     >
-      <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
-        <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
-          Dylan Smith
-        </span>
-        <div className="flex flex-wrap items-center gap-3">
-        </div>
-      </div>
+      <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
+        Dylan Smith
+      </span>
 
       <div className="max-w-3xl text-lg font-medium leading-loose text-slate-200 lg:text-2xl">
         Designing &amp; developing{" "}
@@ -48,6 +44,20 @@ export function Hero() {
             className="absolute inset-x-0 -bottom-0.5 top-0 z-10 w-0 bg-teal-300 transition-all duration-500 ease-in-out group-hover:w-full"
           />
         </a>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-3 lg:hidden">
+        <Button
+          href="/Dylan-Smith-Resume.pdf"
+          target="_blank"
+          rel="noreferrer"
+          variant="primary"
+        >
+          <FileText aria-hidden="true" />
+          Resume
+        </Button>
+        <SocialLink site="github" />
+        <SocialLink site="linkedin" />
       </div>
     </Canvas>
   );
