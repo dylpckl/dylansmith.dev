@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import { Tag } from "@/components/Tag";
 
 type FeatureProps = {
-  verb: string;
   tags: string[];
   stat: string;
   statUnit?: string;
@@ -19,7 +18,6 @@ const baseClasses =
   "group relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-slate-800/60 p-6 ring-1 ring-slate-700 backdrop-blur-sm transition-all duration-300 hover:ring-teal-300/60";
 
 export function Feature({
-  verb,
   tags,
   stat,
   statUnit,
@@ -32,15 +30,10 @@ export function Feature({
 
   return (
     <div className={cn(baseClasses, className)}>
-      <div className="flex items-start justify-between gap-4 text-slate-400">
-        <span className="font-mono text-xs uppercase tracking-widest">
-          {verb}
-        </span>
-        <div className="hidden flex-wrap items-start justify-end gap-1.5 md:flex">
-          {tags.map((t) => (
-            <Tag key={t}>{t}</Tag>
-          ))}
-        </div>
+      <div className="hidden flex-wrap justify-end gap-1.5 text-slate-400 md:flex">
+        {tags.map((t) => (
+          <Tag key={t}>{t}</Tag>
+        ))}
       </div>
 
       <div

@@ -1,12 +1,9 @@
 "use client";
 
 import { ReactNode } from "react";
-import { LucideIcon } from "lucide-react";
 import { Tile } from "./Tile";
 
 type Props = {
-  label: string;
-  labelIcon?: LucideIcon;
   number: string;
   caption: string;
   className?: string;
@@ -15,8 +12,6 @@ type Props = {
 };
 
 export function StatTile({
-  label,
-  labelIcon,
   number,
   caption,
   className,
@@ -39,18 +34,13 @@ export function StatTile({
 
   if (onClickModal) {
     return (
-      <Tile
-        label={label}
-        labelIcon={labelIcon}
-        className={className}
-        onClickModal={onClickModal}
-      >
+      <Tile className={className} onClickModal={onClickModal}>
         {inner}
       </Tile>
     );
   }
   return (
-    <Tile label={label} labelIcon={labelIcon} className={className} decorative>
+    <Tile className={className} decorative>
       {inner}
     </Tile>
   );

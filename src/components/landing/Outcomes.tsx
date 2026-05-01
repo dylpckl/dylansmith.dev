@@ -1,7 +1,6 @@
 "use client";
 
 import type { RefObject } from "react";
-import { Briefcase, FileText, Layers } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
 import { StatTile } from "@/components/bento/StatTile";
 import { Feature } from "@/components/bento/Feature";
@@ -22,7 +21,6 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       <VerticalText text="outcomes" />
       <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
         <Feature
-          verb="Designed & Developed"
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
           statUnit="design systems shipped"
@@ -46,23 +44,18 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
         />
 
         <StatTile
-          label="Docs Contributor"
-          labelIcon={FileText}
           number="100+"
           caption="pages of documentation contributed — patterns, conventions, schemas — the docs the engineering team ships from."
           className="md:col-span-3 lg:col-span-4"
         />
 
         <StatTile
-          label="In the industry"
-          labelIcon={Briefcase}
           number="10+ yrs"
           caption="across design, development, data engineering, and support — the full software lifecycle."
           className="md:col-span-3 lg:col-span-4"
         />
 
         <Feature
-          verb="Faster data migrations"
           tags={["Python", "Monorepo", "CI/CD"]}
           stat="60%"
           statUnit="faster data migrations"
