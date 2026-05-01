@@ -95,7 +95,7 @@ function Principles() {
                 strokeWidth={1.5}
               />
               <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-                Details Matter
+                The details matter
               </h3>
             </div>
             <p className="text-sm leading-relaxed text-slate-300">
@@ -112,7 +112,7 @@ function Principles() {
                 strokeWidth={1.5}
               />
               <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-                Solutions First
+                Solutions first
               </h3>
             </div>
             <p className="text-sm leading-relaxed text-slate-300">
