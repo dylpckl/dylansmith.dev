@@ -33,16 +33,19 @@ function styleFor(name: string) {
 
 export function ScatteredFiles() {
   return (
-    <div className="grid w-fit grid-cols-3 gap-2" aria-hidden="true">
+    <div
+      className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 sm:w-fit"
+      aria-hidden="true"
+    >
       {FILES.map((name) => {
         const s = styleFor(name);
         return (
           <span
             key={name}
-            className={`flex w-32 items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[11px] ring-1 ${s.cell}`}
+            className={`flex min-w-0 items-center gap-1.5 rounded px-2.5 py-1.5 font-mono text-[11px] ring-1 ${s.cell}`}
           >
             <FileCode className={`h-3 w-3 shrink-0 ${s.icon}`} />
-            {name}
+            <span className="truncate">{name}</span>
           </span>
         );
       })}

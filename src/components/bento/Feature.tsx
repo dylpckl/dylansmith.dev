@@ -33,7 +33,7 @@ export function Feature({
   return (
     <div className={cn(baseClasses, className)}>
       <div className="flex items-start justify-between gap-4 text-slate-400">
-        <span className="font-mono text-xs uppercase tracking-widest md:text-sm">
+        <span className="font-mono text-xs uppercase tracking-widest">
           {verb}
         </span>
         <div className="flex flex-wrap items-start justify-end gap-1.5">
@@ -47,22 +47,22 @@ export function Feature({
         className={cn(
           "flex flex-1 gap-6",
           isBelow
-            ? "flex-col"
+            ? "flex-col justify-between"
             : "flex-col lg:flex-row lg:items-start lg:justify-between",
         )}
       >
         <div className="flex flex-col">
           <div className="flex items-baseline gap-3">
-            <span className="font-sans text-6xl font-bold leading-none text-slate-100 lg:text-7xl">
+            <span className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl">
               {stat}
             </span>
             {statUnit && (
-              <span className="font-sans text-2xl font-medium leading-none text-slate-300 lg:text-3xl">
+              <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
                 {statUnit}
               </span>
             )}
           </div>
-          <p className="mt-4 text-sm leading-relaxed text-slate-300 lg:text-base">
+          <p className="mt-3 text-sm leading-relaxed text-slate-300">
             {subtitle}
           </p>
         </div>

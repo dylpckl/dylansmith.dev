@@ -1,13 +1,12 @@
 "use client";
 
 import type { RefObject } from "react";
-import { FileText, Layers, Sparkles, Workflow } from "lucide-react";
+import { Briefcase, FileText, Layers } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
 import { StatTile } from "@/components/bento/StatTile";
 import { Feature } from "@/components/bento/Feature";
-import { Support } from "@/components/bento/Support";
 import { MiniSystemDemo } from "./visuals/MiniSystemDemo";
-import { OneOffConsolidation } from "./visuals/OneOffConsolidation";
+import { ScriptsToToolkit } from "./visuals/ScriptsToToolkit";
 
 type OutcomesProps = {
   sectionRef: RefObject<HTMLDivElement>;
@@ -26,7 +25,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           verb="Designed & Developed"
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
-          statUnit="design systems"
+          statUnit="design systems shipped"
           subtitle={
             <>
               First-of-their-kind at MDS and{" "}
@@ -49,15 +48,18 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
         <StatTile
           label="Docs Contributor"
           labelIcon={FileText}
-          number="#1"
-          caption="Patterns, conventions, schemas — the docs the engineering team ships from."
+          number="100+"
+          caption="pages of documentation contributed — patterns, conventions, schemas — the docs the engineering team ships from."
           className="md:col-span-3 lg:col-span-4"
         />
 
-        <Support icon={Sparkles} className="md:col-span-3 lg:col-span-4">
-          Custom Claude skills, MCP workflows, agentic pipelines &mdash;
-          adopted team-wide.
-        </Support>
+        <StatTile
+          label="In the industry"
+          labelIcon={Briefcase}
+          number="10+ yrs"
+          caption="across design, development, data engineering, and support — the full software lifecycle."
+          className="md:col-span-3 lg:col-span-4"
+        />
 
         <Feature
           verb="Faster data migrations"
@@ -75,26 +77,18 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
               <span className="text-orange-200">custom Python CLI package.</span>
             </>
           }
-          graphic={<OneOffConsolidation />}
+          graphic={<ScriptsToToolkit />}
           graphicPosition="below"
           className="md:col-span-6 lg:col-span-12"
         />
 
-        <StatTile
-          label="Time-to-ship"
-          labelIcon={Workflow}
-          number="50%"
-          caption="Overhauled feature handoff with product owners — cut delivery time in half at MDS."
-          className="md:col-span-3 lg:col-span-6"
-        />
-
-        <StatTile
+        {/* <StatTile
           label="Daily Users"
           labelIcon={Layers}
           number="1,000+"
           caption="Daily users on keystone features I led from concept to production at MDS."
           className="md:col-span-3 lg:col-span-6"
-        />
+        /> */}
       </div>
     </section>
   );

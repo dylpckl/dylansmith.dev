@@ -26,10 +26,10 @@ export function StatTile({
   const inner = (
     <>
       <div className="flex flex-1 flex-col justify-center">
-        <span className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl">
+        <span className="font-sans text-3xl font-bold leading-none text-slate-100 xl:text-4xl 2xl:text-5xl">
           {number}
         </span>
-        <p className="mt-3 max-w-[34ch] text-base leading-snug text-slate-300 lg:text-lg">
+        <p className="mt-3 max-w-[34ch] text-xs leading-snug text-slate-300 xl:text-sm 2xl:text-base">
           {caption}
         </p>
       </div>

@@ -162,7 +162,7 @@ export function Header({ activeSection }) {
 
     //   <DesktopNavigation className="pointer-events-auto hidden md:block" />
     // </header>
-    <header className="hidden w-full bg-gradient-to-t from-slate-800/60 px-6 py-12 md:px-12 md:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-1/6 lg:flex-col lg:bg-none lg:py-24">
+    <header className="hidden w-full bg-gradient-to-t from-slate-800/60 px-6 py-12 md:px-12 md:py-20 lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-fit lg:flex-col lg:bg-none lg:py-24">
       {/* <span className="flex lg:hidden flex-col tracking-tight font-bold text-slate-200">
       <span className="text-5xl">Dylan Smith</span>
       <span className="text-lg font-medium mt-4">
@@ -190,20 +190,21 @@ export function Header({ activeSection }) {
           <Image src={Logo} alt="logo" height={64} />
         </Link>
         <Nav links={links} activeSection={activeSection} />
+      </div>
+      <div className="mt-6 flex w-fit flex-col gap-3">
         <Button
           href="/Dylan-Smith-Resume.pdf"
           target="_blank"
           rel="noreferrer"
           variant="primary"
-          className="mt-6"
         >
           <FileText aria-hidden="true" />
           Resume
         </Button>
-      </div>
-      <div className="mt-6 flex gap-3">
-        <SocialLink site="github" />
-        <SocialLink site="linkedin" />
+        <div className="flex w-full justify-between">
+          <SocialLink site="github" />
+          <SocialLink site="linkedin" />
+        </div>
       </div>
     </header>
   );

@@ -51,10 +51,10 @@ export function Intro({ sectionRef }: IntroProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="INTRO" />
-      <div className="flex w-full flex-col gap-16 md:gap-24">
+      <div className="flex w-full flex-col gap-10 md:gap-14">
         <Principles />
         <Tools />
-        <Practices />
+        {/* <Practices /> */}
       </div>
     </section>
   );
@@ -64,19 +64,21 @@ function Principles() {
   return (
     <div>
       {/* Pull-quote callout */}
-      <blockquote className="flex flex-col gap-4 rounded-xl bg-slate-800/40 p-6 ring-1 ring-slate-700 backdrop-blur-sm md:flex-row md:items-center md:gap-6">
+      <blockquote className="flex flex-col gap-4 rounded-xl bg-slate-800/40 p-6 ring-1 ring-slate-700 backdrop-blur-sm md:flex-row md:items-start md:gap-6">
         <Quote
           aria-hidden="true"
           className="h-8 w-8 shrink-0 rotate-180 fill-teal-300/20 text-teal-300/60"
           strokeWidth={1.5}
         />
-        <p className="flex-1 font-mono text-sm italic leading-relaxed text-slate-100 lg:text-base">
-          &ldquo;You don&apos;t rise to the level of your goals, you fall to
-          the level of your systems.&rdquo;
-        </p>
-        <span className="font-mono text-[10px] uppercase tracking-widest text-slate-400 md:whitespace-nowrap">
-          &mdash; James Clear
-        </span>
+        <div className="flex flex-1 flex-col gap-2">
+          <p className="font-mono text-sm italic leading-relaxed text-slate-100 lg:text-base">
+            &ldquo;You don&apos;t rise to the level of your goals, you fall to
+            the level of your systems.&rdquo;
+          </p>
+          <span className="self-center font-mono text-[10px] uppercase tracking-widest text-slate-400">
+            &mdash; James Clear
+          </span>
+        </div>
       </blockquote>
 
       {/* First Principles grid */}

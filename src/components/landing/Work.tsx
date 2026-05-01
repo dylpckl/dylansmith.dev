@@ -62,7 +62,7 @@ export function Work({ sectionRef }: WorkProps) {
                 afterLabel="Refreshed"
                 initial={75}
                 before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src="/case-studies/smartadvocate/legacy.png"
                       alt="Legacy SmartAdvocate case management UI"
@@ -73,7 +73,7 @@ export function Work({ sectionRef }: WorkProps) {
                   </div>
                 }
                 after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src="/case-studies/smartadvocate/refreshed.png"
                       alt="Refreshed SmartAdvocate case management UI"
@@ -109,7 +109,7 @@ export function Work({ sectionRef }: WorkProps) {
                 afterLabel="Refreshed"
                 initial={62}
                 before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src={bankRecLegacy}
                       alt="Legacy bank reconciliation screen"
@@ -120,7 +120,7 @@ export function Work({ sectionRef }: WorkProps) {
                   </div>
                 }
                 after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src={bankRecSpire}
                       alt="Refreshed bank reconciliation screen"
@@ -155,7 +155,7 @@ export function Work({ sectionRef }: WorkProps) {
                 afterLabel="Refreshed"
                 initial={32}
                 before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src={rapidpayLegacy}
                       alt="Legacy RapidPay screen"
@@ -166,7 +166,7 @@ export function Work({ sectionRef }: WorkProps) {
                   </div>
                 }
                 after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[520px] lg:h-[720px]">
+                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
                     <Image
                       src={rapidpaySpire}
                       alt="Refreshed RapidPay screen"

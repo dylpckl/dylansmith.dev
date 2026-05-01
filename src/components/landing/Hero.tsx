@@ -17,18 +17,6 @@ export function Hero() {
           Dylan Smith
         </span>
         <div className="flex flex-wrap items-center gap-3">
-          {/* <SocialLink site="github" />
-          <SocialLink site="linkedin" />
-          <SocialLink site="email" />
-          <Button
-            href="/Dylan-Smith-Resume.pdf"
-            target="_blank"
-            rel="noreferrer"
-            variant="primary"
-          >
-            <FileText aria-hidden="true" />
-            Resume
-          </Button> */}
         </div>
       </div>
 
@@ -50,13 +38,15 @@ export function Hero() {
           href="https://www.smartadvocate.com/"
           target="_blank"
           rel="noreferrer"
-          className="group relative underline decoration-teal-300 hover:decoration-teal-900"
+          className="group relative underline decoration-teal-300 transition-colors duration-500 ease-in-out hover:decoration-teal-900"
         >
-          <span className="relative z-20 group-hover:text-teal-900">
-            SmartAdvocate
+          <span className="relative z-20 transition-colors duration-500 ease-in-out group-hover:text-teal-900">
+            SmartAdvocate.
           </span>
-          {"."}
-          <span className="absolute inset-0 z-10 w-0 bg-teal-300 duration-500 ease-in-out group-hover:w-full group-hover:transition-all" />
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-0 -bottom-0.5 top-0 z-10 w-0 bg-teal-300 transition-all duration-500 ease-in-out group-hover:w-full"
+          />
         </a>
       </div>
     </Canvas>
