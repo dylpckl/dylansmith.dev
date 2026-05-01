@@ -5,7 +5,7 @@ import {
   Quote,
   Search,
   Puzzle,
-  Wrench,
+  HeartHandshake,
   Boxes,
   Workflow,
   Sparkles,
@@ -88,46 +88,53 @@ function Principles() {
         </span>
         <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="flex flex-col gap-3">
-            <Search
-              aria-hidden="true"
-              className="h-6 w-6 shrink-0 text-teal-300"
-              strokeWidth={1.5}
-            />
-            <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Details Matter
-            </h3>
+            <div className="flex items-center gap-3 md:contents">
+              <Search
+                aria-hidden="true"
+                className="h-6 w-6 shrink-0 text-teal-300"
+                strokeWidth={1.5}
+              />
+              <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+                Details Matter
+              </h3>
+            </div>
             <p className="text-sm leading-relaxed text-slate-300">
-              Pixel-perfect isn&apos;t a slogan. Token-level spec,
-              state-by-state docs, schemas worth shipping from.
+              Small details compound over large surfaces to make a big
+              difference.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            <Puzzle
-              aria-hidden="true"
-              className="h-6 w-6 shrink-0 text-teal-300"
-              strokeWidth={1.5}
-            />
-            <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Solutions First
-            </h3>
+            <div className="flex items-center gap-3 md:contents">
+              <Puzzle
+                aria-hidden="true"
+                className="h-6 w-6 shrink-0 text-teal-300"
+                strokeWidth={1.5}
+              />
+              <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+                Solutions First
+              </h3>
+            </div>
             <p className="text-sm leading-relaxed text-slate-300">
-              Solve the problem before naming the system. Systems emerge from
-              solutions, not the other way around.
+              Work backwards from the blue-sky result. Systems support the
+              solution, not the other way around.
             </p>
           </div>
 
           <div className="flex flex-col gap-3">
-            <Wrench
-              aria-hidden="true"
-              className="h-6 w-6 shrink-0 text-teal-300"
-              strokeWidth={1.5}
-            />
-            <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-              Tools, Not Masters
-            </h3>
+            <div className="flex items-center gap-3 md:contents">
+              <HeartHandshake
+                aria-hidden="true"
+                className="h-6 w-6 shrink-0 text-teal-300"
+                strokeWidth={1.5}
+              />
+              <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+                Be nice to your future self
+              </h3>
+            </div>
             <p className="text-sm leading-relaxed text-slate-300">
-              My tools exist to serve me, not the other way around.
+              Today&apos;s shortcut is tomorrow&apos;s debt. Document the why,
+              name things twice, leave clear breadcrumbs.
             </p>
           </div>
         </div>
