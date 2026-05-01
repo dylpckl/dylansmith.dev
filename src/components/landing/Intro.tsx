@@ -112,7 +112,7 @@ function Principles() {
                 strokeWidth={1.5}
               />
               <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
-                Solutions first
+                Solutions over tools
               </h3>
             </div>
             <p className="text-sm leading-relaxed text-slate-300">
