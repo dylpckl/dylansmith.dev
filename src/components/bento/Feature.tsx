@@ -4,7 +4,6 @@ import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Tag } from "@/components/Tag";
 import { CountUp } from "@/components/CountUp";
-import { Canvas, Ruler } from "@/components/canvas";
 
 type FeatureProps = {
   tags: string[];
@@ -14,7 +13,6 @@ type FeatureProps = {
   graphic?: ReactNode;
   graphicPosition?: "right" | "below";
   className?: string;
-  measured?: boolean;
 };
 
 const baseClasses =
@@ -28,41 +26,11 @@ export function Feature({
   graphic,
   graphicPosition = "right",
   className,
-  measured = false,
 }: FeatureProps) {
   const isBelow = graphicPosition === "below";
 
-  const statRow = measured ? (
-    <Ruler className="flex w-fit items-baseline gap-3">
-      <Ruler.Guideline edge="top" />
-      <Ruler.Guideline edge="right" />
-      <Ruler.Target edge="bottom" />
-      <CountUp
-        to={stat}
-        className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
-      />
-      {statUnit && (
-        <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
-          {statUnit}
-        </span>
-      )}
-    </Ruler>
-  ) : (
-    <div className="flex items-baseline gap-3">
-      <CountUp
-        to={stat}
-        className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
-      />
-      {statUnit && (
-        <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
-          {statUnit}
-        </span>
-      )}
-    </div>
-  );
-
-  const body = (
-    <>
+  return (
+    <div className={cn(baseClasses, className)}>
       <div className="hidden flex-wrap justify-end gap-1.5 text-slate-400 md:flex">
         {tags.map((t) => (
           <Tag key={t}>{t}</Tag>
@@ -78,7 +46,17 @@ export function Feature({
         )}
       >
         <div className="flex flex-col">
-          {statRow}
+          <div className="flex items-baseline gap-3">
+            <CountUp
+              to={stat}
+              className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
+            />
+            {statUnit && (
+              <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
+                {statUnit}
+              </span>
+            )}
+          </div>
           <p className="mt-3 text-sm leading-relaxed text-slate-300">
             {subtitle}
           </p>
@@ -89,11 +67,6 @@ export function Feature({
           </div>
         )}
       </div>
-    </>
+    </div>
   );
-
-  if (measured) {
-    return <Canvas className={cn(baseClasses, className)}>{body}</Canvas>;
-  }
-  return <div className={cn(baseClasses, className)}>{body}</div>;
 }

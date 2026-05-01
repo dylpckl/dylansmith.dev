@@ -27,7 +27,6 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
           statUnit="design systems shipped"
-          measured
           subtitle={
             <>
               First-of-their-kind at MDS and{" "}
