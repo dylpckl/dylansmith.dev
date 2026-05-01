@@ -35,8 +35,8 @@ export function Feature({
   const statRow = measured ? (
     <Ruler className="flex w-fit items-baseline gap-3">
       <Ruler.Guideline edge="top" />
-      <Ruler.Guideline edge="bottom" />
-      <Ruler.Target edge="right" />
+      <Ruler.Guideline edge="right" />
+      <Ruler.Target edge="bottom" />
       <CountUp
         to={stat}
         className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
