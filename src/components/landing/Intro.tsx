@@ -134,8 +134,7 @@ function Principles() {
               </h3>
             </div>
             <p className="text-sm leading-relaxed text-slate-300">
-              Today&apos;s shortcut is tomorrow&apos;s debt. Document the why,
-              name things twice, leave clear breadcrumbs.
+              Document the why and leave clever breadcrumbs.
             </p>
           </div>
         </div>
