@@ -3,6 +3,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Tag } from "@/components/Tag";
+import { CountUp } from "@/components/CountUp";
 
 type FeatureProps = {
   tags: string[];
@@ -46,9 +47,10 @@ export function Feature({
       >
         <div className="flex flex-col">
           <div className="flex items-baseline gap-3">
-            <span className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl">
-              {stat}
-            </span>
+            <CountUp
+              to={stat}
+              className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
+            />
             {statUnit && (
               <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
                 {statUnit}
