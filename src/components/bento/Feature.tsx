@@ -36,7 +36,7 @@ export function Feature({
         <span className="font-mono text-xs uppercase tracking-widest">
           {verb}
         </span>
-        <div className="flex flex-wrap items-start justify-end gap-1.5">
+        <div className="hidden flex-wrap items-start justify-end gap-1.5 md:flex">
           {tags.map((t) => (
             <Tag key={t}>{t}</Tag>
           ))}

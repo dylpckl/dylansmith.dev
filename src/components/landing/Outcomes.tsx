@@ -20,7 +20,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="outcomes" />
-      <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-1 gap-4 md:grid-cols-6 lg:grid-cols-12">
+      <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
         <Feature
           verb="Designed & Developed"
           tags={["Tokens", "Atomic", "WCAG"]}
@@ -42,7 +42,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           }
           graphic={<MiniSystemDemo />}
           graphicPosition="below"
-          className="md:col-span-6 lg:col-span-8 lg:row-span-2"
+          className="col-span-2 md:col-span-6 lg:col-span-8 lg:row-span-2"
         />
 
         <StatTile
@@ -79,7 +79,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           }
           graphic={<ScriptsToToolkit />}
           graphicPosition="below"
-          className="md:col-span-6 lg:col-span-12"
+          className="col-span-2 md:col-span-6 lg:col-span-12"
         />
 
         {/* <StatTile
