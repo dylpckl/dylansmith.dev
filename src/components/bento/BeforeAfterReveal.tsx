@@ -1,6 +1,7 @@
 "use client";
 
 import { ReactNode, useCallback, useRef, useState } from "react";
+import { ArrowLeftRight } from "lucide-react";
 import { Tag } from "@/components/Tag";
 
 type Props = {
@@ -52,8 +53,11 @@ function TapToggle({
       >
         {showAfter ? afterLabel : beforeLabel}
       </Tag>
-      <span className="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-slate-900/80 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-300 ring-1 ring-teal-300/40 backdrop-blur-sm">
-        Tap to swap
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-slate-800/60 text-slate-300 ring-1 ring-slate-700 backdrop-blur-sm"
+      >
+        <ArrowLeftRight className="h-[18px] w-[18px]" />
       </span>
     </button>
   );
