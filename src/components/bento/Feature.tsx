@@ -16,7 +16,7 @@ type FeatureProps = {
 };
 
 const baseClasses =
-  "group relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-slate-800/60 p-6 ring-1 ring-slate-700 backdrop-blur-sm transition-all duration-300 hover:ring-teal-300/60";
+  "group relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-slate-900/80 p-6 ring-1 ring-slate-700 backdrop-blur-sm transition-all duration-300 hover:ring-teal-300/60";
 
 export function Feature({
   tags,

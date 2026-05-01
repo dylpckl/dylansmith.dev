@@ -5,7 +5,7 @@ import { StateChips } from "@/components/bento/StateChips";
 
 export function MiniSystemDemo() {
   return (
-    <div className="mt-4 flex flex-col gap-3 rounded-lg bg-slate-900/70 p-4 ring-1 ring-slate-700 backdrop-blur-sm">
+    <div className="mt-4 flex flex-col gap-3">
       <div>
         <span className="font-mono text-[9px] uppercase tracking-widest text-slate-500">
           Tokens

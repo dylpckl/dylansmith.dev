@@ -6,7 +6,7 @@ import { ScatteredFiles } from "./ScatteredFiles";
 
 export function ScriptsToToolkit() {
   return (
-    <div className="flex flex-col items-stretch gap-4 rounded-lg bg-slate-900/80 p-6 ring-1 ring-slate-700 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
+    <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-8">
       <ScatteredFiles />
 
       <ArrowRight
