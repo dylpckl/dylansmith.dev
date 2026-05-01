@@ -19,11 +19,14 @@ export function CountUp({ to, duration = 1500, className }: Props) {
 
   useEffect(() => {
     const el = ref.current;
-    if (!el || !match) return;
+    if (!el) return;
+    const m = to.match(/^([\d,]+)(.*)$/);
+    if (!m) return;
+    const tgt = parseInt(m[1].replace(/,/g, ""), 10);
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setValue(target);
+      setValue(tgt);
       return;
     }
 
@@ -36,7 +39,7 @@ export function CountUp({ to, duration = 1500, className }: Props) {
         const tick = (now: number) => {
           const t = Math.min((now - start) / duration, 1);
           const eased = 1 - Math.pow(1 - t, 3);
-          setValue(Math.round(target * eased));
+          setValue(Math.round(tgt * eased));
           if (t < 1) raf = requestAnimationFrame(tick);
         };
         raf = requestAnimationFrame(tick);
@@ -49,7 +52,7 @@ export function CountUp({ to, duration = 1500, className }: Props) {
       obs.disconnect();
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [target, duration, match]);
+  }, [to, duration]);
 
   const display = hasCommas ? value.toLocaleString() : String(value);
 
