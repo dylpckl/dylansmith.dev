@@ -37,7 +37,7 @@ function TapToggle({
       type="button"
       onClick={() => setShowAfter((v) => !v)}
       aria-label={`Show ${showAfter ? beforeLabel : afterLabel}`}
-      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-slate-700 ${className}`}
+      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${className}`}
     >
       <div className="relative">{after}</div>
       <div
@@ -155,7 +155,7 @@ function DragReveal({
         aria-valuemax={100}
         aria-valuenow={Math.round(pos)}
         onKeyDown={onKeyDown}
-        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-teal-300 focus:outline-none ${
+        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
           dragging ? "" : "motion-safe:transition-[left] motion-safe:duration-150"
         }`}
         style={{ left: `calc(${pos}% - 2px)` }}

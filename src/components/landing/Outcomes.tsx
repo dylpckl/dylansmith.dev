@@ -19,6 +19,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="outcomes" />
+      <h2 className="sr-only">Outcomes</h2>
       <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
         <Feature
           tags={["Tokens", "Atomic", "WCAG"]}

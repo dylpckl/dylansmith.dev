@@ -12,9 +12,9 @@ export function Hero() {
       id="hero"
       className="flex flex-col gap-8 px-6 py-12 text-slate-200 md:gap-10 md:px-12 md:py-20 lg:py-24"
     >
-      <span className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
+      <h1 className="text-5xl font-bold tracking-tight text-slate-100 lg:text-7xl">
         Dylan Smith
-      </span>
+      </h1>
 
       <div className="max-w-3xl text-lg font-medium leading-loose text-slate-200 lg:text-2xl">
         Designing &amp; developing{" "}

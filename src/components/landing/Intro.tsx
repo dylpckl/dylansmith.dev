@@ -51,6 +51,7 @@ export function Intro({ sectionRef }: IntroProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="INTRO" />
+      <h2 className="sr-only">Intro</h2>
       <div className="flex w-full flex-col gap-10 md:gap-14">
         <Principles />
         <Tools />

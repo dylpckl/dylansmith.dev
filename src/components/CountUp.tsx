@@ -58,7 +58,10 @@ export function CountUp({ to, duration = 1500, className }: Props) {
 
   return (
     <span ref={ref} className={className}>
-      {match ? `${display}${suffix}` : to}
+      <span aria-hidden="true">
+        {match ? `${display}${suffix}` : to}
+      </span>
+      <span className="sr-only">{to}</span>
     </span>
   );
 }

@@ -36,6 +36,7 @@ export function Work({ sectionRef }: WorkProps) {
       className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pt-32"
     >
       <VerticalText text="WORK" />
+      <h2 className="sr-only">Work</h2>
       <div className="flex w-full flex-col gap-4">
         {/* TODO(smartadvocate): drop legacy.png + spire.png into
             public/case-studies/smartadvocate/, uncomment the imports above,
