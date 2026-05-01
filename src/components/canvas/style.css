@@ -1,0 +1,17 @@
+.vertical {
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 4px,
+    #d78775ce 4px 8px
+  );
+}
+
+.horizontal {
+  position: absolute;
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0 4px,
+    #d78775 4px 8px
+  );
+}

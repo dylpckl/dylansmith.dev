@@ -7,6 +7,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "/public/images/ds-logo.png";
 import { Socials, SocialLink } from "@/components/SocialLink";
+import { Button } from "@/components/Button";
+import { FileText } from "lucide-react";
 
 const NavItem = ({ href, children }) => {
   let isActive = usePathname().includes(href);
@@ -188,13 +190,16 @@ export function Header({ activeSection }) {
           <Image src={Logo} alt="logo" height={64} />
         </Link>
         <Nav links={links} activeSection={activeSection} />
-        <Link
+        <Button
           href="/Dylan-Smith-Resume.pdf"
           target="_blank"
-          className="mt-6 flex cursor-pointer gap-4 pt-6 font-mono text-sm font-semibold uppercase text-slate-200"
+          rel="noreferrer"
+          variant="primary"
+          className="mt-6"
         >
-          resume
-        </Link>
+          <FileText aria-hidden="true" />
+          Resume
+        </Button>
       </div>
       <div className="mt-6 flex gap-3">
         <SocialLink site="github" />

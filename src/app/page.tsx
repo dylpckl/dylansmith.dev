@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 
 import { Header } from "@/components/Header";
-import { useDimensions } from "@/lib/useDimensions";
 
 import { Hero } from "@/components/landing/Hero";
 import { Intro } from "@/components/landing/Intro";
@@ -13,11 +12,9 @@ import { Work } from "@/components/landing/Work";
 export default function Home() {
   const [activeSection, setActiveSection] = useState("intro");
 
-  const heroRef = useRef<HTMLDivElement | null>(null);
   const introRef = useRef<HTMLDivElement | null>(null);
   const outcomesRef = useRef<HTMLDivElement | null>(null);
   const workRef = useRef<HTMLDivElement | null>(null);
-  const { width, height } = useDimensions(heroRef);
 
   useEffect(() => {
     const sections = [introRef, outcomesRef, workRef];
@@ -42,7 +39,7 @@ export default function Home() {
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />
 
-        <Hero sectionRef={heroRef} width={width} height={height} />
+        <Hero />
         <Intro sectionRef={introRef} />
         <Outcomes sectionRef={outcomesRef} />
         <Work sectionRef={workRef} />

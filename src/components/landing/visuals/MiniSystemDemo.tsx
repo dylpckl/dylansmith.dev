@@ -1,6 +1,6 @@
 "use client";
 
-import MeasuredDiv from "@/components/MeasuredDiv";
+import { Ruler } from "@/components/canvas";
 import { MiniTokenStrip } from "@/components/bento/MiniTokenStrip";
 import { StateChips } from "@/components/bento/StateChips";
 
@@ -35,20 +35,13 @@ export function MiniSystemDemo() {
               <span className="w-6 font-mono text-[9px] uppercase tracking-widest text-slate-500">
                 {label}
               </span>
-              <MeasuredDiv
-                guideline1={false}
-                guideline1Props={{ edge: "bottom" }}
-                guideline2={false}
-                guideline2Props={{ edge: "bottom" }}
-                measurement={true}
-                measurementProps={{ edge: "bottom" }}
-                className="inline-flex w-fit"
-              >
+              <Ruler className="inline-flex w-fit">
+                <Ruler.Target edge="bottom" />
                 <div className={`flex ${gap}`}>
                   <span className="h-5 w-5 rounded-sm bg-teal-300/30 ring-1 ring-teal-300/60" />
                   <span className="h-5 w-5 rounded-sm bg-teal-300/30 ring-1 ring-teal-300/60" />
                 </div>
-              </MeasuredDiv>
+              </Ruler>
             </div>
           ))}
         </div>
