@@ -38,3 +38,6 @@ bash.exe.stackdump
 # Playwright MCP artifacts (only root-level PNGs; public/ assets stay tracked)
 .playwright-mcp/
 /*.png
+
+# Claude Code: track shared settings + CLAUDE.md, ignore per-machine overrides
+.claude/settings.local.json
