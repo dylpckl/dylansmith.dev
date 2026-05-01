@@ -12,7 +12,54 @@ type Props = {
   initial?: number;
 };
 
-export function BeforeAfterReveal({
+export function BeforeAfterReveal(props: Props) {
+  const { className = "" } = props;
+  return (
+    <>
+      <TapToggle {...props} className={`md:hidden ${className}`} />
+      <DragReveal {...props} className={`hidden md:block ${className}`} />
+    </>
+  );
+}
+
+function TapToggle({
+  before,
+  after,
+  beforeLabel = "Before",
+  afterLabel = "After",
+  className = "",
+}: Props) {
+  const [showAfter, setShowAfter] = useState(true);
+
+  return (
+    <button
+      type="button"
+      onClick={() => setShowAfter((v) => !v)}
+      aria-label={`Show ${showAfter ? beforeLabel : afterLabel}`}
+      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-slate-700 ${className}`}
+    >
+      <div className="relative">{after}</div>
+      <div
+        className="absolute inset-0 transition-opacity duration-500 ease-out motion-reduce:transition-none"
+        style={{ opacity: showAfter ? 0 : 1 }}
+        aria-hidden="true"
+      >
+        {before}
+      </div>
+      <Tag
+        intent={showAfter ? "teal" : "orange"}
+        className="pointer-events-none absolute left-2 top-2 z-20"
+      >
+        {showAfter ? afterLabel : beforeLabel}
+      </Tag>
+      <span className="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-slate-900/80 px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-teal-300 ring-1 ring-teal-300/40 backdrop-blur-sm">
+        Tap to swap
+      </span>
+    </button>
+  );
+}
+
+function DragReveal({
   before,
   after,
   beforeLabel = "Before",
