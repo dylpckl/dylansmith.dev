@@ -2,6 +2,7 @@
 
 import type { RefObject } from "react";
 import VerticalText from "@/components/VerticalText";
+import { SectionLabel } from "@/components/SectionLabel";
 import { StatTile } from "@/components/bento/StatTile";
 import { Feature } from "@/components/bento/Feature";
 import { MiniSystemDemo } from "./visuals/MiniSystemDemo";
@@ -19,8 +20,9 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
     >
       <VerticalText text="outcomes" />
-      <h2 className="sr-only">Outcomes</h2>
-      <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
+      <div className="flex w-full flex-col gap-6">
+        <SectionLabel as="h2">Outcomes</SectionLabel>
+        <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
         <Feature
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
@@ -83,6 +85,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
           caption="Daily users on keystone features I led from concept to production at MDS."
           className="md:col-span-3 lg:col-span-6"
         /> */}
+        </div>
       </div>
     </section>
   );

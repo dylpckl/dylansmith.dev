@@ -1,20 +1,21 @@
-import type { ReactNode } from "react";
+import type { ElementType, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
+  as?: ElementType;
   children: ReactNode;
   className?: string;
 };
 
-export function SectionLabel({ children, className }: Props) {
+export function SectionLabel({ as: Tag = "span", children, className }: Props) {
   return (
-    <span
+    <Tag
       className={cn(
         "font-mono text-sm uppercase tracking-widest text-slate-300",
         className,
       )}
     >
       {children}
-    </span>
+    </Tag>
   );
 }

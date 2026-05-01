@@ -14,6 +14,7 @@ import VerticalText from "@/components/VerticalText";
 import { TechLogo } from "@/components/TechLogo";
 import { Tag } from "@/components/Tag";
 import { SectionLabel } from "@/components/SectionLabel";
+import { Canvas, Ruler } from "@/components/canvas";
 
 type IntroProps = {
   sectionRef: RefObject<HTMLDivElement>;
@@ -87,22 +88,28 @@ function Principles() {
       <div className="mt-12 md:mt-16">
         <SectionLabel>First Principles</SectionLabel>
         <div className="mt-6 grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div className="flex flex-col gap-3">
+          <Canvas className="flex flex-col gap-3">
             <div className="flex items-center gap-3 md:contents">
               <Search
                 aria-hidden="true"
                 className="h-6 w-6 shrink-0 text-teal-300"
                 strokeWidth={1.5}
               />
-              <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
+              <Ruler
+                as="h3"
+                className="w-fit font-serif text-xl font-semibold text-slate-100 lg:text-2xl"
+              >
+                <Ruler.Guideline edge="top" />
+                <Ruler.Guideline edge="bottom" />
+                <Ruler.Target edge="right" />
                 The details matter
-              </h3>
+              </Ruler>
             </div>
             <p className="text-sm leading-relaxed text-slate-300">
               Small details compound over large surfaces to make a big
               difference.
             </p>
-          </div>
+          </Canvas>
 
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-3 md:contents">
