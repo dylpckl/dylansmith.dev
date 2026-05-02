@@ -65,7 +65,7 @@ export function Intro({ sectionRef }: IntroProps) {
 
 function Principles() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-10 md:gap-6">
       <SectionLabel>First Principles</SectionLabel>
 
       <blockquote className="flex flex-col gap-4 rounded-xl bg-slate-800/40 p-6 ring-1 ring-slate-700 backdrop-blur-sm md:flex-row md:items-start md:gap-6">
@@ -85,7 +85,7 @@ function Principles() {
         </div>
       </blockquote>
 
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
         <Canvas className="flex flex-col gap-3">
           <div className="flex items-center gap-3 md:contents">
             <Search
