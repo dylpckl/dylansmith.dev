@@ -15,6 +15,7 @@ import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import Mountains from "/public/images/mountain.jpg";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { PhotoCredit } from "@/components/PhotoCredit";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const jetbrains_mono = JetBrains_Mono({
@@ -73,6 +74,7 @@ export default async function RootLayout({
           }}
           className="fixed"
         />
+        <PhotoCredit />
         {/* <div className="fixed -z-20 inset-0 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px]"></div> */}
         <div
           id="layout"
