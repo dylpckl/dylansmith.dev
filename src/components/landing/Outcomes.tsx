@@ -27,19 +27,14 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
         <Feature
           tags={["Tokens", "Atomic", "WCAG"]}
           stat="2"
-          statUnit="design systems shipped"
+          statUnit="design systems"
           subtitle={
             <>
-              First-of-their-kind at MDS and{" "}
-              <a
-                href="https://www.smartadvocate.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="underline decoration-slate-500 underline-offset-2 transition hover:decoration-teal-300"
-              >
-                SmartAdvocate
-              </a>
-              {" "}&mdash; both adopted as team standard.
+              Designed & shipped
+              Both first-of-their-kind &mdash; architected end-to-end and
+              adopted as team standard, from{" "}
+              <span className="text-teal-200">token architecture</span> to{" "}
+              <span className="text-orange-200">WCAG-compliant components</span>.
             </>
           }
           graphic={<MiniSystemDemo />}
