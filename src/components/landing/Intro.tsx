@@ -103,7 +103,7 @@ function Principles() {
               The details matter
             </Ruler>
           </div>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             Small details compound over large surfaces to make a big
             difference.
           </p>
@@ -120,7 +120,7 @@ function Principles() {
               Solutions over tools
             </h3>
           </div>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             Work backwards from the blue-sky result. Systems support the
             solution, not the other way around.
           </p>
@@ -137,7 +137,7 @@ function Principles() {
               Be kind to your future self
             </h3>
           </div>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             Document the why and leave clever breadcrumbs.
           </p>
         </div>
@@ -189,7 +189,7 @@ function Practices() {
           <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
             Token-driven systems
           </h3>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             Tokens are the contract. Components, states, and docs all derive
             from them &mdash; change the token, everything follows.
           </p>
@@ -203,7 +203,7 @@ function Practices() {
           <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
             Migration as infrastructure
           </h3>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             One-off scripts become a starter kit. Standardized structure plus a
             custom CLI turns months of bespoke work into weeks of repeatable
             runs.
@@ -218,7 +218,7 @@ function Practices() {
           <h3 className="font-serif text-xl font-semibold text-slate-100 lg:text-2xl">
             AI-augmented workflow
           </h3>
-          <p className="text-sm leading-relaxed text-slate-300">
+          <p className="text-sm leading-relaxed text-slate-300 lg:text-base xl:text-lg">
             Custom Claude skills, MCP servers, agentic pipelines &mdash;
             adopted team-wide. Compound leverage on every task.
           </p>

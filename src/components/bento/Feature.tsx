@@ -49,10 +49,10 @@ export function Feature({
           <div className="flex items-baseline gap-3">
             <CountUp
               to={stat}
-              className="font-sans text-4xl font-bold leading-none text-slate-100 xl:text-5xl 2xl:text-6xl"
+              className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl xl:text-7xl 2xl:text-8xl"
             />
             {statUnit && (
-              <span className="font-sans text-lg font-medium leading-none text-slate-300 xl:text-xl 2xl:text-2xl">
+              <span className="font-sans text-lg font-medium leading-none text-slate-300 lg:text-2xl xl:text-3xl 2xl:text-4xl">
                 {statUnit}
               </span>
             )}

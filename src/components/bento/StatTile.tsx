@@ -36,7 +36,7 @@ export function StatTile({
           to={number}
           className="font-sans text-3xl font-bold leading-none text-slate-100 xl:text-4xl 2xl:text-5xl"
         />
-        <p className="mt-3 max-w-[34ch] text-xs leading-snug text-slate-300 xl:text-sm 2xl:text-base">
+        <p className="mt-3 max-w-[34ch] text-xs leading-snug text-slate-300 lg:text-base xl:text-base 2xl:text-lg">
           {caption}
         </p>
       </div>
