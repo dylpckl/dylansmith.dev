@@ -48,7 +48,7 @@ export function Hero() {
 
       <div className="flex flex-wrap items-center gap-3 lg:hidden">
         <Button
-          href="/Dylan-Smith-Resume.pdf"
+          href="/Dylan Smith - UX Engineer - April 2026.docx.pdf"
           target="_blank"
           rel="noreferrer"
           variant="primary"
