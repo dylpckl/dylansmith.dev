@@ -11,7 +11,7 @@ export function SectionLabel({ as: Tag = "span", children, className }: Props) {
   return (
     <Tag
       className={cn(
-        "flex items-center gap-3 font-mono text-sm uppercase tracking-widest text-slate-300",
+        "flex items-center gap-3 font-mono text-sm uppercase tracking-widest text-slate-300 lg:hidden",
         className,
       )}
     >
