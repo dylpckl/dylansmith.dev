@@ -24,59 +24,62 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
       <div className="flex w-full flex-col gap-6">
         <SectionLabel as="h2">Outcomes</SectionLabel>
         <div className="grid w-full auto-rows-[minmax(140px,auto)] grid-cols-2 gap-4 md:grid-cols-6 lg:grid-cols-12">
-        <Feature
-          tags={["Tokens", "Atomic", "WCAG"]}
-          stat="2"
-          statUnit="design systems"
-          subtitle={
-            <>
-              Designed & shipped
-              Both first-of-their-kind &mdash; architected end-to-end and
-              adopted as team standard, from{" "}
-              <span className="text-teal-200">token architecture</span> to{" "}
-              <span className="text-orange-200">WCAG-compliant components</span>.
-            </>
-          }
-          graphic={<MiniSystemDemo />}
-          graphicPosition="below"
-          className="col-span-2 md:col-span-6 lg:col-span-8 lg:row-span-2"
-        />
+          <Feature
+            tags={["Tokens", "Atomic", "WCAG"]}
+            stat="2"
+            statUnit="design systems"
+            subtitle={
+              <>
+                Designed & shipped end-to-end, from{" "}
+                <span className="text-purple-200">token architecture</span> to{" "}
+                <span className="text-orange-200">
+                  WCAG-compliant components
+                </span>
+                .
+              </>
+            }
+            graphic={<MiniSystemDemo />}
+            graphicPosition="below"
+            className="col-span-2 md:col-span-6 lg:col-span-8 lg:row-span-2"
+          />
 
-        <StatTile
-          icon={FileText}
-          number="100+"
-          caption="pages of documentation contributed — patterns, conventions, schemas — the docs the engineering team ships from."
-          className="md:col-span-3 lg:col-span-4"
-        />
+          <StatTile
+            icon={FileText}
+            number="100+"
+            caption="pages of documentation authored"
+            className="md:col-span-3 lg:col-span-4"
+          />
 
-        <StatTile
-          icon={Briefcase}
-          number="10+ yrs"
-          caption="across design, development, data engineering, and support — the full software lifecycle."
-          className="md:col-span-3 lg:col-span-4"
-        />
+          <StatTile
+            icon={Briefcase}
+            number="10+ years"
+            caption="across design, development, and data engineering"
+            className="md:col-span-3 lg:col-span-4"
+          />
 
-        <Feature
-          tags={["Python", "Monorepo", "CI/CD"]}
-          stat="60%"
-          statUnit="faster data migrations"
-          subtitle={
-            <>
-              Cut from <strong>3 months to 2 weeks</strong> across 12+
-              concurrent projects by{" "}
-              <span className="text-teal-200">
-                standardizing project structure
-              </span>{" "}
-              and building a{" "}
-              <span className="text-orange-200">custom Python CLI package.</span>
-            </>
-          }
-          graphic={<ScriptsToToolkit />}
-          graphicPosition="below"
-          className="col-span-2 md:col-span-6 lg:col-span-12"
-        />
+          <Feature
+            tags={["Python", "Monorepo", "CI/CD"]}
+            stat="60%"
+            statUnit="faster data migrations"
+            subtitle={
+              <>
+                Cut from <strong>3 months to 2 weeks</strong> across 12+
+                concurrent projects by{" "}
+                <span className="text-teal-200">
+                  standardizing project structure
+                </span>{" "}
+                and building a{" "}
+                <span className="text-orange-200">
+                  custom Python CLI package.
+                </span>
+              </>
+            }
+            graphic={<ScriptsToToolkit />}
+            graphicPosition="below"
+            className="col-span-2 md:col-span-6 lg:col-span-12"
+          />
 
-        {/* <StatTile
+          {/* <StatTile
           label="Daily Users"
           labelIcon={Layers}
           number="1,000+"

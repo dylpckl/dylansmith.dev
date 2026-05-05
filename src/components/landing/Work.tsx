@@ -102,8 +102,8 @@ export function Work({ sectionRef }: WorkProps) {
               />
             </div>
             <p className="text-md text-slate-300 lg:text-base">
-              Solo design under a one-week deadline &mdash; legacy ASP screen
-              redesigned for the new SmartAdvocate UI.
+              Bringing the experience of reconciling bank statements into the
+              21st century.
             </p>
             <div className="mt-2">
               <BeforeAfterReveal
@@ -149,7 +149,8 @@ export function Work({ sectionRef }: WorkProps) {
               />
             </div>
             <p className="text-md text-slate-300 lg:text-base">
-              Legacy ASP payment screen redesigned for the new SmartAdvocate UI.
+              Two-panel design with a guided workflow for processing payments,
+              replacing a disjointed legacy multi-step experience.
             </p>
             <div className="mt-2">
               <BeforeAfterReveal
