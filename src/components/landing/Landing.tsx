@@ -46,14 +46,14 @@ export function Landing({ posts }: LandingProps) {
       // A section is "active" when it crosses a band around the upper third
       // of the viewport, so the top of the page reads as Intro, not whatever
       // frame happens to be the tallest.
-      { rootMargin: "-30% 0px -60% 0px", threshold: 0 },
+      { rootMargin: "-20% 0px -72% 0px", threshold: 0 },
     );
     refs.forEach((r) => r.current && observer.observe(r.current));
     return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex">
+    <div className="relative min-h-screen lg:flex">
       <div className="ws-grid" aria-hidden="true" />
       <div className="ws-veil" aria-hidden="true" />
 

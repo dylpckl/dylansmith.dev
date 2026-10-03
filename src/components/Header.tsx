@@ -169,7 +169,7 @@ export function Header({ activeSection, sections }: HeaderProps) {
         </nav>
 
         {showMaterial && (
-          <div className="mt-auto">
+          <div>
             <div className={groupLabel}>Material</div>
             <MaterialToggle />
           </div>

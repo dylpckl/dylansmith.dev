@@ -22,7 +22,7 @@ export function Workspace({ children }: WorkspaceProps) {
         <TopRuler canvasRef={canvasRef} />
         <div
           ref={canvasRef}
-          className="flex flex-col gap-12 px-4 pb-16 pt-8 md:px-8 md:pb-24 lg:gap-16 lg:px-10 lg:pt-10"
+          className="flex w-full max-w-7xl flex-col gap-12 px-4 pb-16 pt-8 md:px-8 md:pb-24 lg:gap-16 lg:px-10 lg:pt-10"
         >
           {children}
         </div>

@@ -23,7 +23,7 @@ export default async function BlogIndexPage() {
   return (
     <div
       data-material="slate"
-      className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex"
+      className="relative min-h-screen lg:flex"
     >
       {/* Pinned to Slate until the blog is rethemed for Paper. */}
       <div className="fixed inset-0 -z-30 bg-paper" aria-hidden="true" />
