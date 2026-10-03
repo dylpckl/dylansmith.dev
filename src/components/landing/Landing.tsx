@@ -8,12 +8,14 @@ import { Frame } from "@/components/workspace/Frame";
 
 import { Hero } from "./Hero";
 import { Principles } from "./Principles";
+import { Outcomes } from "./Outcomes";
 import { Work } from "./Work";
 import { Writing, type PostSummary } from "./Writing";
 
 export const SECTIONS: NavSection[] = [
   { id: "intro", label: "Intro" },
   { id: "principles", label: "Principles" },
+  { id: "outcomes", label: "Outcomes" },
   { id: "work", label: "Work" },
   { id: "writing", label: "Writing" },
 ];
@@ -32,11 +34,12 @@ export function Landing({ posts }: LandingProps) {
 
   const introRef = useRef<HTMLElement>(null);
   const principlesRef = useRef<HTMLElement>(null);
+  const outcomesRef = useRef<HTMLElement>(null);
   const workRef = useRef<HTMLElement>(null);
   const writingRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const refs = [introRef, principlesRef, workRef, writingRef];
+    const refs = [introRef, principlesRef, outcomesRef, workRef, writingRef];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -66,6 +69,9 @@ export function Landing({ posts }: LandingProps) {
           </Frame>
           <Frame id="principles" label="Principles" sectionRef={principlesRef}>
             <Principles />
+          </Frame>
+          <Frame id="outcomes" label="Outcomes" sectionRef={outcomesRef}>
+            <Outcomes />
           </Frame>
           <Frame id="work" label="Work" sectionRef={workRef}>
             <Work />

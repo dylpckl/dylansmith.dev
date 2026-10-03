@@ -1,7 +1,7 @@
 # Workspace landing page — design spec
 
 **Date:** 2026-10-02
-**Status:** approved in brainstorm (Slate default, squared frames, Outcomes folded into Principles)
+**Status:** approved in brainstorm (Slate default, squared frames); revised 2026-10-03: Outcomes back to its own frame, solid Paper fills
 
 ## Goal
 
@@ -15,37 +15,38 @@ Two audiences: hiring managers (landing page, snappy and visual) and senior peer
 - **Two materials, one layout.** Slate (dark, default) is the current sleek look. Paper (light) is a notebook: warm paper, graph grid, ink. Same components, swapped tokens.
 - **The teal Ruler stays** and is promoted from one-off to signature: frames, section labels, and the existing `Canvas`/`Ruler` annotations all use the accent token.
 - **Frames squared up.** No horizontal stagger.
-- **Outcomes folded into Principles.** Each principle carries one stat as its receipt.
+- **Outcomes stays its own frame.** Folding it into Principles was tried and rejected as too crowded; Principles is three short cards with a proof link each.
 - **Sidebar is the existing nav** (sections, blog, resume, socials) restyled as a tool panel, plus one addition: the material toggle.
 - **Only rare-brew is writable.** Day-job tiles get live-product links, not posts. Proof links on principles point into rare-brew post sections.
 
 ## Page structure
 
-Four frames, in order. Each frame is a labeled, bordered region on the canvas with corner marks and a mono label (`NAME · W × H`, measured live from the frame's own box).
+Five frames, in order. Each frame is a labeled, bordered region on the canvas with corner marks and a mono label (`NAME · W × H`, measured live from the frame's own box).
 
 | Frame id | Label | Content |
 |---|---|---|
 | `intro` | Intro | Current Hero: name, tagline with the measured `pixel-perfect`, "Leading design at SmartAdvocate", mobile-only resume/social buttons. |
-| `principles` | Principles | James Clear quote. One line folding in the years stat. Three principle rows, each: icon, title, claim, stat + unit (CountUp), tags, proof link. Tools logo row and skills tags below. |
+| `principles` | Principles | James Clear quote. Three principle cards: icon, title, claim, proof link. Tools logo row and skills tags below. |
+| `outcomes` | Outcomes | The stats bento as before: two Features with graphics, two StatTiles. |
 | `work` | Work | Four tiles as today. Every tile has a link row: day-job tiles link to the live product; rarebrew links to notes and the live site. No tile is dead. |
 | `writing` | Writing | List of blog posts from the loader: title, category of the first section, summary. Link to `/blog`. |
 
-### Principle rows (content)
+### Principle cards (content)
 
-| Principle | Claim | Stat | Tags | Proof link |
-|---|---|---|---|---|
-| The details matter | Small details compound over large surfaces to make a big difference. | 2 design systems | Tokens, Atomic, WCAG | `/blog/rare-brew#section-control-bar-redesign` ("The four-control build bar") |
-| Solutions over tools | Work backwards from the blue-sky result. Systems support the solution, not the other way around. | 60% faster data migrations | Python, Monorepo, CI/CD | `/blog/rare-brew#section-stacked-list-view` ("Stacked list replaced a too-clever grid") |
-| Be kind to your future self | Document the why and leave clever breadcrumbs. | 100+ pages of documentation | Docs, Skills & Agents | `/blog/rare-brew#section-two-shells-same-data` ("Two shells, same data") |
+| Principle | Claim | Proof link |
+|---|---|---|
+| The details matter | Small details compound over large surfaces to make a big difference. | `/blog/rare-brew#section-control-bar-redesign` ("The four-control build bar") |
+| Solutions over tools | Work backwards from the blue-sky result. Systems support the solution, not the other way around. | `/blog/rare-brew#section-stacked-list-view` ("Stacked list replaced a too-clever grid") |
+| Be kind to your future self | Document the why and leave clever breadcrumbs. | `/blog/rare-brew#section-two-shells-same-data` ("Two shells, same data") |
 
-The "10+ years" stat moves into the Principles lead line. The `MiniSystemDemo` and `ScriptsToToolkit` graphics ride under rows one and two.
+Stats and graphics live in the Outcomes frame, unchanged from before.
 
 ### Sidebar (desktop, `lg+`)
 
 Sticky left column, panel-styled: mono labels, grouped lists, accent-colored active row with a `▸` marker.
 
 1. Wordmark: "Dylan Smith" (links home).
-2. **Sections:** Intro, Principles, Work, Writing. Active state from the existing IntersectionObserver.
+2. **Sections:** Intro, Principles, Outcomes, Work, Writing. Active state from the existing IntersectionObserver.
 3. **Elsewhere:** Blog, Resume ↓, GitHub ↗, LinkedIn ↗.
 4. **Material:** Slate / Paper segmented toggle.
 
@@ -65,6 +66,7 @@ Sticky left column, panel-styled: mono labels, grouped lists, accent-colored act
 - `next-themes` (already a dependency) with `attribute="data-material"`, `themes={["slate","paper"]}`, `defaultTheme="slate"`, `enableSystem={false}`. Persists to localStorage.
 - Tokens are CSS custom properties as RGB triplets on `:root, [data-material="slate"]` and overridden on `[data-material="paper"]`. Tailwind exposes them as semantic colors with alpha support: `paper`, `ink`, `ink-2`, `ink-3`, `ink-4`, `line`, `frame`, `accent`, `accent-ink` (text on an accent fill), `panel`, `surface`, `surface-2`, `grid`, `ruler`, `lav`.
 - Landing components and shared primitives (Header, Tile, Tag, Button, SocialLink, BeforeAfterReveal, Canvas/Ruler, CountUp, the visuals) move from literal `slate-*`/`teal-*` classes to the semantic tokens.
+- **Fills** (`card`, `card-strong`, `frame-fill`) are full CSS colors, not triplets: translucent over the photo in Slate, solid in Paper, because translucent surfaces over graph paper were hard to read.
 - **Blog pages stay Slate for now.** Their page wrapper sets `data-material="slate"` so the global toggle can't half-theme them. Retheming the blog for Paper is a follow-up.
 
 ### Token values
@@ -89,13 +91,13 @@ Sticky left column, panel-styled: mono labels, grouped lists, accent-colored act
 
 ## Data flow
 
-`src/app/page.tsx` becomes a server component that loads posts with `getAllPosts()` and renders `<Landing posts={…} />`. `Landing` (client) owns the four section refs and the IntersectionObserver, and renders `Header`, `Workspace`, and the four frames. The Writing frame receives a trimmed `PostSummary[]` (slug, title, summary, category).
+`src/app/page.tsx` becomes a server component that loads posts with `getAllPosts()` and renders `<Landing posts={…} />`. `Landing` (client) owns the five section refs and the IntersectionObserver, and renders `Header`, `Workspace`, and the five frames. The Writing frame receives a trimmed `PostSummary[]` (slug, title, summary, category).
 
 ## Files
 
 New: `src/components/workspace/{Workspace,Frame,Rulers,MaterialToggle}.tsx`, `src/components/landing/{Landing,Principles,Writing}.tsx`, `src/components/ThemeProvider.tsx`.
 Changed: `page.tsx`, `layout.tsx`, `globals.css`, `tailwind.config.js`, `Header.jsx` (becomes `Header.tsx`), `Hero.tsx`, `Work.tsx`, `Tile.tsx`, `Tag.tsx`, `Button.tsx`, `BeforeAfterReveal.tsx`, canvas `Target.tsx` + `style.css`, blog page wrappers, `CLAUDE.md`.
-Removed from the landing: `Intro.tsx`, `Outcomes.tsx` (merged into `Principles.tsx`).
+Removed from the landing: `Intro.tsx` (split into `Principles.tsx` and the Hero). `Outcomes.tsx` drops its section wrapper and keeps its bento.
 
 ## Out of scope
 

@@ -9,21 +9,14 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Canvas, Ruler } from "@/components/canvas";
-import { CountUp } from "@/components/CountUp";
 import { TagGroup } from "@/components/Tag";
 import { TechLogo } from "@/components/TechLogo";
-import { MiniSystemDemo } from "./visuals/MiniSystemDemo";
-import { ScriptsToToolkit } from "./visuals/ScriptsToToolkit";
 
 type Principle = {
   icon: LucideIcon;
   title: string;
   claim: string;
-  stat: string;
-  statUnit: string;
-  tags: string[];
   proof: { label: string; href: string };
-  graphic?: React.ReactNode;
 };
 
 const PRINCIPLES: Principle[] = [
@@ -32,36 +25,25 @@ const PRINCIPLES: Principle[] = [
     title: "The details matter",
     claim:
       "Small details compound over large surfaces to make a big difference.",
-    stat: "2",
-    statUnit: "design systems, designed & shipped end-to-end",
-    tags: ["Tokens", "Atomic", "WCAG"],
     proof: {
       label: "In practice: the four-control build bar",
       href: "/blog/rare-brew#section-control-bar-redesign",
     },
-    graphic: <MiniSystemDemo />,
   },
   {
     icon: Puzzle,
     title: "Solutions over tools",
     claim:
       "Work backwards from the blue-sky result. Systems support the solution, not the other way around.",
-    stat: "60%",
-    statUnit: "faster data migrations, 3 months to 2 weeks",
-    tags: ["Python", "Monorepo", "CI/CD"],
     proof: {
-      label: "In practice: a stacked list replaced a too-clever grid",
+      label: "In practice: a stacked list beat a clever grid",
       href: "/blog/rare-brew#section-stacked-list-view",
     },
-    graphic: <ScriptsToToolkit />,
   },
   {
     icon: HeartHandshake,
     title: "Be kind to your future self",
     claim: "Document the why and leave clever breadcrumbs.",
-    stat: "100+",
-    statUnit: "pages of documentation authored",
-    tags: ["Docs", "Skills & Agents"],
     proof: {
       label: "In practice: two shells, same data",
       href: "/blog/rare-brew#section-two-shells-same-data",
@@ -96,8 +78,8 @@ const SKILLS = [
 
 export function Principles() {
   return (
-    <div className="flex flex-col gap-10">
-      <blockquote className="flex flex-col gap-4 rounded-xl bg-surface/40 p-6 ring-1 ring-line/25 backdrop-blur-sm md:flex-row md:items-start md:gap-6">
+    <div className="flex flex-col gap-10 md:gap-12">
+      <blockquote className="flex flex-col gap-4 rounded-xl bg-card p-6 ring-1 ring-line/25 backdrop-blur-sm md:flex-row md:items-start md:gap-6">
         <Quote
           aria-hidden="true"
           className="h-8 w-8 shrink-0 rotate-180 fill-accent/20 text-accent/60"
@@ -114,24 +96,18 @@ export function Principles() {
         </div>
       </blockquote>
 
-      <p className="max-w-[60ch] text-base leading-relaxed text-ink-2 lg:text-lg">
-        <CountUp to="10+" className="font-semibold text-ink" /> years across
-        design, development, and data engineering, distilled to three rules.
-        Each one comes with a receipt.
-      </p>
-
-      <ol className="divide-y divide-line/20 border-y border-line/20">
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
         {PRINCIPLES.map((p, i) => (
-          <PrincipleRow key={p.title} principle={p} measured={i === 0} />
+          <PrincipleCard key={p.title} principle={p} measured={i === 0} />
         ))}
-      </ol>
+      </div>
 
       <Tools />
     </div>
   );
 }
 
-function PrincipleRow({
+function PrincipleCard({
   principle: p,
   measured,
 }: {
@@ -139,58 +115,43 @@ function PrincipleRow({
   measured: boolean;
 }) {
   const Icon = p.icon;
+  const titleClass = "font-serif text-xl font-semibold text-ink lg:text-2xl";
 
   const title = measured ? (
-    <Canvas className="w-fit">
-      <Ruler
-        as="h3"
-        className="font-serif text-2xl font-semibold text-ink lg:text-3xl"
-      >
-        <Ruler.Guideline edge="top" />
-        <Ruler.Guideline edge="bottom" />
-        <Ruler.Target edge="right" />
-        {p.title}
-      </Ruler>
-    </Canvas>
-  ) : (
-    <h3 className="font-serif text-2xl font-semibold text-ink lg:text-3xl">
+    <Ruler as="h3" className={`w-fit ${titleClass}`}>
+      <Ruler.Guideline edge="top" />
+      <Ruler.Guideline edge="bottom" />
+      <Ruler.Target edge="right" />
       {p.title}
-    </h3>
+    </Ruler>
+  ) : (
+    <h3 className={titleClass}>{p.title}</h3>
   );
 
-  return (
-    <li className="grid gap-6 py-8 md:grid-cols-[minmax(0,1fr)_auto] md:gap-10 md:py-10">
-      <div className="flex flex-col gap-3">
-        <Icon
-          aria-hidden="true"
-          className="h-6 w-6 shrink-0 text-accent"
-          strokeWidth={1.5}
-        />
-        {title}
-        <p className="max-w-[56ch] text-sm leading-relaxed text-ink-2 lg:text-base xl:text-lg">
-          {p.claim}
-        </p>
-        <TagGroup tags={p.tags} size="xs" className="mt-1" />
-        <Link
-          href={p.proof.href}
-          className="mt-2 w-fit font-mono text-xs uppercase tracking-widest text-accent transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-        >
-          {p.proof.label} →
-        </Link>
-      </div>
+  const body = (
+    <>
+      <Icon
+        aria-hidden="true"
+        className="h-6 w-6 shrink-0 text-accent"
+        strokeWidth={1.5}
+      />
+      {title}
+      <p className="text-sm leading-relaxed text-ink-2 lg:text-base xl:text-lg">
+        {p.claim}
+      </p>
+      <Link
+        href={p.proof.href}
+        className="mt-1 w-fit font-mono text-xs uppercase tracking-widest text-accent transition hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+      >
+        {p.proof.label} →
+      </Link>
+    </>
+  );
 
-      <div className="flex flex-col md:items-end md:text-right">
-        <CountUp
-          to={p.stat}
-          className="font-sans text-5xl font-bold leading-none text-ink lg:text-6xl xl:text-7xl"
-        />
-        <span className="mt-2 max-w-[22ch] text-sm leading-snug text-ink-3 lg:text-base">
-          {p.statUnit}
-        </span>
-      </div>
-
-      {p.graphic && <div className="md:col-span-2">{p.graphic}</div>}
-    </li>
+  return measured ? (
+    <Canvas className="flex flex-col gap-3">{body}</Canvas>
+  ) : (
+    <div className="flex flex-col gap-3">{body}</div>
   );
 }
 

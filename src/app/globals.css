@@ -30,6 +30,10 @@
   --m-grid: 51 65 85;
   --m-ruler: 100 116 139;
   --m-lav: 196 181 253;
+  /* Fills: translucent over the photo in Slate, solid in Paper. */
+  --m-card: rgb(30 41 59 / 0.6);
+  --m-card-strong: rgb(30 41 59);
+  --m-frame-fill: rgb(30 41 59 / 0.25);
 }
 
 [data-material="paper"] {
@@ -50,6 +54,9 @@
   --m-grid: 70 110 170;
   --m-ruler: 107 103 97;
   --m-lav: 124 111 205;
+  --m-card: rgb(255 255 255);
+  --m-card-strong: rgb(251 249 244);
+  --m-frame-fill: rgb(250 248 243);
 }
 
 html,

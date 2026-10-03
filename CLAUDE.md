@@ -34,7 +34,8 @@ src/
     landing/                  # one file per landing frame
       Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + four Frames
       Hero.tsx                # Intro frame content
-      Principles.tsx          # three principles, each with a stat receipt + proof link; tools + skills
+      Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
+      Outcomes.tsx            # the stats bento (Feature + StatTile)
       Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
       Writing.tsx             # post list for the Writing frame (PostSummary type lives here)
       visuals/                # inline graphics (MiniSystemDemo, ScriptsToToolkit, ManaCurve, ScatteredFiles)
@@ -60,7 +61,7 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Work → Writing**, each a `Frame`. Outcomes was folded into Principles (every principle carries one stat as its receipt).
+Section flow on the landing page: **Intro → Principles → Outcomes → Work → Writing**, each a `Frame`. Principles are three short cards with an "in practice" proof link each; Outcomes is the stats bento. (Folding Outcomes into Principles was tried and rejected as too crowded.)
 
 ## Materials (theming)
 
@@ -68,6 +69,7 @@ Two materials share one layout: **Slate** (dark, default) and **Paper** (light n
 
 - **Use the semantic tokens, not `slate-*`/`teal-*`, in anything the landing page renders.** Literal palette classes only survive where the color is content (e.g. the teal token strip in `MiniTokenStrip`).
 - **Blog pages are pinned to Slate** via `data-material="slate"` on their wrapper until they're rethemed. The material toggle only renders when `Header` receives `sections`.
+- **Fills:** `bg-card` (tiles, quote), `bg-card-strong` (tile hover), `bg-frame-fill` (Frame background) are translucent over the photo in Slate and solid in Paper. Use these for any surface, not `bg-surface/NN`, so Paper stays readable over the graph grid.
 - The mountain photo and the veil gradient are Slate-only (`.ws-photo`, `.ws-veil`); the grid layer (`.ws-grid`) is dots in Slate and graph paper in Paper.
 
 ## Conventions

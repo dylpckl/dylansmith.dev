@@ -16,7 +16,7 @@ type FeatureProps = {
 };
 
 const baseClasses =
-  "group relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-slate-900/80 p-6 ring-1 ring-slate-700 backdrop-blur-sm transition-all duration-300 hover:ring-teal-300/60";
+  "group relative flex flex-col gap-4 overflow-hidden rounded-2xl bg-card p-6 ring-1 ring-line/25 backdrop-blur-sm transition-all duration-300 hover:ring-accent/60";
 
 export function Feature({
   tags,
@@ -31,7 +31,7 @@ export function Feature({
 
   return (
     <div className={cn(baseClasses, className)}>
-      <div className="hidden flex-wrap justify-end gap-1.5 text-slate-400 md:flex">
+      <div className="hidden flex-wrap justify-end gap-1.5 text-ink-3 md:flex">
         {tags.map((t) => (
           <Tag key={t}>{t}</Tag>
         ))}
@@ -49,15 +49,15 @@ export function Feature({
           <div className="flex items-baseline gap-3">
             <CountUp
               to={stat}
-              className="font-sans text-5xl font-bold leading-none text-slate-100 lg:text-6xl xl:text-7xl 2xl:text-8xl"
+              className="font-sans text-5xl font-bold leading-none text-ink lg:text-6xl xl:text-7xl 2xl:text-8xl"
             />
             {statUnit && (
-              <span className="font-sans text-lg font-medium leading-none text-slate-300 lg:text-2xl xl:text-3xl 2xl:text-4xl">
+              <span className="font-sans text-lg font-medium leading-none text-ink-2 lg:text-2xl xl:text-3xl 2xl:text-4xl">
                 {statUnit}
               </span>
             )}
           </div>
-          <p className="mt-3 text-sm leading-relaxed text-slate-300">
+          <p className="mt-3 text-sm leading-relaxed text-ink-2">
             {subtitle}
           </p>
         </div>

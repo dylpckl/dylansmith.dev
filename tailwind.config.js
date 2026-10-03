@@ -49,7 +49,14 @@ module.exports = {
           4: "rgb(var(--m-ink-4) / <alpha-value>)",
         },
         line: "rgb(var(--m-line) / <alpha-value>)",
-        frame: "rgb(var(--m-frame) / <alpha-value>)",
+        frame: {
+          DEFAULT: "rgb(var(--m-frame) / <alpha-value>)",
+          fill: "var(--m-frame-fill)",
+        },
+        card: {
+          DEFAULT: "var(--m-card)",
+          strong: "var(--m-card-strong)",
+        },
         accent: {
           DEFAULT: "rgb(var(--m-accent) / <alpha-value>)",
           ink: "rgb(var(--m-accent-ink) / <alpha-value>)",

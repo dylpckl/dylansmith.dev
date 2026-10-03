@@ -29,9 +29,9 @@ type TileProps =
   | (CommonProps & { decorative: true; onClickModal?: never; href?: never });
 
 const baseClasses =
-  "group relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-surface/60 p-6 ring-1 ring-line/25 backdrop-blur-sm";
+  "group relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-card p-6 ring-1 ring-line/25 backdrop-blur-sm";
 const interactiveClasses =
-  "transition-all duration-300 hover:bg-surface hover:ring-accent/60 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-accent";
+  "transition-all duration-300 hover:bg-card-strong hover:ring-accent/60 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-accent";
 
 function TileHeader({
   label,
