@@ -13,16 +13,16 @@ export function Target({ edge }: TargetProps) {
     return (
       <span
         className={cn(
-          "absolute left-0 flex w-full items-center border-l-2 border-r-2 border-l-red-300 border-r-red-300 text-center font-mono text-xs font-normal text-red-300",
+          "absolute left-0 flex w-full items-center border-l-2 border-r-2 border-l-accent border-r-accent text-center font-mono text-xs font-normal text-accent",
           {
             "bottom-full": edge === "top",
             "top-full": edge === "bottom",
           },
         )}
       >
-        <hr className="h-px grow border-0 bg-red-300" />
+        <hr className="h-px grow border-0 bg-accent" />
         <span className="mx-2 leading-3">{width}px</span>
-        <hr className="h-px grow border-0 bg-red-300" />
+        <hr className="h-px grow border-0 bg-accent" />
       </span>
     );
   }
@@ -30,7 +30,7 @@ export function Target({ edge }: TargetProps) {
   return (
     <span
       className={cn(
-        "absolute flex h-full w-4 flex-col items-center border-b-2 border-t-2 border-b-red-300 border-t-red-300 text-center font-mono text-xs font-normal",
+        "absolute flex h-full w-4 flex-col items-center border-b-2 border-t-2 border-b-accent border-t-accent text-center font-mono text-xs font-normal",
         {
           "-left-4": edge === "left",
           "-right-4": edge === "right",
@@ -38,9 +38,9 @@ export function Target({ edge }: TargetProps) {
       )}
     >
       <div className="relative flex h-full w-full items-center justify-center">
-        <hr className="h-full w-px border-0 bg-red-300" />
+        <hr className="h-full w-px border-0 bg-accent" />
         <span
-          className={cn("absolute text-red-300", {
+          className={cn("absolute text-accent", {
             "-left-10": edge === "left",
             "-right-10": edge === "right",
           })}

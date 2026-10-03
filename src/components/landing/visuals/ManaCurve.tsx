@@ -18,7 +18,7 @@ export function ManaCurve() {
         {BUCKETS.map((b) => (
           <div
             key={b.label}
-            className="w-5 rounded-t-sm bg-teal-300/80 ring-1 ring-teal-300/30"
+            className="w-5 rounded-t-sm bg-accent/80 ring-1 ring-accent/30"
             style={{ height: `${b.h}%` }}
           />
         ))}
@@ -27,13 +27,13 @@ export function ManaCurve() {
         {BUCKETS.map((b) => (
           <span
             key={b.label}
-            className="w-5 text-center font-mono text-[9px] uppercase tracking-widest text-slate-500"
+            className="w-5 text-center font-mono text-[9px] uppercase tracking-widest text-ink-4"
           >
             {b.label}
           </span>
         ))}
       </div>
-      <span className="mt-1 font-mono text-[9px] uppercase tracking-widest text-slate-500">
+      <span className="mt-1 font-mono text-[9px] uppercase tracking-widest text-ink-4">
         mana curve · CMC distribution
       </span>
     </div>

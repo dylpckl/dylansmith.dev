@@ -37,7 +37,7 @@ function TapToggle({
       type="button"
       onClick={() => setShowAfter((v) => !v)}
       aria-label={`Show ${showAfter ? beforeLabel : afterLabel}`}
-      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${className}`}
+      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-line/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${className}`}
     >
       <div className="relative">{after}</div>
       <div
@@ -55,7 +55,7 @@ function TapToggle({
       </Tag>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-slate-800/60 text-slate-300 ring-1 ring-slate-700 backdrop-blur-sm"
+        className="pointer-events-none absolute bottom-2 right-2 z-20 inline-flex h-10 w-10 items-center justify-center rounded-md bg-surface/60 text-ink-2 ring-1 ring-line/25 backdrop-blur-sm"
       >
         <ArrowLeftRight className="h-[18px] w-[18px]" />
       </span>
@@ -116,7 +116,7 @@ function DragReveal({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full select-none overflow-hidden rounded-lg ring-1 ring-slate-700 ${className}`}
+      className={`relative w-full select-none overflow-hidden rounded-lg ring-1 ring-line/25 ${className}`}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -155,14 +155,14 @@ function DragReveal({
         aria-valuemax={100}
         aria-valuenow={Math.round(pos)}
         onKeyDown={onKeyDown}
-        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-teal-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900 ${
+        className={`absolute top-0 z-30 flex h-full w-1 cursor-ew-resize items-center justify-center bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${
           dragging ? "" : "motion-safe:transition-[left] motion-safe:duration-150"
         }`}
         style={{ left: `calc(${pos}% - 2px)` }}
       >
-        <span className="absolute flex h-8 w-8 items-center justify-center rounded-full bg-teal-300 text-slate-900 ring-2 ring-slate-900 shadow-lg">
-          <span className="block h-3 w-px bg-slate-900" />
-          <span className="ml-1 block h-3 w-px bg-slate-900" />
+        <span className="absolute flex h-8 w-8 items-center justify-center rounded-full bg-accent text-accent-ink ring-2 ring-paper shadow-lg">
+          <span className="block h-3 w-px bg-paper" />
+          <span className="ml-1 block h-3 w-px bg-paper" />
         </span>
       </button>
     </div>
