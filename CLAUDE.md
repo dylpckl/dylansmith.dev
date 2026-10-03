@@ -22,8 +22,8 @@ npm run build
 ```
 src/
   app/
-    page.tsx                  # thin composer: refs + IntersectionObserver, ~50 lines
-    layout.tsx
+    page.tsx                  # server: loads posts, renders <Landing>
+    layout.tsx                # fonts, ThemeProvider (materials), mountain photo (Slate only)
     sitemap.ts                # XML sitemap (root + /blog + each post)
     blog/
       page.tsx                # /blog index — lists all posts
@@ -31,18 +31,25 @@ src/
         page.tsx              # /blog/[slug] — single post
         opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
-    landing/                  # one file per landing section
-      Hero.tsx
-      Intro.tsx               # First Principles + Tools/Languages + Practices
-      Outcomes.tsx            # the only bento on the page
-      Work.tsx                # case-study tiles (drag reveals)
-      visuals/                # inline graphics (MiniSystemDemo, OneOffConsolidation, ManaCurve, ScatteredFiles)
+    landing/                  # one file per landing frame
+      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + four Frames
+      Hero.tsx                # Intro frame content
+      Principles.tsx          # three principles, each with a stat receipt + proof link; tools + skills
+      Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
+      Writing.tsx             # post list for the Writing frame (PostSummary type lives here)
+      visuals/                # inline graphics (MiniSystemDemo, ScriptsToToolkit, ManaCurve, ScatteredFiles)
+    workspace/                # the "design canvas" furniture
+      Workspace.tsx           # canvas column + edge rulers
+      Frame.tsx               # labeled, bordered section; chip shows live W × H
+      Rulers.tsx              # TopRuler / LeftRuler (lg+ only; left one tracks scroll)
+      MaterialToggle.tsx      # Slate / Paper segmented control
     bento/                    # reusable bento primitives (Tile, Feature, Support, StatTile, BeforeAfterReveal, MiniTokenStrip, StateChips)
     blog/                     # BlogHero, SectionCard, PostCard
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
     Tag.tsx                   # Tag + TagGroup — the canonical chip/badge component
     TechLogo.tsx              # mask-based brand SVG with hover-colorize via per-element --brand var
-    Header.jsx                # sticky sidebar nav; tracks activeSection from page.tsx
+    ThemeProvider.tsx         # next-themes wrapper writing data-material on <html>
+    Header.tsx                # panel-styled sidebar nav (desktop) / top strip (mobile); takes activeSection + sections
   content/
     blog/<slug>.md            # one MD file per post — frontmatter + prose
   lib/
@@ -53,14 +60,23 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Hero → Intro → Outcomes → Work**.
+Section flow on the landing page: **Intro → Principles → Work → Writing**, each a `Frame`. Outcomes was folded into Principles (every principle carries one stat as its receipt).
+
+## Materials (theming)
+
+Two materials share one layout: **Slate** (dark, default) and **Paper** (light notebook). `next-themes` writes `data-material="slate|paper"` on `<html>` (persisted under `material`). Tokens are RGB triplets in `globals.css`, exposed to Tailwind as semantic colors: `paper`, `ink`/`ink-2`/`ink-3`/`ink-4`, `line`, `frame`, `accent`/`accent-ink`, `warm`, `panel`, `surface`/`surface-2`, `grid`, `ruler`, `lav`. All support alpha (`bg-accent/20`).
+
+- **Use the semantic tokens, not `slate-*`/`teal-*`, in anything the landing page renders.** Literal palette classes only survive where the color is content (e.g. the teal token strip in `MiniTokenStrip`).
+- **Blog pages are pinned to Slate** via `data-material="slate"` on their wrapper until they're rethemed. The material toggle only renders when `Header` receives `sections`.
+- The mountain photo and the veil gradient are Slate-only (`.ws-photo`, `.ws-veil`); the grid layer (`.ws-grid`) is dots in Slate and graph paper in Paper.
 
 ## Conventions
 
 - **Tags/chips:** always use [`Tag`](src/components/Tag.tsx) (`intent: default|teal|orange`, `size: xs|sm|md`, `variant: solid|tinted`) and `TagGroup` for arrays. Don't add new inline tag styles.
 - **Tile:** [`Tile`](src/components/bento/Tile.tsx) takes optional `label`, `labelIcon`, `tags`, plus a discriminated variant (`href`, `onClickModal`, or `decorative`). Header collapses entirely when neither label nor tags are passed. Use `decorative` for non-clickable tiles.
 - **Brand logos:** drop SVGs from [simpleicons.org](https://simpleicons.org) (CC0) into `public/logos/` named with the simple-icons slug (e.g. `nextdotjs.svg`). Render via `<TechLogo name="..." label="..." brandColor="#XXXXXX" />`. Default render is monochrome `currentColor`; brand color shows on hover.
-- **Section refs:** Intro/Outcomes/Work each take a `sectionRef: RefObject<HTMLDivElement>` prop — page.tsx owns the refs and forwards them so the `IntersectionObserver` can highlight the sidebar nav. Hero no longer takes a sectionRef (it owns its own measurement via `Canvas`).
+- **Frames:** every landing section is `<Frame id label sectionRef>` from `@/components/workspace/Frame`. `Landing.tsx` owns the refs and the `IntersectionObserver` (band-based `rootMargin`, so the top of the page reads as Intro). Section components (`Hero`, `Principles`, `Work`, `Writing`) render content only; no section wrappers, no `VerticalText`/`SectionLabel`.
+- **Rulers are furniture.** `TopRuler`/`LeftRuler` are `aria-hidden`, desktop-only, and purely decorative. Don't hang behavior on them.
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.
 - **BeforeAfterReveal:** the drag handle accepts `initial` (0–100). Vary it across tiles for visual interest (current values: 75/62/32). Pair with `<Image fill object-cover>` inside a fixed-height container.
 

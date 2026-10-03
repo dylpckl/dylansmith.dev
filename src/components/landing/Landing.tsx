@@ -43,7 +43,10 @@ export function Landing({ posts }: LandingProps) {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { threshold: 0.25 },
+      // A section is "active" when it crosses a band around the upper third
+      // of the viewport, so the top of the page reads as Intro, not whatever
+      // frame happens to be the tallest.
+      { rootMargin: "-30% 0px -60% 0px", threshold: 0 },
     );
     refs.forEach((r) => r.current && observer.observe(r.current));
     return () => observer.disconnect();

@@ -39,7 +39,7 @@ export function Frame({
       id={id}
       aria-labelledby={`${id}-heading`}
       className={cn(
-        "relative scroll-mt-16 border border-frame/35 bg-surface/25 px-6 py-10 md:px-10 md:py-12 lg:scroll-mt-10",
+        "relative scroll-mt-16 border border-frame/50 bg-surface/25 px-6 py-10 md:px-10 md:py-12 lg:scroll-mt-10",
         className,
       )}
     >
