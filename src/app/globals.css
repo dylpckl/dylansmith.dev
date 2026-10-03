@@ -25,6 +25,10 @@
   --m-accent-ink: 19 78 74;
   --m-warm: 253 186 116;
   --m-panel: 11 19 36;
+  --m-panel-ink: 241 245 249;
+  --m-panel-ink-2: 203 213 225;
+  --m-panel-ink-3: 100 116 139;
+  --m-panel-accent: 94 234 212;
   --m-surface: 30 41 59;
   --m-surface-2: 51 65 85;
   --m-grid: 51 65 85;
@@ -38,25 +42,30 @@
 
 [data-material="paper"] {
   color-scheme: light;
-  --m-paper: 244 240 230;
+  /* 60 paper, 30 graphite (panel, rulers, borders, grid), 10 teal. */
+  --m-paper: 236 231 220;
   --m-ink: 28 26 23;
   --m-ink-2: 51 48 43;
-  --m-ink-3: 107 103 97;
-  --m-ink-4: 147 142 133;
-  --m-line: 28 26 23;
-  --m-frame: 28 26 23;
-  --m-accent: 15 143 130;
-  --m-accent-ink: 244 240 230;
+  --m-ink-3: 92 88 82;
+  --m-ink-4: 130 125 117;
+  --m-line: 43 42 39;
+  --m-frame: 43 42 39;
+  --m-accent: 11 124 112;
+  --m-accent-ink: 236 231 220;
   --m-warm: 194 65 12;
-  --m-panel: 236 231 219;
-  --m-surface: 255 255 255;
-  --m-surface-2: 233 228 216;
-  --m-grid: 70 110 170;
-  --m-ruler: 107 103 97;
+  --m-panel: 43 42 39;
+  --m-panel-ink: 236 231 220;
+  --m-panel-ink-2: 201 196 186;
+  --m-panel-ink-3: 150 145 136;
+  --m-panel-accent: 45 212 191;
+  --m-surface: 247 244 236;
+  --m-surface-2: 225 219 206;
+  --m-grid: 43 42 39;
+  --m-ruler: 160 155 147;
   --m-lav: 124 111 205;
-  --m-card: rgb(255 255 255);
+  --m-card: rgb(247 244 236);
   --m-card-strong: rgb(251 249 244);
-  --m-frame-fill: rgb(250 248 243);
+  --m-frame-fill: rgb(243 239 230);
 }
 
 html,
@@ -101,8 +110,8 @@ body {
 
 [data-material="paper"] .ws-grid {
   background-image:
-    linear-gradient(rgb(var(--m-grid) / 0.16) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(var(--m-grid) / 0.16) 1px, transparent 1px);
+    linear-gradient(rgb(var(--m-grid) / 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--m-grid) / 0.11) 1px, transparent 1px);
   background-size: 16px 16px;
   mask-image: none;
 }

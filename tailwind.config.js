@@ -62,7 +62,13 @@ module.exports = {
           ink: "rgb(var(--m-accent-ink) / <alpha-value>)",
         },
         warm: "rgb(var(--m-warm) / <alpha-value>)",
-        panel: "rgb(var(--m-panel) / <alpha-value>)",
+        panel: {
+          DEFAULT: "rgb(var(--m-panel) / <alpha-value>)",
+          ink: "rgb(var(--m-panel-ink) / <alpha-value>)",
+          "ink-2": "rgb(var(--m-panel-ink-2) / <alpha-value>)",
+          "ink-3": "rgb(var(--m-panel-ink-3) / <alpha-value>)",
+          accent: "rgb(var(--m-panel-accent) / <alpha-value>)",
+        },
         surface: {
           DEFAULT: "rgb(var(--m-surface) / <alpha-value>)",
           2: "rgb(var(--m-surface-2) / <alpha-value>)",

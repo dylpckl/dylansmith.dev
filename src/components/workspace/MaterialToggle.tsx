@@ -30,7 +30,7 @@ export function MaterialToggle({ className }: Props) {
       role="group"
       aria-label="Material"
       className={cn(
-        "inline-flex w-full overflow-hidden rounded border border-line/30 font-mono text-[10px] uppercase tracking-widest",
+        "inline-flex w-full overflow-hidden rounded border border-panel-ink-3/40 font-mono text-[10px] uppercase tracking-widest",
         className,
       )}
     >
@@ -43,10 +43,10 @@ export function MaterialToggle({ className }: Props) {
             aria-pressed={active}
             onClick={() => setTheme(m)}
             className={cn(
-              "flex-1 px-2 py-1.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+              "flex-1 px-2 py-1.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-panel-accent",
               active
-                ? "bg-accent/15 text-accent"
-                : "text-ink-3 hover:text-ink",
+                ? "bg-panel-accent/15 text-panel-accent"
+                : "text-panel-ink-3 hover:text-panel-ink",
             )}
           >
             {LABELS[m]}

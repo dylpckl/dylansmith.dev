@@ -65,7 +65,7 @@ Section flow on the landing page: **Intro → Principles → Outcomes → Work �
 
 ## Materials (theming)
 
-Two materials share one layout: **Slate** (dark, default) and **Paper** (light notebook). `next-themes` writes `data-material="slate|paper"` on `<html>` (persisted under `material`). Tokens are RGB triplets in `globals.css`, exposed to Tailwind as semantic colors: `paper`, `ink`/`ink-2`/`ink-3`/`ink-4`, `line`, `frame`, `accent`/`accent-ink`, `warm`, `panel`, `surface`/`surface-2`, `grid`, `ruler`, `lav`. All support alpha (`bg-accent/20`).
+Two materials share one layout: **Slate** (dark, default) and **Paper** (light notebook). `next-themes` writes `data-material="slate|paper"` on `<html>` (persisted under `material`). Tokens are RGB triplets in `globals.css`, exposed to Tailwind as semantic colors: `paper`, `ink`/`ink-2`/`ink-3`/`ink-4`, `line`, `frame`, `accent`/`accent-ink`, `warm`, `panel` + `panel-ink`/`panel-ink-2`/`panel-ink-3`/`panel-accent` (text and accent ON the panel, which is graphite in Paper), `surface`/`surface-2`, `grid`, `ruler`, `lav`. All support alpha (`bg-accent/20`). Paper follows a 60/30/10 split: paper stock, graphite (panel, rulers, borders, grid), teal.
 
 - **Use the semantic tokens, not `slate-*`/`teal-*`, in anything the landing page renders.** Literal palette classes only survive where the color is content (e.g. the teal token strip in `MiniTokenStrip`).
 - **Blog pages are pinned to Slate** via `data-material="slate"` on their wrapper until they're rethemed. The material toggle only renders when `Header` receives `sections`.

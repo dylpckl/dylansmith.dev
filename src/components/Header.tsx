@@ -29,10 +29,10 @@ const ELSEWHERE = [
 ];
 
 const groupLabel =
-  "mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-4";
+  "mb-2 font-mono text-[10px] uppercase tracking-[0.18em] text-panel-ink-3";
 
 const rowBase =
-  "flex items-center justify-between gap-3 py-1 font-mono text-xs transition-colors focus:outline-none focus-visible:text-accent";
+  "flex items-center justify-between gap-3 py-1 font-mono text-xs transition-colors focus:outline-none focus-visible:text-panel-accent";
 
 function Row({
   href,
@@ -49,7 +49,7 @@ function Row({
 }) {
   const className = cn(
     rowBase,
-    active ? "text-accent" : "text-ink-2 hover:text-accent",
+    active ? "text-panel-accent" : "text-panel-ink-2 hover:text-panel-accent",
   );
   const inner = (
     <>
@@ -63,7 +63,7 @@ function Row({
         {label}
       </span>
       {mark && (
-        <span aria-hidden="true" className="text-ink-4">
+        <span aria-hidden="true" className="text-panel-ink-3">
           {mark}
         </span>
       )}
@@ -107,7 +107,7 @@ export function Header({ activeSection, sections }: HeaderProps) {
       <header className="sticky top-0 z-40 flex items-center justify-between gap-4 border-b border-line/20 bg-panel/90 px-4 py-3 backdrop-blur lg:hidden">
         <Link
           href="/"
-          className="text-sm font-bold tracking-tight text-ink focus:outline-none focus-visible:text-accent"
+          className="text-sm font-bold tracking-tight text-panel-ink focus:outline-none focus-visible:text-panel-accent"
         >
           Dylan Smith
         </Link>
@@ -116,7 +116,7 @@ export function Header({ activeSection, sections }: HeaderProps) {
             href="/blog"
             className={cn(
               "font-mono text-xs uppercase tracking-widest",
-              activeSection === "blog" ? "text-accent" : "text-ink-2",
+              activeSection === "blog" ? "text-panel-accent" : "text-panel-ink-2",
             )}
           >
             Blog
@@ -129,7 +129,7 @@ export function Header({ activeSection, sections }: HeaderProps) {
       <aside className="hidden shrink-0 border-r border-line/20 bg-panel/90 backdrop-blur-sm lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-48 lg:flex-col lg:px-5 lg:py-8 xl:w-56">
         <Link
           href="/"
-          className="mb-8 text-base font-bold tracking-tight text-ink focus:outline-none focus-visible:text-accent"
+          className="mb-8 text-base font-bold tracking-tight text-panel-ink focus:outline-none focus-visible:text-panel-accent"
         >
           Dylan Smith
         </Link>
