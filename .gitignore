@@ -41,3 +41,10 @@ bash.exe.stackdump
 
 # Claude Code: track shared settings + CLAUDE.md, ignore per-machine overrides
 .claude/settings.local.json
+
+# Blog: private per-post data (SHAs, real dates, branch names from target repos).
+# Read only by /blog-draft and /blog-capture skills; never imported by the Next app.
+.blog-data/
+
+# Superpowers brainstorming companion sessions
+.superpowers/

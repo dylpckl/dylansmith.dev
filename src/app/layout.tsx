@@ -24,6 +24,7 @@ const jetbrains_mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dylansmith.dev"),
   title: "Dylan Smith - Designer & Developer",
   description:
     "Dylan Smith is a UI Designer and Developer who crafts best in class storytelling experiences for the web.",

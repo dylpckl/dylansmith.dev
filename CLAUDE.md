@@ -1,6 +1,6 @@
 # dylansmith.dev
 
-Personal portfolio site. Single-page landing — no separate case-study pages.
+Personal portfolio site. Single-page landing for case studies, plus a `/blog/[slug]` devlog format for long-form project timelines.
 
 ## Stack
 
@@ -24,6 +24,12 @@ src/
   app/
     page.tsx                  # thin composer: refs + IntersectionObserver, ~50 lines
     layout.tsx
+    sitemap.ts                # XML sitemap (root + /blog + each post)
+    blog/
+      page.tsx                # /blog index — lists all posts
+      [slug]/
+        page.tsx              # /blog/[slug] — single post
+        opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
     landing/                  # one file per landing section
       Hero.tsx
@@ -32,12 +38,18 @@ src/
       Work.tsx                # case-study tiles (drag reveals)
       visuals/                # inline graphics (MiniSystemDemo, OneOffConsolidation, ManaCurve, ScatteredFiles)
     bento/                    # reusable bento primitives (Tile, Feature, Support, StatTile, BeforeAfterReveal, MiniTokenStrip, StateChips)
+    blog/                     # BlogHero, SectionCard, PostCard
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
     Tag.tsx                   # Tag + TagGroup — the canonical chip/badge component
     TechLogo.tsx              # mask-based brand SVG with hover-colorize via per-element --brand var
     Header.jsx                # sticky sidebar nav; tracks activeSection from page.tsx
+  content/
+    blog/<slug>.md            # one MD file per post — frontmatter + prose
+  lib/
+    blog/                     # types, post loader (gray-matter), body parser
 public/
   case-studies/<slug>/legacy.png + refreshed.png   # before/after pairs
+  blog/<slug>/<section-id>.png                     # per-section screenshots
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
@@ -56,11 +68,23 @@ Section flow on the landing page: **Hero → Intro → Outcomes → Work**.
 
 - **This site must be responsive.** All layouts, components, and spacing must work across mobile, tablet, and desktop. Use Tailwind responsive prefixes (`sm:`, `md:`, `lg:`) whenever creating separate elements or adjusting spacing. Never hardcode pixel widths or layouts that break on small screens.
 
+## Blog (`/blog/[slug]`)
+
+Feature-focused project writeups. Each post is a handful of specific features and design decisions — not a timeline, not a postmortem. Distinct from the `Work.tsx` case-study tiles: tiles are the curated marketing presentation; blog posts go deep on individual cuts.
+
+- **One post per project.** Lives at `src/content/blog/<slug>.md`. Frontmatter holds structured data (sections, hero stats, tags); body is prose with `## headings` matching `sections[].id` (slugified).
+- **Sections, not chapters.** Each `section` has a `category` (e.g., "Mobile UX", "Architecture", "Domain modeling"), a `title`, and prose. They're not chronological — order them however reads best.
+- **No git artifacts in served HTML.** Posts never render raw SHAs, real commit dates, or branch names. When a target repo is private, those live only in `.blog-data/<slug>.private.json` (gitignored, never imported by the Next app). The boundary is physical: the loader at `src/lib/blog/posts.ts` has no code path that reads `.blog-data/`.
+- **Voice:** first-person Dylan. Personal, opinionated, no marketing puff.
+- **Adding a new post:** drop a `.md` file into `src/content/blog/`, screenshots into `public/blog/<slug>/<section-id>.png`. Loader handles the rest — sitemap, OG image, route params all derive from the file's presence. Screenshots that don't exist on disk are silently dropped from the rendered section (no broken images).
+- **Extraction skills (planned):** `/blog-draft` (proposes section titles + drafts prose from a target repo) and `/blog-capture` (captures screenshots from prior commits). Both are Claude Code skills, not npm scripts.
+
 ## Things NOT to do
 
-- **Don't recreate `/work/<slug>/page.tsx` case-study pages.** They were deleted on purpose — see `.claude/projects/.../memory/case_studies_deprecated.md` (host-side memory). Tiles in `Work.tsx` are the full presentation; no "Read the case study →" links.
+- **Don't recreate `/work/<slug>/page.tsx` case-study pages.** They were deleted on purpose — see `.claude/projects/.../memory/case_studies_deprecated.md`. Tiles in `Work.tsx` are the full marketing presentation. The blog (`/blog/<slug>`) is a different artifact — feature-focused project notes, not a curated case study — and is the right place to link out to.
 - Don't add inline tag/badge spans — use `Tag`.
 - Don't suggest installing `@svgr/webpack` for the brand logos — `TechLogo`'s mask-image trick covers the use case without a build dep.
+- Don't put SHAs, real commit dates, or branch names in any file under `src/content/blog/` or `src/lib/blog/` — those ride along into the static HTML and leak private-repo metadata.
 
 ## Visual verification
 

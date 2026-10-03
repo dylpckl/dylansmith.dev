@@ -37,7 +37,7 @@ const MobileNavigation = (props) => {
       <div className="absolute top-0 h-12 w-screen bg-slate-300">
         <nav>
           <ul>
-            <NavItem href="/journal">journal</NavItem>
+            <NavItem href="/blog">blog</NavItem>
           </ul>
         </nav>
       </div>
@@ -51,8 +51,8 @@ const DesktopNavigation = (props) => {
       <ul className="flex items-center gap-2 md:gap-3">
         <NavItem href="/#case-studies">work</NavItem>
         <span className="text-xs text-slate-400">{"//"}</span>
-        {/* <NavItem href="/journal">journal</NavItem>
-        <span className="text-slate-400 text-xs">{"//"}</span> */}
+        <NavItem href="/blog">blog</NavItem>
+        <span className="text-xs text-slate-400">{"//"}</span>
         <NavItem href="/about">about</NavItem>
         <span className="text-xs text-slate-400">{"//"}</span>
         <a
@@ -190,6 +190,17 @@ export function Header({ activeSection }) {
           <Image src={Logo} alt="logo" height={64} />
         </Link>
         <Nav links={links} activeSection={activeSection} />
+        <Link
+          href="/blog"
+          className={clsx(
+            "mt-4 block font-mono text-sm font-semibold uppercase transition",
+            activeSection === "blog"
+              ? "text-teal-300"
+              : "text-slate-300 hover:text-teal-300",
+          )}
+        >
+          blog
+        </Link>
       </div>
       <div className="mt-6 flex w-fit flex-col gap-3">
         <Button

@@ -2,6 +2,7 @@
 
 import type { RefObject } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, CreditCard, Layers } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
 import { SectionLabel } from "@/components/SectionLabel";
@@ -202,14 +203,22 @@ export function Work({ sectionRef }: WorkProps) {
                 Recharts visualizations, Scryfall + EDHREC data layer.
               </p>
               <TagGroup tags={RAREBREW_TAGS} className="mt-1 gap-2" />
-              <a
-                href="https://rarebrew.gg"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
-              >
-                Visit rarebrew.gg ↗
-              </a>
+              <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
+                <Link
+                  href="/blog/rare-brew"
+                  className="inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                >
+                  Read the timeline →
+                </Link>
+                <a
+                  href="https://rarebrew.gg"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest text-slate-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
+                >
+                  Visit rarebrew.gg ↗
+                </a>
+              </div>
             </div>
             <ManaCurve />
           </div>
