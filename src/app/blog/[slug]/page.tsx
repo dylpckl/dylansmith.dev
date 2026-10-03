@@ -61,7 +61,12 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   };
 
   return (
-    <div className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex">
+    <div
+      data-material="slate"
+      className="relative mx-auto min-h-screen max-w-screen-2xl lg:flex"
+    >
+      {/* Pinned to Slate until the blog is rethemed for Paper. */}
+      <div className="fixed inset-0 -z-30 bg-paper" aria-hidden="true" />
       <Header activeSection="blog" />
 
       <main className="w-full pb-20 lg:flex-1 lg:pb-32">
