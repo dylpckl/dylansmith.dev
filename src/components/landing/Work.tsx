@@ -1,11 +1,8 @@
 "use client";
 
-import type { RefObject } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, CreditCard, Layers } from "lucide-react";
-import VerticalText from "@/components/VerticalText";
-import { SectionLabel } from "@/components/SectionLabel";
+import { Layers } from "lucide-react";
 import { TagGroup } from "@/components/Tag";
 import { Tile } from "@/components/bento/Tile";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
@@ -15,10 +12,6 @@ import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
 import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
 import rapidpayLegacy from "/public/case-studies/rapidpay/legacy.png";
 import rapidpaySpire from "/public/case-studies/rapidpay/spire.png";
-
-type WorkProps = {
-  sectionRef: RefObject<HTMLDivElement>;
-};
 
 const RAREBREW_TAGS = [
   "React",
@@ -30,200 +23,207 @@ const RAREBREW_TAGS = [
   "PWA",
 ];
 
-export function Work({ sectionRef }: WorkProps) {
+const SHOT =
+  "relative h-72 w-full bg-paper md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]";
+
+const linkClass =
+  "inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent";
+
+type TileLink = { label: string; href: string; primary?: boolean };
+
+/** Every tile ends in at least one real destination. */
+function TileLinks({ links }: { links: TileLink[] }) {
   return (
-    <section
-      ref={sectionRef}
-      id="work"
-      className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pt-32"
-    >
-      <VerticalText text="WORK" />
-      <div className="flex w-full flex-col gap-4">
-        <SectionLabel as="h2">Work</SectionLabel>
-        {/* TODO(smartadvocate): drop legacy.png + spire.png into
-            public/case-studies/smartadvocate/, uncomment the imports above,
-            and uncomment this <Tile>. */}
-        <Tile tags={["Design System", "ASP.NET", "Tokens", "WCAG"]} decorative>
-          <div className="flex flex-1 flex-col gap-4">
-            <div className="group relative w-fit">
-              <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                SmartAdvocate UI Refresh
-              </h3>
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-full h-1 w-full max-w-0 bg-teal-300 transition-all duration-300 group-hover:max-w-full"
-              />
-            </div>
-            <p className="text-md text-slate-300 lg:text-base">
-              Sole designer &amp; developer on the site-wide UI refresh &mdash;
-              first design system at the company, shipped into a legacy ASP.NET
-              / DevExpress codebase with no regressions.
-            </p>
-            <div className="mt-2">
-              <BeforeAfterReveal
-                beforeLabel="Legacy"
-                afterLabel="Refreshed"
-                initial={75}
-                before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src="/case-studies/smartadvocate/legacy.png"
-                      alt="Legacy SmartAdvocate case management UI"
-                      fill
-                      className="object-cover object-left-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-                after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src="/case-studies/smartadvocate/refreshed.png"
-                      alt="Refreshed SmartAdvocate case management UI"
-                      fill
-                      className="object-cover object-left-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-              />
-            </div>
-          </div>
-        </Tile>
+    <div className="mt-1 flex flex-wrap items-center gap-x-5 gap-y-2">
+      {links.map((l) => {
+        const cls = `${linkClass} ${
+          l.primary ? "text-accent hover:text-ink" : "text-ink-2 hover:text-accent"
+        }`;
+        const external = l.href.startsWith("http");
+        return external ? (
+          <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className={cls}>
+            {l.label} ↗
+          </a>
+        ) : (
+          <Link key={l.href} href={l.href} className={cls}>
+            {l.label} →
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
 
-        <Tile decorative>
-          <div className="flex flex-1 flex-col gap-4">
-            <div className="group relative w-fit">
-              <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                Bank Reconciliation
-              </h3>
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-full h-1 w-full max-w-0 bg-teal-300 transition-all duration-300 group-hover:max-w-full"
-              />
-            </div>
-            <p className="text-md text-slate-300 lg:text-base">
-              Bringing the experience of reconciling bank statements into the
-              21st century.
-            </p>
-            <div className="mt-2">
-              <BeforeAfterReveal
-                beforeLabel="Legacy"
-                afterLabel="Refreshed"
-                initial={62}
-                before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src={bankRecLegacy}
-                      alt="Legacy bank reconciliation screen"
-                      fill
-                      className="object-cover object-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-                after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src={bankRecSpire}
-                      alt="Refreshed bank reconciliation screen"
-                      fill
-                      className="object-cover object-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-              />
-            </div>
-          </div>
-        </Tile>
+function TileTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="group relative w-fit">
+      <h3 className="font-serif text-3xl font-semibold leading-tight text-ink lg:text-4xl">
+        {children}
+      </h3>
+      <span
+        aria-hidden="true"
+        className="absolute left-0 top-full h-1 w-full max-w-0 bg-accent transition-all duration-300 group-hover:max-w-full"
+      />
+    </div>
+  );
+}
 
-        <Tile decorative>
-          <div className="flex flex-1 flex-col gap-4">
-            <div className="group relative w-fit">
-              <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                RapidPay
-              </h3>
-              <span
-                aria-hidden="true"
-                className="absolute left-0 top-full h-1 w-full max-w-0 bg-teal-300 transition-all duration-300 group-hover:max-w-full"
-              />
-            </div>
-            <p className="text-md text-slate-300 lg:text-base">
-              Two-panel design with a guided workflow for processing payments,
-              replacing a disjointed legacy multi-step experience.
-            </p>
-            <div className="mt-2">
-              <BeforeAfterReveal
-                beforeLabel="Legacy"
-                afterLabel="Refreshed"
-                initial={32}
-                before={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src={rapidpayLegacy}
-                      alt="Legacy RapidPay screen"
-                      fill
-                      className="object-cover object-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-                after={
-                  <div className="relative h-72 w-full bg-slate-900 md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]">
-                    <Image
-                      src={rapidpaySpire}
-                      alt="Refreshed RapidPay screen"
-                      fill
-                      className="object-cover object-top"
-                      sizes="100vw"
-                    />
-                  </div>
-                }
-              />
-            </div>
+export function Work() {
+  return (
+    <div className="flex flex-col gap-4">
+      <Tile tags={["Design System", "ASP.NET", "Tokens", "WCAG"]} decorative>
+        <div className="flex flex-1 flex-col gap-4">
+          <TileTitle>SmartAdvocate UI Refresh</TileTitle>
+          <p className="text-md text-ink-2 lg:text-base">
+            Sole designer &amp; developer on the site-wide UI refresh &mdash;
+            first design system at the company, shipped into a legacy ASP.NET
+            / DevExpress codebase with no regressions.
+          </p>
+          <div className="mt-2">
+            <BeforeAfterReveal
+              beforeLabel="Legacy"
+              afterLabel="Refreshed"
+              initial={75}
+              before={
+                <div className={SHOT}>
+                  <Image
+                    src="/case-studies/smartadvocate/legacy.png"
+                    alt="Legacy SmartAdvocate case management UI"
+                    fill
+                    className="object-cover object-left-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+              after={
+                <div className={SHOT}>
+                  <Image
+                    src="/case-studies/smartadvocate/refreshed.png"
+                    alt="Refreshed SmartAdvocate case management UI"
+                    fill
+                    className="object-cover object-left-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+            />
           </div>
-        </Tile>
+          <TileLinks
+            links={[
+              { label: "smartadvocate.com", href: "https://www.smartadvocate.com/", primary: true },
+            ]}
+          />
+        </div>
+      </Tile>
 
-        <Tile label="Side Project" labelIcon={Layers} decorative>
-          <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-            <div className="flex flex-col gap-3">
-              <div className="group relative w-fit">
-                <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                  rarebrew.gg
-                </h3>
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-full h-1 w-full max-w-0 bg-teal-300 transition-all duration-300 group-hover:max-w-full"
-                />
-              </div>
-              <p className="max-w-[60ch] text-base leading-snug text-slate-300 lg:text-lg">
-                A desktop-first PWA deckbuilder for Magic: The Gathering
-                Commander &mdash; custom component library on design tokens,
-                Recharts visualizations, Scryfall + EDHREC data layer.
-              </p>
-              <TagGroup tags={RAREBREW_TAGS} className="mt-1 gap-2" />
-              <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-2">
-                <Link
-                  href="/blog/rare-brew"
-                  className="inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
-                >
-                  Read the timeline →
-                </Link>
-                <a
-                  href="https://rarebrew.gg"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest text-slate-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
-                >
-                  Visit rarebrew.gg ↗
-                </a>
-              </div>
-            </div>
-            <ManaCurve />
+      <Tile decorative>
+        <div className="flex flex-1 flex-col gap-4">
+          <TileTitle>Bank Reconciliation</TileTitle>
+          <p className="text-md text-ink-2 lg:text-base">
+            Bringing the experience of reconciling bank statements into the
+            21st century.
+          </p>
+          <div className="mt-2">
+            <BeforeAfterReveal
+              beforeLabel="Legacy"
+              afterLabel="Refreshed"
+              initial={62}
+              before={
+                <div className={SHOT}>
+                  <Image
+                    src={bankRecLegacy}
+                    alt="Legacy bank reconciliation screen"
+                    fill
+                    className="object-cover object-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+              after={
+                <div className={SHOT}>
+                  <Image
+                    src={bankRecSpire}
+                    alt="Refreshed bank reconciliation screen"
+                    fill
+                    className="object-cover object-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+            />
           </div>
-        </Tile>
-      </div>
-    </section>
+          <TileLinks
+            links={[
+              { label: "Shipped at MDS", href: "https://multidataservices.com/", primary: true },
+            ]}
+          />
+        </div>
+      </Tile>
+
+      <Tile decorative>
+        <div className="flex flex-1 flex-col gap-4">
+          <TileTitle>RapidPay</TileTitle>
+          <p className="text-md text-ink-2 lg:text-base">
+            Two-panel design with a guided workflow for processing payments,
+            replacing a disjointed legacy multi-step experience.
+          </p>
+          <div className="mt-2">
+            <BeforeAfterReveal
+              beforeLabel="Legacy"
+              afterLabel="Refreshed"
+              initial={32}
+              before={
+                <div className={SHOT}>
+                  <Image
+                    src={rapidpayLegacy}
+                    alt="Legacy RapidPay screen"
+                    fill
+                    className="object-cover object-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+              after={
+                <div className={SHOT}>
+                  <Image
+                    src={rapidpaySpire}
+                    alt="Refreshed RapidPay screen"
+                    fill
+                    className="object-cover object-top"
+                    sizes="100vw"
+                  />
+                </div>
+              }
+            />
+          </div>
+          <TileLinks
+            links={[
+              { label: "Shipped at MDS", href: "https://multidataservices.com/", primary: true },
+            ]}
+          />
+        </div>
+      </Tile>
+
+      <Tile label="Side Project" labelIcon={Layers} decorative>
+        <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+          <div className="flex flex-col gap-3">
+            <TileTitle>rarebrew.gg</TileTitle>
+            <p className="max-w-[60ch] text-base leading-snug text-ink-2 lg:text-lg">
+              A desktop-first PWA deckbuilder for Magic: The Gathering
+              Commander &mdash; custom component library on design tokens,
+              Recharts visualizations, Scryfall + EDHREC data layer.
+            </p>
+            <TagGroup tags={RAREBREW_TAGS} className="mt-1 gap-2" />
+            <TileLinks
+              links={[
+                { label: "Read the notes", href: "/blog/rare-brew", primary: true },
+                { label: "rarebrew.gg", href: "https://rarebrew.gg" },
+              ]}
+            />
+          </div>
+          <ManaCurve />
+        </div>
+      </Tile>
+    </div>
   );
 }
