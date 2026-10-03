@@ -1,16 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
 
-  body {
-    scroll-behavior: smooth !important;
-  }
-} */
+/* ------------------------------------------------------------------ */
+/* Materials                                                           */
+/* Two materials share one layout: Slate (dark, default) and Paper     */
+/* (light notebook). Tokens are RGB triplets so Tailwind can apply     */
+/* alpha via rgb(var(--m-x) / <alpha-value>). next-themes writes       */
+/* data-material on <html>; a subtree can pin itself with the same     */
+/* attribute (the blog does, until it is rethemed).                    */
+/* ------------------------------------------------------------------ */
+
+:root,
+[data-material="slate"] {
+  color-scheme: dark;
+  --m-paper: 15 23 42;
+  --m-ink: 241 245 249;
+  --m-ink-2: 203 213 225;
+  --m-ink-3: 148 163 184;
+  --m-ink-4: 100 116 139;
+  --m-line: 148 163 184;
+  --m-frame: 148 163 184;
+  --m-accent: 94 234 212;
+  --m-accent-ink: 19 78 74;
+  --m-warm: 253 186 116;
+  --m-panel: 11 19 36;
+  --m-surface: 30 41 59;
+  --m-surface-2: 51 65 85;
+  --m-grid: 51 65 85;
+  --m-ruler: 100 116 139;
+  --m-lav: 196 181 253;
+}
+
+[data-material="paper"] {
+  color-scheme: light;
+  --m-paper: 244 240 230;
+  --m-ink: 28 26 23;
+  --m-ink-2: 51 48 43;
+  --m-ink-3: 107 103 97;
+  --m-ink-4: 147 142 133;
+  --m-line: 28 26 23;
+  --m-frame: 28 26 23;
+  --m-accent: 15 143 130;
+  --m-accent-ink: 244 240 230;
+  --m-warm: 194 65 12;
+  --m-panel: 236 231 219;
+  --m-surface: 255 255 255;
+  --m-surface-2: 233 228 216;
+  --m-grid: 70 110 170;
+  --m-ruler: 107 103 97;
+  --m-lav: 124 111 205;
+}
 
 html,
 body {
@@ -18,6 +58,54 @@ body {
   scroll-padding-top: 48px;
 }
 
+/* ------------------------------------------------------------------ */
+/* Workspace background layers                                         */
+/* .ws-photo  fixed mountain photo (Slate only)                        */
+/* .ws-grid   fixed dot grid (Slate) or graph paper (Paper)            */
+/* .ws-veil   fixed vertical gradient that settles the photo (Slate)   */
+/* ------------------------------------------------------------------ */
+
+.ws-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  pointer-events: none;
+  background-image: radial-gradient(rgb(var(--m-grid)) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: radial-gradient(
+    ellipse 50% 50% at 50% 50%,
+    #000 60%,
+    transparent 100%
+  );
+}
+
+.ws-veil {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(var(--m-paper) / 0.2),
+    rgb(var(--m-paper) / 0.4),
+    rgb(var(--m-paper) / 0.9)
+  );
+}
+
+[data-material="paper"] .ws-grid {
+  background-image:
+    linear-gradient(rgb(var(--m-grid) / 0.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--m-grid) / 0.16) 1px, transparent 1px);
+  background-size: 16px 16px;
+  mask-image: none;
+}
+
+[data-material="paper"] .ws-photo,
+[data-material="paper"] .ws-veil {
+  display: none;
+}
+
+/* Legacy keyframes kept for components that still reference them. */
 @keyframes grow-progress {
   from {
     transform: scaleX(0);
@@ -37,14 +125,6 @@ body {
 }
 
 #progress-bar {
-  /* position: fixed;
-  left: 0;
-  top: 0; */
-  /* width: 100%;
-  height: 1em;
-  background: red; */
-
-  /* transform-origin: 0 50%; */
   animation: shift-left linear;
   animation-timeline: scroll(block nearest);
   animation-duration: auto;

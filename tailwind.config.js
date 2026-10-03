@@ -40,6 +40,30 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      colors: {
+        paper: "rgb(var(--m-paper) / <alpha-value>)",
+        ink: {
+          DEFAULT: "rgb(var(--m-ink) / <alpha-value>)",
+          2: "rgb(var(--m-ink-2) / <alpha-value>)",
+          3: "rgb(var(--m-ink-3) / <alpha-value>)",
+          4: "rgb(var(--m-ink-4) / <alpha-value>)",
+        },
+        line: "rgb(var(--m-line) / <alpha-value>)",
+        frame: "rgb(var(--m-frame) / <alpha-value>)",
+        accent: {
+          DEFAULT: "rgb(var(--m-accent) / <alpha-value>)",
+          ink: "rgb(var(--m-accent-ink) / <alpha-value>)",
+        },
+        warm: "rgb(var(--m-warm) / <alpha-value>)",
+        panel: "rgb(var(--m-panel) / <alpha-value>)",
+        surface: {
+          DEFAULT: "rgb(var(--m-surface) / <alpha-value>)",
+          2: "rgb(var(--m-surface-2) / <alpha-value>)",
+        },
+        grid: "rgb(var(--m-grid) / <alpha-value>)",
+        ruler: "rgb(var(--m-ruler) / <alpha-value>)",
+        lav: "rgb(var(--m-lav) / <alpha-value>)",
+      },
       typography: {
         DEFAULT: {
           css: {
