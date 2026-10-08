@@ -42,29 +42,26 @@ const NOTES = [
 ];
 
 export function RarebrewCard() {
-  const spot = useFinePointer();
+  const parallax = useFinePointer();
   return (
     <SplitCard
-      // CSS variables, not state: the glow repaints on every move without
-      // re-rendering the demo. Over the demo itself it drops to a faint wash.
+      // Parallax via CSS variables (no re-render): --px/--py run -1..1 from
+      // the card's center; --pon eases the fan open while the cursor is here.
       onPointerMove={(e) => {
-        if (!spot) return;
+        if (!parallax) return;
         const el = e.currentTarget;
         const r = el.getBoundingClientRect();
-        el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
-        el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
-        const overDemo = (e.target as Element).closest("[data-demo]");
-        el.style.setProperty("--spot-on", overDemo ? "0.25" : "1");
+        el.style.setProperty("--px", (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+        el.style.setProperty("--py", (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
+        el.style.setProperty("--pon", "1");
       }}
-      onPointerLeave={(e) => e.currentTarget.style.setProperty("--spot-on", "0")}
-      overlay={
-        // One layer over the whole card, so copy and art share a single glow;
-        // `screen` only ever lightens, so it reads on the dark ground and art.
-        <>
-          <div className="absolute inset-0 mix-blend-screen transition-opacity duration-300 [background-image:radial-gradient(360px_circle_at_var(--spot-x,-999px)_var(--spot-y,-999px),rgba(240,189,82,.42),rgba(224,168,60,.12)_45%,transparent_70%)] [opacity:var(--spot-on,0)]" />
-          <div className="absolute inset-x-0 bottom-0 h-[3px] bg-[#E0A83C]" />
-        </>
-      }
+      onPointerLeave={(e) => {
+        const el = e.currentTarget;
+        el.style.setProperty("--px", "0");
+        el.style.setProperty("--py", "0");
+        el.style.setProperty("--pon", "0");
+      }}
+      overlay={<div className="absolute inset-x-0 bottom-0 h-[3px] bg-[#E0A83C]" />}
       className={`${dmSans.className} rounded-2xl text-[#f2f2f2] ring-1 ring-[#E0A83C]/35`}
       style={{ background: "#121212" }}
       background={
@@ -77,7 +74,8 @@ export function RarebrewCard() {
           <img
             src={COMMANDER_ART}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover object-[35%_50%] opacity-90"
+            className="absolute inset-0 h-full w-full object-cover object-[35%_50%] opacity-90 transition-transform duration-500 ease-out"
+            style={{ transform: "translate3d(calc(var(--px, 0) * -16px), calc(var(--py, 0) * -10px), 0) scale(1.06)" }}
           />
           {/* Veil: the art bleeds out of the copy column — from the left at lg, from the top when stacked. */}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#121212_0%,rgba(18,18,18,.5)_22%,rgba(18,18,18,.15)_100%)] lg:hidden" />
@@ -86,7 +84,6 @@ export function RarebrewCard() {
       }
       copy={
         <>
-          <span className="font-mono text-xs uppercase tracking-widest text-[#a6a6a6]">Mobile-first PWA</span>
 
           <h3 className={`${spaceGrotesk.className} text-5xl font-bold leading-none tracking-tight lg:text-6xl`}>
             rarebrew<span className="text-[#E0A83C]">.gg</span>
@@ -130,7 +127,13 @@ export function RarebrewCard() {
               <div
                 key={src}
                 className="absolute left-[-80px] top-[-112px] w-[160px] overflow-hidden rounded-[9px] shadow-[0_18px_40px_rgba(0,0,0,.75)] sm:left-[-95px] sm:top-[-132px] sm:w-[190px]"
-                style={{ transformOrigin: "50% 210%", transform: `rotate(${FAN_ANGLES[i]}deg)` }}
+                style={{
+                  transformOrigin: "50% 210%",
+                  // Opens ~25% wider while the cursor is on the card and leans
+                  // toward it.
+                  transform: `rotate(calc(${FAN_ANGLES[i]}deg * (1 + var(--pon, 0) * 0.25) + var(--px, 0) * 5deg))`,
+                  transition: "transform 450ms cubic-bezier(.2,.8,.3,1)",
+                }}
               >
                 <img src={src} alt="" className="block w-full max-w-none" />
               </div>

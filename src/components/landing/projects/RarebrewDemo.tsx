@@ -6,7 +6,6 @@ import { ArrowLeft, ChevronDown, Layers, Library, MoreVertical, Play, Plus, Rss,
 import { CARDS, COMMANDER, DECK_NAME, scryfallImage, type DeckCard } from "@/lib/demos/rarebrew/deck";
 import { PhoneFrame } from "./PhoneFrame";
 import { dmSans, spaceGrotesk as grotesk } from "./fonts";
-import { TryHint } from "./TryHint";
 
 
 // rarebrew's tokens (app/globals.css, dark).
@@ -42,6 +41,8 @@ const STACK_OVERLAP = 4;
 const STACK_UP_SHADOW = "drop-shadow(0 -3px 6px rgba(0,0,0,0.7))";
 const STRIP_DOWN_SHADOW = "0 1px 2px rgba(0,0,0,0.4)";
 const ROW_GAP_AFTER_OPEN = 12;
+const DEAL_STEP = 55; // ms between cards dealing in
+const DEAL_MAX = 14; // rows past this land together (they're off-screen anyway)
 const rowH = (w: number) => Math.round(cardH(w) * 0.12) + STACK_OVERLAP;
 const HEADER_H = 96;
 
@@ -73,6 +74,15 @@ const money = (n: number) => `$${n.toFixed(n >= 100 ? 0 : 2)}`;
 
 export function RarebrewDemo() {
   const sections = useMemo(buildSections, []);
+  // Each section's first row index in the whole list, for the deal-in stagger.
+  const offsets = useMemo(() => {
+    let n = 0;
+    return sections.map((s) => {
+      const at = n;
+      n += s.cards.length;
+      return at;
+    });
+  }, [sections]);
   const all = useMemo(() => [COMMANDER, ...CARDS], []);
   const total = count(all);
   const [active, setActive] = useState("commander");
@@ -80,7 +90,11 @@ export function RarebrewDemo() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [insights, setInsights] = useState(false);
-  const [touched, setTouched] = useState(false);
+  // Entrance: the stack deals in when the phone scrolls into view, then the
+  // commander peeks open and closed once, unless the visitor got there first.
+  const [dealt, setDealt] = useState(false);
+  const touched = useRef(false);
+  const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -109,6 +123,35 @@ export function RarebrewDemo() {
     strip.scrollTo({ left: target, behavior: "smooth" });
   }, [active]);
 
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const timers: number[] = [];
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        setDealt(true);
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const commander = `${sections[0].id}:${sections[0].cards[0].name}`;
+        const settle = DEAL_MAX * DEAL_STEP + 600;
+        timers.push(window.setTimeout(() => !touched.current && setExpanded(commander), settle));
+        timers.push(
+          window.setTimeout(
+            () => !touched.current && setExpanded((cur) => (cur === commander ? null : cur)),
+            settle + 1900,
+          ),
+        );
+      },
+      { threshold: 0.4 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, [sections]);
+
   const jumpTo = (id: string) => {
     const el = scrollRef.current;
     const node = sectionRefs.current[id];
@@ -135,7 +178,8 @@ export function RarebrewDemo() {
   return (
     <PhoneFrame screen={C.g800} ink={C.g100}>
       <div
-        onPointerDown={() => setTouched(true)}
+        ref={rootRef}
+        onPointerDown={() => (touched.current = true)}
         className={`${dmSans.className} relative flex min-h-0 flex-1 flex-col`}
         style={{ background: C.g900, color: C.g100 }}
       >
@@ -280,7 +324,8 @@ export function RarebrewDemo() {
                             index={i}
                             open={expanded === key}
                             prevOpen={prevKey !== null && expanded === prevKey}
-                            hint={si === 0 && i === 0 ? !touched : undefined}
+                            dealt={dealt}
+                            dealDelay={Math.min(offsets[si] + i, DEAL_MAX) * DEAL_STEP}
                             onToggle={(node) => toggleRow(key, node)}
                           />
                         );
@@ -377,15 +422,16 @@ function CardRow({
   index,
   open,
   prevOpen,
-  hint,
+  dealt,
+  dealDelay,
   onToggle,
 }: {
   card: DeckCard;
   index: number;
   open: boolean;
   prevOpen: boolean;
-  /** Show the "tap a card" hint on this row; undefined = never. */
-  hint?: boolean;
+  dealt: boolean;
+  dealDelay: number;
   onToggle: (node: HTMLElement | null) => void;
 }) {
   const ref = useRef<HTMLLIElement>(null);
@@ -414,7 +460,10 @@ function CardRow({
         marginTop: index === 0 ? 0 : prevOpen || open ? ROW_GAP_AFTER_OPEN : -STACK_OVERLAP,
         // The covering card casts its shadow up onto the one behind it.
         filter: index > 0 && !open && !prevOpen ? STACK_UP_SHADOW : "none",
-        transition: `margin-top .2s ease, filter .2s ease`,
+        // Dealt onto the stack from just above, one card after another.
+        opacity: dealt ? 1 : 0,
+        transform: dealt ? "none" : "translateY(-26px) rotate(-1.5deg)",
+        transition: `margin-top .2s ease, filter .2s ease, opacity .3s ease ${dealDelay}ms, transform .45s cubic-bezier(.2,.8,.3,1) ${dealDelay}ms`,
       }}
     >
       <span className="col-start-1 row-start-1 flex h-full justify-center pt-3">
@@ -462,11 +511,6 @@ function CardRow({
           />
         )}
       </button>
-      {hint !== undefined && (
-        <div className="pointer-events-none relative col-start-2 row-start-1 self-stretch">
-          <TryHint show={hint && !open} label="Tap a card" color={C.brand} ink={C.brandText} placement="center" radius={10} />
-        </div>
-      )}
       <span className="col-start-3 row-start-1 flex h-full flex-col items-end justify-start gap-2 pr-1.5 pt-3">
         <span className="text-[10px] tabular-nums" style={{ fontFamily: MONO, color: C.g400 }}>
           {card.usd == null ? "—" : money(card.usd)}

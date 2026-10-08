@@ -16,7 +16,6 @@ import {
   type DatamuseWord,
 } from "@/lib/demos/crosscheck/datamuse";
 import { PhoneFrame } from "./PhoneFrame";
-import { TryHint } from "./TryHint";
 
 // crosscheck's own palette (src/styles.css, light theme).
 const THEME = {
@@ -61,7 +60,8 @@ function buildRequest(
 }
 
 export function CrosscheckDemo() {
-  const [query, setQuery] = useState(PRESETS[0].query);
+  // Starts empty: the clue types itself in when the phone scrolls into view.
+  const [query, setQuery] = useState("");
   const [pattern, setPattern] = useState(PRESETS[0].pattern);
   const [req, setReq] = useState<SolveRequest | null>(null);
   const [answers, setAnswers] = useState<Answer[]>([]);
@@ -69,7 +69,7 @@ export function CrosscheckDemo() {
   const [error, setError] = useState<string | null>(null);
   const [lengthFilter, setLengthFilter] = useState<number | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  const [touched, setTouched] = useState(false);
+  const touched = useRef(false);
   const abortRef = useRef<AbortController | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -114,22 +114,43 @@ export function CrosscheckDemo() {
     }
   }, []);
 
-  // Don't hit Datamuse on page load — wait until the phone scrolls into view.
+  // Autoplay once on scroll into view: type the first preset's clue into the
+  // field, then solve it. Also keeps Datamuse off the page-load path. Any
+  // press inside the demo hands control to the visitor.
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
+    const timers: number[] = [];
     const io = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          solve(PRESETS[0].query, PRESETS[0].pattern);
-          io.disconnect();
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        const { query: q, pattern: p } = PRESETS[0];
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce) {
+          setQuery(q);
+          solve(q, p);
+          return;
         }
+        for (let i = 1; i <= q.length; i++) {
+          timers.push(
+            window.setTimeout(() => {
+              if (!touched.current) setQuery(q.slice(0, i));
+            }, 400 + i * 75),
+          );
+        }
+        timers.push(
+          window.setTimeout(() => {
+            if (!touched.current) solve(q, p);
+          }, 400 + q.length * 75 + 350),
+        );
       },
-      { rootMargin: "200px" },
+      { threshold: 0.4 },
     );
     io.observe(el);
     return () => {
       io.disconnect();
+      timers.forEach((id) => window.clearTimeout(id));
       abortRef.current?.abort();
     };
   }, [solve]);
@@ -180,7 +201,12 @@ export function CrosscheckDemo() {
       : "? for each unknown letter";
 
   return (
-    <div ref={rootRef} onPointerDown={() => setTouched(true)}>
+    <div ref={rootRef} onPointerDown={() => (touched.current = true)}>
+      <style>{`
+        @keyframes cc-flip { from { opacity: 0; transform: perspective(240px) rotateX(-90deg); } to { opacity: 1; transform: none; } }
+        .cc-tile { animation: cc-flip 380ms cubic-bezier(.2,.8,.3,1) both; transform-origin: 50% 0; }
+        @media (prefers-reduced-motion: reduce) { .cc-tile { animation: none; } }
+      `}</style>
       <PhoneFrame screen="#E6DFD0" ink="#1B1B1B">
         <div
           className="flex min-h-0 flex-1 flex-col"
@@ -317,14 +343,7 @@ export function CrosscheckDemo() {
             style={{ background: "var(--ground)" }}
           >
             <div className="relative mb-4 mt-1">
-              <TryHint
-                show={!touched}
-                label="Tap a clue"
-                color="#2B4C7E"
-                ink="#fff"
-                placement="bottom"
-                radius={18}
-              />
+
               <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]">
                 {PRESETS.map((p) => {
                   const on = req?.query === p.query;
@@ -359,10 +378,12 @@ export function CrosscheckDemo() {
               </div>
             </div>
 
-            <SectionHead
-              label="Answers"
-              count={view.publishedTotal || undefined}
-            />
+            {req && (
+              <SectionHead
+                label="Answers"
+                count={view.publishedTotal || undefined}
+              />
+            )}
 
             {view.lengths.length > 1 && (
               <div className="flex items-center gap-2.5 pb-3">
@@ -408,9 +429,10 @@ export function CrosscheckDemo() {
 
             {view.published.length > 0 ? (
               <div className="flex flex-col">
-                {view.published.map((a) => (
+                {view.published.map((a, i) => (
                   <AnswerRow
                     key={a.answer}
+                    index={i}
                     answer={a}
                     req={req}
                     copied={copied === a.answer}
@@ -420,7 +442,7 @@ export function CrosscheckDemo() {
               </div>
             ) : status === "loading" && answers.length === 0 ? (
               <Skeleton />
-            ) : (
+            ) : !req ? null : (
               <p className="pb-2 text-[14px]" style={{ color: "var(--ink-3)" }}>
                 No published answer
                 {req ? (
@@ -445,9 +467,10 @@ export function CrosscheckDemo() {
                   <Skeleton />
                 ) : (
                   <div className="flex flex-col">
-                    {view.related.map((a) => (
+                    {view.related.map((a, i) => (
                       <AnswerRow
                         key={a.answer}
+                        index={view.published.length + i}
                         answer={a}
                         req={req}
                         copied={copied === a.answer}
@@ -489,11 +512,14 @@ function SectionHead({ label, count }: { label: string; count?: number }) {
 
 function AnswerRow({
   answer: a,
+  index,
   req,
   copied,
   onCopy,
 }: {
   answer: Answer;
+  /** Position in the list — staggers the tiles flipping in. */
+  index: number;
   req: SolveRequest | null;
   copied: boolean;
   onCopy: (a: Answer) => void;
@@ -534,8 +560,11 @@ function AnswerRow({
                 return (
                   <span
                     key={ci}
-                    className="grid place-items-center"
+                    className="cc-tile grid place-items-center"
                     style={{
+                      // Tiles flip down into place, row by row then letter by
+                      // letter, whenever a new set of answers arrives.
+                      animationDelay: `${Math.min(index, 10) * 70 + ci * 35}ms`,
                       width: long ? 21 : 26,
                       height: long ? 25 : 28,
                       borderRadius: long ? 3 : 4,

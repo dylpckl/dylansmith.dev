@@ -19,7 +19,6 @@ import {
 } from "@/lib/demos/prompt-fighter/victory";
 import { SEEDS, type SeedFighter } from "@/lib/demos/prompt-fighter/seeds";
 import { PixelSprite } from "./PixelSprite";
-import { TryHint } from "./TryHint";
 
 // prompt-fighter's own theme (src/theme.ts).
 const t = {
@@ -680,6 +679,7 @@ function Builder({
   const [rows, setRows] = useState(0);
   const [visible, setVisible] = useState(false);
   const [touched, setTouched] = useState(false);
+  const autoplayed = useRef(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const seed = SEEDS[index];
@@ -741,6 +741,17 @@ function Builder({
     setGenStep(0);
     setPhase("generating");
   };
+
+  // Autoplay the first build on scroll into view: once the prompts finish
+  // typing, press Generate for the visitor. One time only, and never after
+  // they've touched the demo.
+  useEffect(() => {
+    if (phase !== "ready" || touched || autoplayed.current) return;
+    autoplayed.current = true;
+    const id = window.setTimeout(generate, 450);
+    return () => window.clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- generate is stable in effect; runs once
+  }, [phase, touched]);
 
   // Which characters of each slot are typed so far.
   let budget = typed;
@@ -942,13 +953,7 @@ function Builder({
         </div>
       ) : (
         <div className="relative grid">
-          <TryHint
-            show={phase === "ready" && !touched}
-            label="Generate one"
-            color={t.accent}
-            ink="#fff"
-            radius={3}
-          />
+
           <button
             type="button"
             onClick={generate}

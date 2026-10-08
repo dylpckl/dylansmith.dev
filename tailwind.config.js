@@ -11,15 +11,6 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        // TryHint: a ring that breathes outward, and a label that bobs.
-        hintRing: {
-          '0%': { opacity: 0.9, transform: 'scale(1)' },
-          '100%': { opacity: 0, transform: 'scale(1.12)' },
-        },
-        hintBob: {
-          '0%, 100%': { transform: 'translate(-50%, 0)' },
-          '50%': { transform: 'translate(-50%, -3px)' },
-        },
         fadeToRight: {
           '0%': { opacity: 1, transform: 'translateX(0)' },
           '100%': { opacity: 0, transform: 'translateX(100%)' },
@@ -39,8 +30,6 @@ module.exports = {
         },
       },
       animation: {
-        hintRing: 'hintRing 1.6s ease-out infinite',
-        hintBob: 'hintBob 1.6s ease-in-out infinite',
         fadeToRight: 'fadeToRight .5s linear infinite',
         growProgress: 'growProgress auto linear',
         skewScroll: 'skewScroll 5s linear infinite',

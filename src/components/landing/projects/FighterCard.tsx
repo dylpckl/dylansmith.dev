@@ -105,10 +105,6 @@ export function FighterCard() {
       figureClassName="lg:py-12 lg:pl-12"
       copy={
         <>
-          <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em] text-[#83838f]">
-            <span>LLM game</span>
-          </div>
-
           <h3 className={`${pressStart.className} text-2xl uppercase leading-[1.4] md:text-3xl`}>
             Prompt
             <br />
