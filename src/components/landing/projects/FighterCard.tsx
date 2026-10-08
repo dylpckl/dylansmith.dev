@@ -107,7 +107,6 @@ export function FighterCard() {
         <>
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em] text-[#83838f]">
             <span>LLM game</span>
-            <span className="bg-[#5aa86f]/15 px-2 py-0.5 text-[10px] tracking-[0.14em] text-[#7cc68f]">Live</span>
           </div>
 
           <h3 className={`${pressStart.className} text-2xl uppercase leading-[1.4] md:text-3xl`}>
@@ -176,7 +175,7 @@ export function FighterCard() {
             href="https://prompt-fight.vercel.app"
             target="_blank"
             rel="noreferrer"
-            className={`${pressStart.className} mt-auto inline-flex h-14 w-full items-center justify-center gap-3 bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:w-fit sm:text-sm`}
+            className={`${pressStart.className} mt-auto inline-flex h-14 w-full items-center justify-center gap-3 self-end bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:w-fit sm:text-sm`}
           >
             Play prompt fighter ▶
           </a>

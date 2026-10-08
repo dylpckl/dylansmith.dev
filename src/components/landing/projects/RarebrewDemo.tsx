@@ -6,6 +6,7 @@ import { ArrowLeft, ChevronDown, Layers, Library, MoreVertical, Play, Plus, Rss,
 import { CARDS, COMMANDER, DECK_NAME, scryfallImage, type DeckCard } from "@/lib/demos/rarebrew/deck";
 import { PhoneFrame } from "./PhoneFrame";
 import { dmSans, spaceGrotesk as grotesk } from "./fonts";
+import { TryHint } from "./TryHint";
 
 
 // rarebrew's tokens (app/globals.css, dark).
@@ -79,6 +80,7 @@ export function RarebrewDemo() {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [insights, setInsights] = useState(false);
+  const [touched, setTouched] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
@@ -133,6 +135,7 @@ export function RarebrewDemo() {
   return (
     <PhoneFrame screen={C.g800} ink={C.g100}>
       <div
+        onPointerDown={() => setTouched(true)}
         className={`${dmSans.className} relative flex min-h-0 flex-1 flex-col`}
         style={{ background: C.g900, color: C.g100 }}
       >
@@ -277,6 +280,7 @@ export function RarebrewDemo() {
                             index={i}
                             open={expanded === key}
                             prevOpen={prevKey !== null && expanded === prevKey}
+                            hint={si === 0 && i === 0 ? !touched : undefined}
                             onToggle={(node) => toggleRow(key, node)}
                           />
                         );
@@ -373,12 +377,15 @@ function CardRow({
   index,
   open,
   prevOpen,
+  hint,
   onToggle,
 }: {
   card: DeckCard;
   index: number;
   open: boolean;
   prevOpen: boolean;
+  /** Show the "tap a card" hint on this row; undefined = never. */
+  hint?: boolean;
   onToggle: (node: HTMLElement | null) => void;
 }) {
   const ref = useRef<HTMLLIElement>(null);
@@ -410,7 +417,7 @@ function CardRow({
         transition: `margin-top .2s ease, filter .2s ease`,
       }}
     >
-      <span className="flex h-full justify-center pt-3">
+      <span className="col-start-1 row-start-1 flex h-full justify-center pt-3">
         {card.qty > 1 && (
           <span className="text-[11px] font-bold tabular-nums" style={{ fontFamily: MONO, color: C.g300 }}>
             {card.qty}×
@@ -423,7 +430,7 @@ function CardRow({
         onClick={() => onToggle(ref.current)}
         aria-expanded={open}
         aria-label={`${card.name}${open ? ", collapse" : ", expand"}`}
-        className="relative w-full overflow-hidden text-left"
+        className="relative col-start-2 row-start-1 w-full overflow-hidden text-left"
         style={{
           height: open ? cardH(w) : rowH(w),
           // Collapsed strips are top-rounded with no bottom edge, so the seams
@@ -455,7 +462,12 @@ function CardRow({
           />
         )}
       </button>
-      <span className="flex h-full flex-col items-end justify-start gap-2 pr-1.5 pt-3">
+      {hint !== undefined && (
+        <div className="pointer-events-none relative col-start-2 row-start-1 self-stretch">
+          <TryHint show={hint && !open} label="Tap a card" color={C.brand} ink={C.brandText} placement="center" radius={10} />
+        </div>
+      )}
+      <span className="col-start-3 row-start-1 flex h-full flex-col items-end justify-start gap-2 pr-1.5 pt-3">
         <span className="text-[10px] tabular-nums" style={{ fontFamily: MONO, color: C.g400 }}>
           {card.usd == null ? "—" : money(card.usd)}
         </span>

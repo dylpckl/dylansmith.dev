@@ -79,7 +79,7 @@ export function CrosscheckCard() {
       masthead={
         <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:flex-row lg:justify-between lg:pt-8">
           <span className="order-2 text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:order-1 lg:w-56 lg:whitespace-nowrap">
-            Mobile-first PWA · <span className="text-[#2F7A4C]">Active</span>
+            Mobile-first PWA
           </span>
           <h3 className="order-1 flex gap-[3px] sm:gap-1 lg:order-2" aria-label="crosscheck">
             {"CROSSCHECK".split("").map((ch, i) => (

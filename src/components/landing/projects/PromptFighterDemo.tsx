@@ -19,6 +19,7 @@ import {
 } from "@/lib/demos/prompt-fighter/victory";
 import { SEEDS, type SeedFighter } from "@/lib/demos/prompt-fighter/seeds";
 import { PixelSprite } from "./PixelSprite";
+import { TryHint } from "./TryHint";
 
 // prompt-fighter's own theme (src/theme.ts).
 const t = {
@@ -33,7 +34,8 @@ const t = {
   good: "#5aa86f",
   warn: "#c9a227",
 };
-const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
+const MONO =
+  'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
 const BEAT_MS = 720;
 
 const STAT_LABEL: Record<keyof Stats, string> = {
@@ -58,7 +60,8 @@ type PoolFighter = (typeof ROSTER)[number] | SeedFighter;
 function Arena({ built }: { built: SeedFighter | null }) {
   // A freshly built fighter takes side A against a random roster opponent.
   const pool: PoolFighter[] = useMemo(
-    () => (built ? [built, ...ROSTER.filter((r) => r.name !== built.name)] : ROSTER),
+    () =>
+      built ? [built, ...ROSTER.filter((r) => r.name !== built.name)] : ROSTER,
     [built],
   );
   const [pick, setPick] = useState<Record<Side, number>>(() => ({
@@ -79,7 +82,8 @@ function Arena({ built }: { built: SeedFighter | null }) {
   const result = useMemo(() => simulate(a, b, seed), [a, b, seed]);
   const log = result.log;
   const finished = step >= log.length && step > 0;
-  const current: TurnEvent | null = step > 0 ? log[Math.min(step, log.length) - 1] : null;
+  const current: TurnEvent | null =
+    step > 0 ? log[Math.min(step, log.length) - 1] : null;
   const hp = current ? current.hp : result.maxHp;
   const meter = current ? current.meter : { a: 0, b: 0 };
 
@@ -89,7 +93,10 @@ function Arena({ built }: { built: SeedFighter | null }) {
       setRunning(false);
       return;
     }
-    timer.current = window.setTimeout(() => setStep((s) => s + 1), step === 0 ? 300 : BEAT_MS);
+    timer.current = window.setTimeout(
+      () => setStep((s) => s + 1),
+      step === 0 ? 300 : BEAT_MS,
+    );
     return () => {
       if (timer.current) window.clearTimeout(timer.current);
     };
@@ -143,25 +150,40 @@ function Arena({ built }: { built: SeedFighter | null }) {
           })}
         </div>
 
-        <PressureMeters a={current?.pressure.a ?? ZERO_METERS} b={current?.pressure.b ?? ZERO_METERS} />
+        <PressureMeters
+          a={current?.pressure.a ?? ZERO_METERS}
+          b={current?.pressure.b ?? ZERO_METERS}
+        />
 
         {/* battlefield */}
         <div
           className="relative h-[150px] overflow-hidden rounded-[3px] sm:h-[176px]"
-          style={{ border: `1px solid ${t.line}`, background: `linear-gradient(180deg, #0e0e11 0%, ${t.panel} 100%)` }}
+          style={{
+            border: `1px solid ${t.line}`,
+            background: `linear-gradient(180deg, #0e0e11 0%, ${t.panel} 100%)`,
+          }}
         >
-          <div className="absolute inset-x-0 bottom-0 h-6" style={{ background: t.panelHi, borderTop: `1px solid ${t.line}` }} />
+          <div
+            className="absolute inset-x-0 bottom-0 h-6"
+            style={{ background: t.panelHi, borderTop: `1px solid ${t.line}` }}
+          />
           <div className="absolute inset-x-0 bottom-4 flex items-end justify-between px-4 sm:px-8">
             {(["a", "b"] as const).map((side) => {
               const f = side === "a" ? a : b;
-              const acting = current?.actor === side && !current.missed && current.move !== "—";
+              const acting =
+                current?.actor === side &&
+                !current.missed &&
+                current.move !== "—";
               return (
                 <div key={side} className="relative">
                   {current && hitSide === side && (
                     <span
                       key={`dmg-${step}`}
                       className="pf-anim absolute -top-2 left-1/2 -translate-x-1/2 text-[13px] font-bold"
-                      style={{ color: t.accent, animation: "pf-float 700ms ease-out forwards" }}
+                      style={{
+                        color: t.accent,
+                        animation: "pf-float 700ms ease-out forwards",
+                      }}
                     >
                       −{current.damage}
                     </span>
@@ -170,7 +192,10 @@ function Arena({ built }: { built: SeedFighter | null }) {
                     <span
                       key={`heal-${step}`}
                       className="pf-anim absolute -top-2 left-1/2 -translate-x-1/2 text-[13px] font-bold"
-                      style={{ color: t.good, animation: "pf-float 700ms ease-out forwards" }}
+                      style={{
+                        color: t.good,
+                        animation: "pf-float 700ms ease-out forwards",
+                      }}
                     >
                       +{current.heal}
                     </span>
@@ -178,22 +203,38 @@ function Arena({ built }: { built: SeedFighter | null }) {
                   <div
                     key={acting ? `lunge-${step}` : "still"}
                     className="pf-anim"
-                    style={{ animation: acting ? `${side === "a" ? "pf-lunge-r" : "pf-lunge-l"} 320ms ease-out` : undefined }}
+                    style={{
+                      animation: acting
+                        ? `${side === "a" ? "pf-lunge-r" : "pf-lunge-l"} 320ms ease-out`
+                        : undefined,
+                    }}
                   >
                     <div
                       key={hitSide === side ? `hit-${step}` : "ok"}
                       className="pf-anim"
-                      style={{ animation: hitSide === side ? "pf-hit 320ms ease-out" : undefined }}
+                      style={{
+                        animation:
+                          hitSide === side
+                            ? "pf-hit 320ms ease-out"
+                            : undefined,
+                      }}
                     >
                       <div
                         className="pf-anim"
                         style={{
-                          animation: !finished ? "pf-bob 1.6s ease-in-out infinite" : undefined,
-                          opacity: finished && result.winner !== side ? 0.35 : 1,
+                          animation: !finished
+                            ? "pf-bob 1.6s ease-in-out infinite"
+                            : undefined,
+                          opacity:
+                            finished && result.winner !== side ? 0.35 : 1,
                           transition: "opacity 400ms ease",
                         }}
                       >
-                        <PixelSprite sprite={f.sprite} flip={side === "b"} className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]" />
+                        <PixelSprite
+                          sprite={f.sprite}
+                          flip={side === "b"}
+                          className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]"
+                        />
                       </div>
                     </div>
                   </div>
@@ -208,7 +249,10 @@ function Arena({ built }: { built: SeedFighter | null }) {
             >
               <span
                 className="rounded-[3px] px-2.5 py-1 text-[11px] uppercase tracking-[0.18em]"
-                style={{ background: result.pressure ? t.warn : t.accent, color: "#fff" }}
+                style={{
+                  background: result.pressure ? t.warn : t.accent,
+                  color: "#fff",
+                }}
               >
                 {VICTORY_LABELS[result.victory]}
               </span>
@@ -221,7 +265,11 @@ function Arena({ built }: { built: SeedFighter | null }) {
           {(["a", "b"] as const).map((side) => {
             const f = side === "a" ? a : b;
             return (
-              <div key={side} className="rounded-[4px] p-2.5" style={{ background: t.panel, border: `1px solid ${t.line}` }}>
+              <div
+                key={side}
+                className="rounded-[4px] p-2.5"
+                style={{ background: t.panel, border: `1px solid ${t.line}` }}
+              >
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
@@ -233,8 +281,13 @@ function Arena({ built }: { built: SeedFighter | null }) {
                     ‹
                   </button>
                   <div className="min-w-0 flex-1 text-center">
-                    <p className="line-clamp-2 text-[11px] leading-tight sm:text-[13px]">{f.name}</p>
-                    <p className="mt-0.5 hidden truncate text-[11px] sm:block" style={{ color: t.dim }}>
+                    <p className="line-clamp-2 text-[11px] leading-tight sm:text-[13px]">
+                      {f.name}
+                    </p>
+                    <p
+                      className="mt-0.5 hidden truncate text-[11px] sm:block"
+                      style={{ color: t.dim }}
+                    >
                       {f.title}
                     </p>
                   </div>
@@ -248,13 +301,18 @@ function Arena({ built }: { built: SeedFighter | null }) {
                     ›
                   </button>
                 </div>
-                <div className="mt-2 flex items-center justify-between text-[10px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
+                <div
+                  className="mt-2 flex items-center justify-between text-[10px] uppercase tracking-[0.14em]"
+                  style={{ color: t.faint }}
+                >
                   <span>
                     {f.wins}–{f.losses}
                   </span>
                   <button
                     type="button"
-                    onClick={() => setStatsOpen((s) => (s === side ? null : side))}
+                    onClick={() =>
+                      setStatsOpen((s) => (s === side ? null : side))
+                    }
                     aria-expanded={statsOpen === side}
                     className="uppercase tracking-[0.14em] underline-offset-2 hover:underline"
                     style={{ color: statsOpen === side ? t.text : t.dim }}
@@ -267,14 +325,30 @@ function Arena({ built }: { built: SeedFighter | null }) {
           })}
         </div>
 
-        {statsOpen && <StatBudget stats={(statsOpen === "a" ? a : b).stats} name={(statsOpen === "a" ? a : b).name} flaw={(statsOpen === "a" ? a : b).flaw.name} moves={(statsOpen === "a" ? a : b).moves.map((m) => m.name)} />}
+        {statsOpen && (
+          <StatBudget
+            stats={(statsOpen === "a" ? a : b).stats}
+            name={(statsOpen === "a" ? a : b).name}
+            flaw={(statsOpen === "a" ? a : b).flaw.name}
+            moves={(statsOpen === "a" ? a : b).moves.map((m) => m.name)}
+          />
+        )}
 
         {/* log */}
-        <div className="rounded-[4px] p-3" style={{ background: t.panel, border: `1px solid ${t.line}` }}>
-          <p className="mb-2 text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+        <div
+          className="rounded-[4px] p-3"
+          style={{ background: t.panel, border: `1px solid ${t.line}` }}
+        >
+          <p
+            className="mb-2 text-[10px] uppercase tracking-[0.14em]"
+            style={{ color: t.dim }}
+          >
             Battle log
           </p>
-          <div ref={logRef} className="grid h-[92px] content-start gap-1.5 overflow-y-auto pr-1 [scrollbar-color:#2a2a31_transparent] [scrollbar-width:thin]">
+          <div
+            ref={logRef}
+            className="grid h-[92px] content-start gap-1.5 overflow-y-auto pr-1 [scrollbar-color:#2a2a31_transparent] [scrollbar-width:thin]"
+          >
             {step === 0 ? (
               <p style={{ color: t.faint }}>Waiting for the bell.</p>
             ) : (
@@ -284,7 +358,10 @@ function Arena({ built }: { built: SeedFighter | null }) {
                   <p
                     key={`${seed}-${i}`}
                     className="pf-anim leading-snug"
-                    style={{ color: last ? t.text : t.faint, animation: last ? "pf-pop 200ms ease-out" : undefined }}
+                    style={{
+                      color: last ? t.text : t.faint,
+                      animation: last ? "pf-pop 200ms ease-out" : undefined,
+                    }}
                   >
                     {e.text}
                   </p>
@@ -292,7 +369,14 @@ function Arena({ built }: { built: SeedFighter | null }) {
               })
             )}
             {finished && winner && loser && (
-              <p className="pf-anim mt-1 border-t pt-2 leading-snug" style={{ borderColor: t.line, color: t.text, animation: "pf-pop 260ms ease-out" }}>
+              <p
+                className="pf-anim mt-1 border-t pt-2 leading-snug"
+                style={{
+                  borderColor: t.line,
+                  color: t.text,
+                  animation: "pf-pop 260ms ease-out",
+                }}
+              >
                 {victoryText(result.victory, winner.name, loser.name)}
               </p>
             )}
@@ -306,7 +390,11 @@ function Arena({ built }: { built: SeedFighter | null }) {
             onClick={() => fight(finished ? newSeed() : seed)}
             disabled={running}
             className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
-            style={{ background: t.accent, color: "#fff", border: `1px solid ${t.accent}` }}
+            style={{
+              background: t.accent,
+              color: "#fff",
+              border: `1px solid ${t.accent}`,
+            }}
           >
             {running ? "Fighting…" : finished ? "Rematch · new seed" : "Fight"}
           </button>
@@ -316,12 +404,19 @@ function Arena({ built }: { built: SeedFighter | null }) {
             disabled={running || !finished}
             title="Same fighters, same seed — the sim is deterministic, so this replays the identical fight."
             className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
-            style={{ background: "transparent", color: t.dim, border: `1px solid ${t.line}` }}
+            style={{
+              background: "transparent",
+              color: t.dim,
+              border: `1px solid ${t.line}`,
+            }}
           >
             Replay seed
           </button>
         </div>
-        <p className="text-center text-[10px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
+        <p
+          className="text-center text-[10px] uppercase tracking-[0.14em]"
+          style={{ color: t.faint }}
+        >
           seed {seed.toString(16).padStart(8, "0")}
         </p>
       </div>
@@ -329,29 +424,60 @@ function Arena({ built }: { built: SeedFighter | null }) {
   );
 }
 
-function HealthBar({ side, name, hp, max, meter }: { side: Side; name: string; hp: number; max: number; meter: number }) {
+function HealthBar({
+  side,
+  name,
+  hp,
+  max,
+  meter,
+}: {
+  side: Side;
+  name: string;
+  hp: number;
+  max: number;
+  meter: number;
+}) {
   const pct = Math.max(0, Math.min(100, (hp / max) * 100));
   const right = side === "b";
   return (
     <div className="grid min-w-0 gap-1.5">
-      <div className={`flex items-baseline justify-between gap-2 ${right ? "flex-row-reverse" : ""}`}>
+      <div
+        className={`flex items-baseline justify-between gap-2 ${right ? "flex-row-reverse" : ""}`}
+      >
         <span className="truncate text-[11px] sm:text-[12px]">{name}</span>
-        <span className="shrink-0 text-[10px] tabular-nums" style={{ color: t.dim }}>
+        <span
+          className="shrink-0 text-[10px] tabular-nums"
+          style={{ color: t.dim }}
+        >
           {hp}/{max}
         </span>
       </div>
-      <div className={`flex h-2.5 ${right ? "justify-end" : ""}`} style={{ background: t.panelHi, border: `1px solid ${t.line}` }}>
+      <div
+        className={`flex h-2.5 ${right ? "justify-end" : ""}`}
+        style={{ background: t.panelHi, border: `1px solid ${t.line}` }}
+      >
         <div
           style={{
             width: `${pct}%`,
             background: pct > 50 ? t.good : pct > 25 ? t.warn : t.accent,
-            transition: "width 420ms cubic-bezier(0.2, 0.8, 0.3, 1), background 220ms ease",
+            transition:
+              "width 420ms cubic-bezier(0.2, 0.8, 0.3, 1), background 220ms ease",
           }}
         />
       </div>
-      <div className={`flex gap-1 ${right ? "justify-end" : ""}`} aria-label={`Signature meter ${meter} of ${METER_TO_SPECIAL}`}>
+      <div
+        className={`flex gap-1 ${right ? "justify-end" : ""}`}
+        aria-label={`Signature meter ${meter} of ${METER_TO_SPECIAL}`}
+      >
         {Array.from({ length: METER_TO_SPECIAL }, (_, i) => (
-          <span key={i} className="h-1 w-4" style={{ background: i < meter ? t.warn : t.panelHi, border: `1px solid ${t.line}` }} />
+          <span
+            key={i}
+            className="h-1 w-4"
+            style={{
+              background: i < meter ? t.warn : t.panelHi,
+              border: `1px solid ${t.line}`,
+            }}
+          />
         ))}
       </div>
     </div>
@@ -366,13 +492,29 @@ const ZERO_METERS: TurnEvent["pressure"]["a"] = { crowd: 0, hex: 0, fate: 0 };
  * All three tracks, always — the app hides dead tracks, but here that made the
  * card grow mid-fight. A track nobody has pushed yet just sits dimmed.
  */
-function PressureMeters({ a, b }: { a: TurnEvent["pressure"]["a"]; b: TurnEvent["pressure"]["b"] }) {
+function PressureMeters({
+  a,
+  b,
+}: {
+  a: TurnEvent["pressure"]["a"];
+  b: TurnEvent["pressure"]["b"];
+}) {
   return (
     <div className="grid gap-1">
       {PRESSURE_TRACKS.map((tr) => (
-        <div key={tr} className="flex items-center gap-2" style={{ opacity: a[tr] > 0 || b[tr] > 0 ? 1 : 0.45, transition: "opacity 220ms ease" }}>
+        <div
+          key={tr}
+          className="flex items-center gap-2"
+          style={{
+            opacity: a[tr] > 0 || b[tr] > 0 ? 1 : 0.45,
+            transition: "opacity 220ms ease",
+          }}
+        >
           <MeterBar value={a[tr]} align="right" />
-          <span className="w-12 shrink-0 text-center text-[9px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
+          <span
+            className="w-12 shrink-0 text-center text-[9px] uppercase tracking-[0.14em]"
+            style={{ color: t.faint }}
+          >
             {TRACK_LABELS[tr]}
           </span>
           <MeterBar value={b[tr]} align="left" />
@@ -382,11 +524,26 @@ function PressureMeters({ a, b }: { a: TurnEvent["pressure"]["a"]; b: TurnEvent[
   );
 }
 
-function MeterBar({ value, align }: { value: number; align: "left" | "right" }) {
+function MeterBar({
+  value,
+  align,
+}: {
+  value: number;
+  align: "left" | "right";
+}) {
   const pct = Math.max(0, Math.min(100, (value / PRESSURE_THRESHOLD) * 100));
   return (
-    <div className={`flex h-1 flex-1 ${align === "right" ? "justify-end" : ""}`} style={{ background: t.panelHi }}>
-      <div style={{ width: `${pct}%`, background: pct >= 100 ? t.warn : t.accent, transition: "width 380ms cubic-bezier(0.2, 0.8, 0.3, 1)" }} />
+    <div
+      className={`flex h-1 flex-1 ${align === "right" ? "justify-end" : ""}`}
+      style={{ background: t.panelHi }}
+    >
+      <div
+        style={{
+          width: `${pct}%`,
+          background: pct >= 100 ? t.warn : t.accent,
+          transition: "width 380ms cubic-bezier(0.2, 0.8, 0.3, 1)",
+        }}
+      />
     </div>
   );
 }
@@ -396,37 +553,83 @@ function MeterBar({ value, align }: { value: number; align: "left" | "right" }) 
  * against the fixed budget. A fighter described as invincible still fills
  * exactly 30 cells — it just fills them lopsidedly.
  */
-function StatBudget({ stats, name, flaw, moves }: { stats: Stats; name: string; flaw: string; moves: string[] }) {
-  const rows: { label: string; keys: readonly (keyof Stats)[]; total: number; colors: string[] }[] = [
+function StatBudget({
+  stats,
+  name,
+  flaw,
+  moves,
+}: {
+  stats: Stats;
+  name: string;
+  flaw: string;
+  moves: string[];
+}) {
+  const rows: {
+    label: string;
+    keys: readonly (keyof Stats)[];
+    total: number;
+    colors: string[];
+  }[] = [
     { label: "Body", keys: BODY_KEYS, total: STAT_TOTAL, colors: BODY_COLORS },
-    { label: "Spirit", keys: SPIRIT_KEYS, total: SPIRIT_TOTAL, colors: SPIRIT_COLORS },
+    {
+      label: "Spirit",
+      keys: SPIRIT_KEYS,
+      total: SPIRIT_TOTAL,
+      colors: SPIRIT_COLORS,
+    },
   ];
   return (
-    <div className="pf-anim grid gap-3 rounded-[4px] p-3" style={{ background: t.panel, border: `1px solid ${t.line}`, animation: "pf-pop 200ms ease-out" }}>
-      <p className="text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+    <div
+      className="pf-anim grid gap-3 rounded-[4px] p-3"
+      style={{
+        background: t.panel,
+        border: `1px solid ${t.line}`,
+        animation: "pf-pop 200ms ease-out",
+      }}
+    >
+      <p
+        className="text-[10px] uppercase tracking-[0.14em]"
+        style={{ color: t.dim }}
+      >
         {name} · stat budget
       </p>
       {rows.map((r) => {
         const spent = r.keys.reduce((s, k) => s + (stats[k] ?? 0), 0);
         return (
           <div key={r.label} className="grid gap-1.5">
-            <div className="flex justify-between text-[10px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
+            <div
+              className="flex justify-between text-[10px] uppercase tracking-[0.14em]"
+              style={{ color: t.faint }}
+            >
               <span>{r.label}</span>
-              <span className="tabular-nums" style={{ color: spent === r.total ? t.good : t.warn }}>
+              <span
+                className="tabular-nums"
+                style={{ color: spent === r.total ? t.good : t.warn }}
+              >
                 {spent}/{r.total}
               </span>
             </div>
             <div className="flex gap-[2px]">
               {r.keys.flatMap((k, ki) =>
                 Array.from({ length: stats[k] ?? 0 }, (_, i) => (
-                  <span key={`${k}-${i}`} className="h-2.5 flex-1" style={{ background: r.colors[ki] }} />
+                  <span
+                    key={`${k}-${i}`}
+                    className="h-2.5 flex-1"
+                    style={{ background: r.colors[ki] }}
+                  />
                 )),
               )}
             </div>
-            <div className="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px]" style={{ color: t.dim }}>
+            <div
+              className="flex flex-wrap gap-x-3 gap-y-0.5 text-[10px]"
+              style={{ color: t.dim }}
+            >
               {r.keys.map((k, ki) => (
                 <span key={k} className="inline-flex items-center gap-1">
-                  <span className="h-1.5 w-1.5" style={{ background: r.colors[ki] }} />
+                  <span
+                    className="h-1.5 w-1.5"
+                    style={{ background: r.colors[ki] }}
+                  />
                   {STAT_LABEL[k]} {stats[k]}
                 </span>
               ))}
@@ -435,7 +638,8 @@ function StatBudget({ stats, name, flaw, moves }: { stats: Stats; name: string; 
         );
       })}
       <p className="text-[11px] leading-snug" style={{ color: t.dim }}>
-        Moves: <span style={{ color: t.text }}>{moves.join(" / ")}</span> · Flaw: <span style={{ color: t.text }}>{flaw}</span>
+        Moves: <span style={{ color: t.text }}>{moves.join(" / ")}</span> ·
+        Flaw: <span style={{ color: t.text }}>{flaw}</span>
       </p>
     </div>
   );
@@ -462,13 +666,20 @@ type Phase = "typing" | "ready" | "generating" | "revealed";
  * themselves into the four slots, "Generate" walks the steps the server takes,
  * and the fighter Claude actually produced for those prompts draws in.
  */
-function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active: boolean }) {
+function Builder({
+  onSend,
+  active,
+}: {
+  onSend: (f: SeedFighter) => void;
+  active: boolean;
+}) {
   const [index, setIndex] = useState(0);
   const [typed, setTyped] = useState(0);
   const [phase, setPhase] = useState<Phase>("typing");
   const [genStep, setGenStep] = useState(0);
   const [rows, setRows] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [touched, setTouched] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const seed = SEEDS[index];
@@ -479,7 +690,10 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), { threshold: 0.3 });
+    const io = new IntersectionObserver(
+      ([e]) => e.isIntersecting && setVisible(true),
+      { threshold: 0.3 },
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -490,7 +704,10 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
       setPhase("ready");
       return;
     }
-    const id = window.setTimeout(() => setTyped((n) => Math.min(total, n + 2)), 22);
+    const id = window.setTimeout(
+      () => setTyped((n) => Math.min(total, n + 2)),
+      22,
+    );
     return () => window.clearTimeout(id);
   }, [visible, active, phase, typed, total]);
 
@@ -532,14 +749,24 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
     budget -= x.length;
     return x.slice(0, n);
   });
-  const typingSlot = phase === "typing" ? shown.findIndex((x, i) => x.length < texts[i].length) : -1;
+  const typingSlot =
+    phase === "typing"
+      ? shown.findIndex((x, i) => x.length < texts[i].length)
+      : -1;
   const revealed = phase === "revealed";
   const done = revealed && rows >= 16;
 
   return (
-    <div ref={rootRef} className="grid gap-3 p-3 sm:p-4">
+    <div
+      ref={rootRef}
+      onPointerDown={() => setTouched(true)}
+      className="grid gap-3 p-3 sm:p-4"
+    >
       <div className="flex items-center justify-between gap-3">
-        <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+        <span
+          className="text-[10px] uppercase tracking-[0.14em]"
+          style={{ color: t.dim }}
+        >
           Seed pool · {index + 1}/{SEEDS.length}
         </span>
         <button
@@ -556,7 +783,10 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
       <div className="grid gap-2">
         {SLOTS.map((slot, i) => (
           <div key={slot.key} className="grid gap-1">
-            <div className="flex justify-between text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+            <div
+              className="flex justify-between text-[10px] uppercase tracking-[0.14em]"
+              style={{ color: t.dim }}
+            >
               <span>{slot.label}</span>
               <span className="tabular-nums" style={{ color: t.faint }}>
                 {shown[i].length}/80
@@ -574,7 +804,10 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
             >
               {shown[i]}
               {typingSlot === i && (
-                <span className="ml-px inline-block h-[13px] w-[7px] translate-y-[2px] animate-pulse" style={{ background: t.accent }} />
+                <span
+                  className="ml-px inline-block h-[13px] w-[7px] translate-y-[2px] animate-pulse"
+                  style={{ background: t.accent }}
+                />
               )}
             </div>
           </div>
@@ -582,48 +815,99 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
       </div>
 
       {/* Reveal area: fixed height, so nothing below moves as the fighter draws in. */}
-      <div className="relative h-[176px] overflow-hidden rounded-[4px]" style={{ background: t.panel, border: `1px solid ${t.line}` }}>
+      <div
+        className="relative h-[176px] overflow-hidden rounded-[4px]"
+        style={{ background: t.panel, border: `1px solid ${t.line}` }}
+      >
         {phase === "generating" ? (
           <div className="grid h-full content-center gap-1.5 px-4">
             {GEN_STEPS.map((step, i) => (
               <p
                 key={step}
                 className="text-[12px]"
-                style={{ color: i < genStep ? t.dim : i === genStep ? t.text : t.faint, opacity: i <= genStep ? 1 : 0.4 }}
+                style={{
+                  color: i < genStep ? t.dim : i === genStep ? t.text : t.faint,
+                  opacity: i <= genStep ? 1 : 0.4,
+                }}
               >
-                <span style={{ color: i < genStep ? t.good : t.accent }}>{i < genStep ? "✓" : "▶"}</span> {step}
+                <span style={{ color: i < genStep ? t.good : t.accent }}>
+                  {i < genStep ? "✓" : "▶"}
+                </span>{" "}
+                {step}
               </p>
             ))}
           </div>
         ) : revealed ? (
-          <div className="pf-anim flex h-full gap-4 p-3" style={{ animation: "pf-pop 220ms ease-out" }}>
-            <div className="grid shrink-0 place-items-center rounded-[3px] px-2" style={{ background: "#0e0e11", border: `1px solid ${t.line}` }}>
-              <PixelSprite sprite={seed.sprite} rows={rows} className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]" />
+          <div
+            className="pf-anim flex h-full gap-4 p-3"
+            style={{ animation: "pf-pop 220ms ease-out" }}
+          >
+            <div
+              className="grid shrink-0 place-items-center rounded-[3px] px-2"
+              style={{ background: "#0e0e11", border: `1px solid ${t.line}` }}
+            >
+              <PixelSprite
+                sprite={seed.sprite}
+                rows={rows}
+                className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]"
+              />
             </div>
             <div className="grid min-w-0 flex-1 content-start gap-2">
-              <div style={{ opacity: rows >= 8 ? 1 : 0, transition: "opacity 300ms ease" }}>
+              <div
+                style={{
+                  opacity: rows >= 8 ? 1 : 0,
+                  transition: "opacity 300ms ease",
+                }}
+              >
                 <p className="truncate text-[14px]">{seed.name}</p>
-                <p className="truncate text-[11px]" style={{ color: t.dim }}>{seed.title}</p>
+                <p className="truncate text-[11px]" style={{ color: t.dim }}>
+                  {seed.title}
+                </p>
               </div>
-              <div className="flex gap-[2px]" style={{ opacity: rows >= 12 ? 1 : 0, transition: "opacity 300ms ease" }}>
+              <div
+                className="flex gap-[2px]"
+                style={{
+                  opacity: rows >= 12 ? 1 : 0,
+                  transition: "opacity 300ms ease",
+                }}
+              >
                 {BODY_KEYS.flatMap((k, ki) =>
                   Array.from({ length: seed.stats[k] }, (_, j) => (
-                    <span key={`${k}-${j}`} className="h-2 flex-1" style={{ background: BODY_COLORS[ki] }} />
+                    <span
+                      key={`${k}-${j}`}
+                      className="h-2 flex-1"
+                      style={{ background: BODY_COLORS[ki] }}
+                    />
                   )),
                 )}
               </div>
-              <p className="text-[10px] tabular-nums" style={{ color: t.faint, opacity: rows >= 12 ? 1 : 0 }}>
-                HP {seed.stats.hp} · ATK {seed.stats.atk} · DEF {seed.stats.def} · SPD {seed.stats.spd} = 30
+              <p
+                className="text-[10px] tabular-nums"
+                style={{ color: t.faint, opacity: rows >= 12 ? 1 : 0 }}
+              >
+                HP {seed.stats.hp} · ATK {seed.stats.atk} · DEF {seed.stats.def}{" "}
+                · SPD {seed.stats.spd} = 30
               </p>
-              <p className="text-[11px] leading-snug" style={{ color: t.dim, opacity: done ? 1 : 0, transition: "opacity 300ms ease" }}>
-                <span style={{ color: t.text }}>{seed.moves[0].name}</span> / <span style={{ color: t.text }}>{seed.moves[1].name}</span>
+              <p
+                className="text-[11px] leading-snug"
+                style={{
+                  color: t.dim,
+                  opacity: done ? 1 : 0,
+                  transition: "opacity 300ms ease",
+                }}
+              >
+                <span style={{ color: t.text }}>{seed.moves[0].name}</span> /{" "}
+                <span style={{ color: t.text }}>{seed.moves[1].name}</span>
                 <br />
                 Flaw: <span style={{ color: t.text }}>{seed.flaw.name}</span>
               </p>
             </div>
           </div>
         ) : (
-          <div className="grid h-full place-items-center px-6 text-center text-[12px]" style={{ color: t.faint }}>
+          <div
+            className="grid h-full place-items-center px-6 text-center text-[12px]"
+            style={{ color: t.faint }}
+          >
             Your fighter appears here.
           </div>
         )}
@@ -635,7 +919,11 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
             type="button"
             onClick={() => onSend(seed)}
             className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em]"
-            style={{ background: t.accent, color: "#fff", border: `1px solid ${t.accent}` }}
+            style={{
+              background: t.accent,
+              color: "#fff",
+              border: `1px solid ${t.accent}`,
+            }}
           >
             Send to the arena ▶
           </button>
@@ -643,25 +931,46 @@ function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active:
             type="button"
             onClick={nextPrompts}
             className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em]"
-            style={{ background: "transparent", color: t.dim, border: `1px solid ${t.line}` }}
+            style={{
+              background: "transparent",
+              color: t.dim,
+              border: `1px solid ${t.line}`,
+            }}
           >
             Build another
           </button>
         </div>
       ) : (
-        <button
-          type="button"
-          onClick={generate}
-          disabled={phase === "generating" || phase === "revealed"}
-          className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
-          style={{ background: t.accent, color: "#fff", border: `1px solid ${t.accent}` }}
-        >
-          {phase === "generating" ? "Generating…" : "Generate fighter"}
-        </button>
+        <div className="relative grid">
+          <TryHint
+            show={phase === "ready" && !touched}
+            label="Generate one"
+            color={t.accent}
+            ink="#fff"
+            radius={3}
+          />
+          <button
+            type="button"
+            onClick={generate}
+            disabled={phase === "generating" || phase === "revealed"}
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            style={{
+              background: t.accent,
+              color: "#fff",
+              border: `1px solid ${t.accent}`,
+            }}
+          >
+            {phase === "generating" ? "Generating…" : "Generate fighter"}
+          </button>
+        </div>
       )}
 
-      <p className="text-center text-[10px] leading-relaxed" style={{ color: t.faint }}>
-        A replay of real generations: my seed prompts and the fighters Claude made from them.
+      <p
+        className="text-center text-[10px] leading-relaxed"
+        style={{ color: t.faint }}
+      >
+        A replay of real generations: my seed prompts and the fighters Claude
+        made from them.
       </p>
     </div>
   );
@@ -679,7 +988,12 @@ export function PromptFighterDemo() {
   return (
     <div
       className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px]"
-      style={{ background: t.bg, color: t.text, fontFamily: MONO, border: `1px solid ${t.line}` }}
+      style={{
+        background: t.bg,
+        color: t.text,
+        fontFamily: MONO,
+        border: `1px solid ${t.line}`,
+      }}
     >
       <style>{`
         @keyframes pf-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
@@ -692,11 +1006,21 @@ export function PromptFighterDemo() {
       `}</style>
 
       {/* chrome */}
-      <div className="flex items-center justify-between gap-3 px-4 py-2.5" style={{ borderBottom: `1px solid ${t.line}` }}>
-        <span className="text-[12px] uppercase tracking-[0.22em]" style={{ color: t.text }}>
+      <div
+        className="flex items-center justify-between gap-3 px-4 py-2.5"
+        style={{ borderBottom: `1px solid ${t.line}` }}
+      >
+        <span
+          className="text-[12px] uppercase tracking-[0.22em]"
+          style={{ color: t.text }}
+        >
           prompt <span style={{ color: t.accent }}>fighter</span>
         </span>
-        <div role="tablist" aria-label="Demo mode" className="flex text-[10px] uppercase tracking-[0.14em]">
+        <div
+          role="tablist"
+          aria-label="Demo mode"
+          className="flex text-[10px] uppercase tracking-[0.14em]"
+        >
           {(["build", "fight"] as const).map((m) => (
             <button
               key={m}
