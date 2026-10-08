@@ -74,6 +74,8 @@ export function RarebrewCard() {
           <img
             src={COMMANDER_ART}
             alt=""
+            loading="lazy"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover object-[35%_50%] opacity-90 transition-transform duration-500 ease-out"
             style={{ transform: "translate3d(calc(var(--px, 0) * -16px), calc(var(--py, 0) * -10px), 0) scale(1.06)" }}
           />
@@ -85,7 +87,7 @@ export function RarebrewCard() {
       copy={
         <>
 
-          <h3 className={`${spaceGrotesk.className} text-5xl font-bold leading-none tracking-tight lg:text-6xl`}>
+          <h3 className={`${spaceGrotesk.className} text-4xl font-bold leading-none tracking-tight min-[360px]:text-5xl lg:text-6xl`}>
             rarebrew<span className="text-[#E0A83C]">.gg</span>
           </h3>
 
@@ -135,7 +137,7 @@ export function RarebrewCard() {
                   transition: "transform 450ms cubic-bezier(.2,.8,.3,1)",
                 }}
               >
-                <img src={src} alt="" className="block w-full max-w-none" />
+                <img src={src} alt="" loading="lazy" decoding="async" className="block w-full max-w-none" />
               </div>
             ))}
           </div>

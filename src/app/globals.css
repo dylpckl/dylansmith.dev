@@ -12,6 +12,24 @@
   }
 } */
 
+/* Page frame: the fixed sidebar's width and the main column's max width.
+   Header (sidebar), page.tsx (main) and Footer all read these. */
+:root {
+  --sidebar: 196px;
+  --content: 1340px;
+}
+
+@layer components {
+  /* Centers the column in the viewport; slides right only when the window is
+     too narrow for the centered column to clear the fixed sidebar. */
+  @media (min-width: 1024px) {
+    .main-column {
+      margin-left: max(var(--sidebar), calc((100vw - var(--content)) / 2));
+      margin-right: max(0px, calc((100vw - var(--content)) / 2));
+    }
+  }
+}
+
 html,
 body {
   scroll-behavior: smooth !important;

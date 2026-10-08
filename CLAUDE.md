@@ -22,7 +22,7 @@ npm run build
 ```
 src/
   app/
-    page.tsx                  # thin composer: refs + IntersectionObserver, ~50 lines
+    page.tsx                  # thin composer: section refs + scroll-line scroll-spy, Header + main.main-column + Footer
     layout.tsx
   components/
     landing/                  # one file per landing section
@@ -37,7 +37,8 @@ src/
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
     Tag.tsx                   # Tag + TagGroup — the canonical chip/badge component
     TechLogo.tsx              # mask-based brand SVG with hover-colorize via per-element --brand var
-    Header.jsx                # sticky sidebar nav; tracks activeSection from page.tsx
+    Header.jsx                # fixed sidebar nav (lg+), width var(--sidebar); tracks activeSection from page.tsx
+    Footer.tsx                # full-bleed site footer; inner content uses .main-column
   lib/
     demos/                    # code vendored from the side-project repos + static data snapshots the demos run on
 public/
@@ -52,9 +53,10 @@ Section flow on the landing page: **Hero → Intro → Outcomes → Work**.
 - **Tags/chips:** always use [`Tag`](src/components/Tag.tsx) (`intent: default|teal|orange`, `size: xs|sm|md`, `variant: solid|tinted`) and `TagGroup` for arrays. Don't add new inline tag styles.
 - **Tile:** [`Tile`](src/components/bento/Tile.tsx) takes optional `label`, `labelIcon`, `tags`, plus a discriminated variant (`href`, `onClickModal`, or `decorative`). Header collapses entirely when neither label nor tags are passed. Use `decorative` for non-clickable tiles.
 - **Brand logos:** drop SVGs from [simpleicons.org](https://simpleicons.org) (CC0) into `public/logos/` named with the simple-icons slug (e.g. `nextdotjs.svg`). Render via `<TechLogo name="..." label="..." brandColor="#XXXXXX" />`. Default render is monochrome `currentColor`; brand color shows on hover.
-- **Section refs:** Intro/Outcomes/Work each take a `sectionRef: RefObject<HTMLDivElement>` prop — page.tsx owns the refs and forwards them so the `IntersectionObserver` can highlight the sidebar nav. Hero no longer takes a sectionRef (it owns its own measurement via `Canvas`).
+- **Section refs:** Intro/Outcomes/Work each take a `sectionRef: RefObject<HTMLDivElement>` prop — page.tsx owns the refs; a scroll listener marks the active section as the last one whose top has passed 30% of the viewport (an IntersectionObserver threshold can't register the very tall Work section). Hero no longer takes a sectionRef (it owns its own measurement via `Canvas`).
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.
-- **Side-project demos run real code.** `src/lib/demos/<project>/` holds files copied verbatim from that project's repo (only import paths touched) plus a dated data snapshot. Refresh by re-copying, not by editing in place. Demos render in the project's own visual language (its tokens, fonts), not the portfolio's.
+- **Page frame:** `--sidebar` and `--content` live on `:root` in `globals.css`; `.main-column` centers content in the viewport and clears the fixed sidebar. Use it for anything that must line up with the cards (main, footer).
+- **Side-project demos.** `src/lib/demos/<project>/` holds files copied verbatim from that project's repo (only import paths touched) plus a dated data snapshot — prompt-fighter and crosscheck run their real code; rarebrew is a UI recreation over a data snapshot (no vendored code). Refresh by re-copying, not by editing in place. Demos render in the project's own visual language (its tokens, fonts), not the portfolio's.
 - **BeforeAfterReveal:** the drag handle accepts `initial` (0–100). Vary it across tiles for visual interest (current values: 75/62/32). Pair with `<Image fill object-cover>` inside a fixed-height container.
 
 ## Design Requirements

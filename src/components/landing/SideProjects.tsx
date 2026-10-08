@@ -12,8 +12,9 @@ export function SideProjects() {
           Side projects
         </h3>
         <p className="max-w-[60ch] text-base text-slate-300 lg:text-lg">
-          What I build after hours. Every demo below runs the project&apos;s own
-          code. Go ahead and poke at them.
+          What I build after hours. The prompt fighter and crosscheck demos run
+          each project&apos;s own code; rarebrew&apos;s is a recreation built on my
+          real deck data. Go ahead and poke at them.
         </p>
       </div>
 

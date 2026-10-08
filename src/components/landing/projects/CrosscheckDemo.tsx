@@ -16,6 +16,7 @@ import {
   type DatamuseWord,
 } from "@/lib/demos/crosscheck/datamuse";
 import { PhoneFrame } from "./PhoneFrame";
+import { CC_MONO, CC_SANS, CC_SERIF } from "./fonts";
 
 // crosscheck's own palette (src/styles.css, light theme).
 const THEME = {
@@ -31,10 +32,6 @@ const THEME = {
   "--chrome": "#E6DFD0",
 } as CSSProperties;
 
-const SANS =
-  '-apple-system, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif';
-const SERIF = 'Georgia, "Times New Roman", serif';
-const MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, monospace';
 
 const PRESETS: { query: string; pattern: string }[] = [
   { query: "old coin", pattern: "" },
@@ -201,7 +198,15 @@ export function CrosscheckDemo() {
       : "? for each unknown letter";
 
   return (
-    <div ref={rootRef} onPointerDown={() => (touched.current = true)}>
+    <div
+      ref={rootRef}
+      // Any visitor input — pointer, key, wheel, focus — cancels the autoplay
+      // so it never types over what they're doing.
+      onPointerDown={() => (touched.current = true)}
+      onKeyDown={() => (touched.current = true)}
+      onWheel={() => (touched.current = true)}
+      onFocus={() => (touched.current = true)}
+    >
       <style>{`
         @keyframes cc-flip { from { opacity: 0; transform: perspective(240px) rotateX(-90deg); } to { opacity: 1; transform: none; } }
         .cc-tile { animation: cc-flip 380ms cubic-bezier(.2,.8,.3,1) both; transform-origin: 50% 0; }
@@ -212,7 +217,7 @@ export function CrosscheckDemo() {
           className="flex min-h-0 flex-1 flex-col"
           style={{
             ...THEME,
-            fontFamily: SANS,
+            fontFamily: CC_SANS,
             color: "var(--ink)",
             fontSize: 15,
             lineHeight: 1.45,
@@ -225,7 +230,7 @@ export function CrosscheckDemo() {
           >
             <span
               className="flex-1 lowercase"
-              style={{ font: `500 18px/1 ${SERIF}`, letterSpacing: "-0.01em" }}
+              style={{ font: `500 18px/1 ${CC_SERIF}`, letterSpacing: "-0.01em" }}
             >
               Crosscheck
             </span>
@@ -317,7 +322,8 @@ export function CrosscheckDemo() {
                   autoCapitalize="characters"
                   className="h-full w-full min-w-0 bg-transparent uppercase outline-none placeholder:normal-case placeholder:tracking-normal placeholder:text-[var(--ink-3)]"
                   style={{
-                    font: `500 14px/1 ${MONO}`,
+                    // 16px: anything smaller makes iOS Safari zoom the page on focus.
+                    font: `500 16px/1 ${CC_MONO}`,
                     letterSpacing: "0.18em",
                   }}
                 />
@@ -339,7 +345,7 @@ export function CrosscheckDemo() {
           {/* results */}
           <div
             ref={scrollRef}
-            className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-8 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="min-h-0 flex-1 overflow-y-auto px-4 pb-8 pt-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
             style={{ background: "var(--ground)" }}
           >
             <div className="relative mb-4 mt-1">
@@ -364,7 +370,7 @@ export function CrosscheckDemo() {
                       {p.pattern && (
                         <span
                           style={{
-                            fontFamily: MONO,
+                            fontFamily: CC_MONO,
                             marginLeft: 6,
                             opacity: 0.7,
                           }}
@@ -572,7 +578,7 @@ function AnswerRow({
                       borderBottomWidth: 2,
                       background: hit ? "var(--blue-tint)" : "var(--paper)",
                       color: hit ? "var(--blue)" : "var(--ink)",
-                      font: `600 ${long ? 12 : 14}px/1 ${MONO}`,
+                      font: `600 ${long ? 12 : 14}px/1 ${CC_MONO}`,
                     }}
                   >
                     {ch}

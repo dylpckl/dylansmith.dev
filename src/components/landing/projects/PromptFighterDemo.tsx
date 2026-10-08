@@ -18,6 +18,7 @@ import {
   victoryText,
 } from "@/lib/demos/prompt-fighter/victory";
 import { SEEDS, type SeedFighter } from "@/lib/demos/prompt-fighter/seeds";
+import { PF_MONO } from "./fonts";
 import { PixelSprite } from "./PixelSprite";
 
 // prompt-fighter's own theme (src/theme.ts).
@@ -33,8 +34,6 @@ const t = {
   good: "#5aa86f",
   warn: "#c9a227",
 };
-const MONO =
-  'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
 const BEAT_MS = 720;
 
 const STAT_LABEL: Record<keyof Stats, string> = {
@@ -996,7 +995,7 @@ export function PromptFighterDemo() {
       style={{
         background: t.bg,
         color: t.text,
-        fontFamily: MONO,
+        fontFamily: PF_MONO,
         border: `1px solid ${t.line}`,
       }}
     >

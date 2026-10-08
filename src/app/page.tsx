@@ -48,12 +48,12 @@ export default function Home() {
   }, []);
 
   return (
-    // The sidebar is pinned to the window edge; the main column centers in the
-    // viewport, and slides right only when the window is too narrow to clear it.
-    <div id="top" className="relative min-h-screen [--content:1340px] [--sidebar:196px]">
+    // The sidebar is pinned to the window edge; .main-column (globals.css)
+    // centers the content in the viewport and clears the sidebar.
+    <div id="top" className="relative min-h-screen">
       <Header activeSection={activeSection} />
 
-      <main className="lg:ml-[max(var(--sidebar),calc((100vw_-_var(--content))/2))] lg:mr-[max(0px,calc((100vw_-_var(--content))/2))]">
+      <main className="main-column">
         {/* Site-wide background layers (z stack: dotted -20, gradient overlay -10) */}
         <div className="fixed inset-0 -z-20 h-full w-full bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-900/20 via-slate-900/40 to-slate-900/90" />

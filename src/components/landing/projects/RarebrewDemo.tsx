@@ -43,6 +43,9 @@ const STRIP_DOWN_SHADOW = "0 1px 2px rgba(0,0,0,0.4)";
 const ROW_GAP_AFTER_OPEN = 12;
 const DEAL_STEP = 55; // ms between cards dealing in
 const DEAL_MAX = 14; // rows past this land together (they're off-screen anyway)
+// Row grid is minmax(26px,1fr) | minmax(0,CARD_W) | minmax(46px,1fr) inside
+// the list's 4px side padding, so the card column is whatever's left, capped.
+const rowCardW = (listW: number) => (listW ? Math.max(0, Math.min(CARD_W, listW - 8 - 26 - 46)) : CARD_W);
 const rowH = (w: number) => Math.round(cardH(w) * 0.12) + STACK_OVERLAP;
 const HEADER_H = 96;
 
@@ -93,19 +96,25 @@ export function RarebrewDemo() {
   // Entrance: the stack deals in when the phone scrolls into view, then the
   // commander peeks open and closed once, unless the visitor got there first.
   const [dealt, setDealt] = useState(false);
+  // Reduced motion: the stack appears in place, no deal-in or peek.
+  const [instant, setInstant] = useState(false);
+  // Any visitor input — pointer, key, wheel, focus — cancels the autoplay.
   const touched = useRef(false);
+  const touch = () => (touched.current = true);
+  // One width for every row: they all share the list's center column.
+  const [listW, setListW] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const spyLock = useRef(false);
+  const spyTarget = useRef(0);
+  const spyTimer = useRef<number | undefined>(undefined);
 
   // Scroll-spy: the active tab is the last section whose top has passed the header.
-  const onScroll = useCallback(() => {
+  const updateActive = useCallback(() => {
     const el = scrollRef.current;
     if (!el) return;
-    setScrolled(el.scrollTop > 2);
-    if (spyLock.current) return;
     let current = sections[0].id;
     for (const s of sections) {
       const node = sectionRefs.current[s.id];
@@ -113,6 +122,41 @@ export function RarebrewDemo() {
     }
     setActive(current);
   }, [sections]);
+
+  // A tab jump locks the spy until the list actually arrives at the jump's
+  // target, however long the smooth scroll takes (or however late it starts).
+  // The fallback only fires if it never arrives — e.g. the visitor grabs the
+  // list mid-scroll — and is re-armed by every scroll event. One shared
+  // timer, so an earlier jump can't unlock a later one.
+  const unlockSpy = useCallback(() => {
+    window.clearTimeout(spyTimer.current);
+    spyLock.current = false;
+    updateActive();
+  }, [updateActive]);
+
+  const armSpyFallback = useCallback(() => {
+    window.clearTimeout(spyTimer.current);
+    spyTimer.current = window.setTimeout(unlockSpy, 1200);
+  }, [unlockSpy]);
+
+  const onScroll = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setScrolled(el.scrollTop > 2);
+    if (!spyLock.current) return updateActive();
+    if (Math.abs(el.scrollTop - spyTarget.current) < 2) unlockSpy();
+    else armSpyFallback();
+  }, [armSpyFallback, unlockSpy, updateActive]);
+
+  useEffect(() => () => window.clearTimeout(spyTimer.current), []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setListW(e.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // Keep the active tab in view inside the strip.
   useEffect(() => {
@@ -131,8 +175,12 @@ export function RarebrewDemo() {
       ([entry]) => {
         if (!entry.isIntersecting) return;
         io.disconnect();
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setInstant(true);
+          setDealt(true);
+          return;
+        }
         setDealt(true);
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         const commander = `${sections[0].id}:${sections[0].cards[0].name}`;
         const settle = DEAL_MAX * DEAL_STEP + 600;
         timers.push(window.setTimeout(() => !touched.current && setExpanded(commander), settle));
@@ -156,10 +204,13 @@ export function RarebrewDemo() {
     const el = scrollRef.current;
     const node = sectionRefs.current[id];
     if (!el || !node) return;
+    const target = Math.max(0, Math.min(node.offsetTop - 4, el.scrollHeight - el.clientHeight));
     setActive(id);
+    if (Math.abs(el.scrollTop - target) < 2) return; // already there
     spyLock.current = true;
-    el.scrollTo({ top: node.offsetTop - 4, behavior: "smooth" });
-    window.setTimeout(() => (spyLock.current = false), 500);
+    spyTarget.current = target;
+    armSpyFallback();
+    el.scrollTo({ top: target, behavior: "smooth" });
   };
 
   const toggleRow = (key: string, node: HTMLElement | null) => {
@@ -179,7 +230,10 @@ export function RarebrewDemo() {
     <PhoneFrame screen={C.g800} ink={C.g100}>
       <div
         ref={rootRef}
-        onPointerDown={() => (touched.current = true)}
+        onPointerDown={touch}
+        onKeyDown={touch}
+        onWheel={touch}
+        onFocus={touch}
         className={`${dmSans.className} relative flex min-h-0 flex-1 flex-col`}
         style={{ background: C.g900, color: C.g100 }}
       >
@@ -277,7 +331,7 @@ export function RarebrewDemo() {
         <div
           ref={scrollRef}
           onScroll={onScroll}
-          className="relative min-h-0 flex-1 overflow-y-auto overscroll-contain px-1 pb-48 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="relative min-h-0 flex-1 overflow-y-auto px-1 pb-48 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {sections.map((s, si) => {
             const isCollapsed = !!collapsed[s.id];
@@ -325,7 +379,8 @@ export function RarebrewDemo() {
                             open={expanded === key}
                             prevOpen={prevKey !== null && expanded === prevKey}
                             dealt={dealt}
-                            dealDelay={Math.min(offsets[si] + i, DEAL_MAX) * DEAL_STEP}
+                            dealDelay={instant ? null : Math.min(offsets[si] + i, DEAL_MAX) * DEAL_STEP}
+                            cardW={rowCardW(listW)}
                             onToggle={(node) => toggleRow(key, node)}
                           />
                         );
@@ -424,6 +479,7 @@ function CardRow({
   prevOpen,
   dealt,
   dealDelay,
+  cardW: w,
   onToggle,
 }: {
   card: DeckCard;
@@ -431,21 +487,13 @@ function CardRow({
   open: boolean;
   prevOpen: boolean;
   dealt: boolean;
-  dealDelay: number;
+  /** null = no deal-in animation (reduced motion). */
+  dealDelay: number | null;
+  cardW: number;
   onToggle: (node: HTMLElement | null) => void;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const btnRef = useRef<HTMLButtonElement>(null);
   const [back, setBack] = useState(false);
-  // The center column flexes on narrow phones, so heights follow its width.
-  const [w, setW] = useState(CARD_W);
-  useEffect(() => {
-    const el = btnRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(([e]) => setW(Math.round(e.contentRect.width) || CARD_W));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
   useEffect(() => {
     if (!open) setBack(false);
   }, [open]);
@@ -462,8 +510,11 @@ function CardRow({
         filter: index > 0 && !open && !prevOpen ? STACK_UP_SHADOW : "none",
         // Dealt onto the stack from just above, one card after another.
         opacity: dealt ? 1 : 0,
-        transform: dealt ? "none" : "translateY(-26px) rotate(-1.5deg)",
-        transition: `margin-top .2s ease, filter .2s ease, opacity .3s ease ${dealDelay}ms, transform .45s cubic-bezier(.2,.8,.3,1) ${dealDelay}ms`,
+        transform: dealt || dealDelay === null ? "none" : "translateY(-26px) rotate(-1.5deg)",
+        transition:
+          dealDelay === null
+            ? "margin-top .2s ease, filter .2s ease"
+            : `margin-top .2s ease, filter .2s ease, opacity .3s ease ${dealDelay}ms, transform .45s cubic-bezier(.2,.8,.3,1) ${dealDelay}ms`,
       }}
     >
       <span className="col-start-1 row-start-1 flex h-full justify-center pt-3">
@@ -474,7 +525,6 @@ function CardRow({
         )}
       </span>
       <button
-        ref={btnRef}
         type="button"
         onClick={() => onToggle(ref.current)}
         aria-expanded={open}
@@ -656,7 +706,7 @@ function InsightsSheet({ open, onClose, cards, total }: { open: boolean; onClose
           </div>
         </div>
 
-        <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain px-3 pb-10 [scrollbar-width:none]">
+        <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-3 pb-10 [scrollbar-width:none]">
           <div className="grid grid-cols-3 gap-2">
             {[
               { k: "Cards", v: String(total), tone: total > 100 ? C.warn : C.g100 },

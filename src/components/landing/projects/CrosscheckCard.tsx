@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
 import { SplitCard } from "./SplitCard";
+import { CC_MONO, CC_SANS, CC_SERIF } from "./fonts";
 import { PhonePlaceholder } from "./PhonePlaceholder";
 import { useFinePointer } from "./useFinePointer";
 
@@ -13,9 +14,6 @@ const CrosscheckDemo = dynamic(() => import("./CrosscheckDemo").then((m) => m.Cr
   loading: PhonePlaceholder,
 });
 
-const SERIF = 'Georgia, "Times New Roman", serif';
-const SANS = '-apple-system, "SF Pro Text", "Segoe UI", Roboto, system-ui, sans-serif';
-const MONO = 'ui-monospace, "SF Mono", Menlo, Consolas, monospace';
 
 const CELL = 36;
 // Black squares for the background grid, as [col, row]. Hand-placed so the
@@ -70,26 +68,30 @@ const NOTES = [
 
 export function CrosscheckCard() {
   const { cell, onPointerMove, onPointerLeave } = useActiveCell();
+  // Created once so active-cell renders don't re-render the demo subtree.
+  const demo = useMemo(() => <CrosscheckDemo />, []);
   return (
     <SplitCard
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       className="rounded-md text-[#1B1B1B]"
-      style={{ background: "#EFE9DD", fontFamily: SANS }}
+      style={{ background: "#EFE9DD", fontFamily: CC_SANS }}
       masthead={
         <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:flex-row lg:justify-between lg:pt-8">
           <span className="order-2 text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:order-1 lg:w-56 lg:whitespace-nowrap">
             Mobile-first PWA
           </span>
-          <h3 className="order-1 flex gap-[3px] sm:gap-1 lg:order-2" aria-label="crosscheck">
+          {/* Tiles flex to fit the column on narrow phones (10 fixed tiles
+              overflowed at 320px), then settle at a fixed size from sm up. */}
+          <h3 className="order-1 flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1 lg:order-2" aria-label="crosscheck">
             {"CROSSCHECK".split("").map((ch, i) => (
               <span
                 key={i}
                 aria-hidden="true"
-                className={`grid h-[30px] w-[26px] place-items-center rounded-[4px] border border-b-[3px] text-[15px] font-bold sm:h-11 sm:w-10 sm:text-2xl ${
+                className={`grid aspect-[10/11] min-w-0 flex-1 place-items-center rounded-[4px] border border-b-[3px] text-[clamp(11px,4vw,15px)] font-bold sm:aspect-auto sm:h-11 sm:w-10 sm:flex-none sm:text-2xl ${
                   i === 5 ? "border-[#2B4C7E] bg-[#E3E9F3] text-[#2B4C7E]" : "border-[#D8D0BE] bg-[#FBF8F1]"
                 }`}
-                style={{ fontFamily: MONO }}
+                style={{ fontFamily: CC_MONO }}
               >
                 {ch}
               </span>
@@ -135,7 +137,7 @@ export function CrosscheckCard() {
       }
       copy={
         <>
-          <p className="text-xl leading-snug lg:text-2xl" style={{ fontFamily: SERIF }}>
+          <p className="text-xl leading-snug lg:text-2xl" style={{ fontFamily: CC_SERIF }}>
             Type a crossword clue, get candidate answers as letter tiles plus what the word means.
           </p>
           <p className="max-w-[60ch] text-sm leading-relaxed text-[#5E5A50] lg:text-base">
@@ -147,7 +149,7 @@ export function CrosscheckCard() {
             {NOTES.map((n) => (
               <div key={n.title} className="flex flex-col gap-1">
                 <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#2B4C7E]">{n.title}</dt>
-                <dd className="text-[15px] leading-relaxed" style={{ fontFamily: SERIF }}>
+                <dd className="text-[15px] leading-relaxed" style={{ fontFamily: CC_SERIF }}>
                   {n.body}
                 </dd>
               </div>
@@ -180,7 +182,7 @@ export function CrosscheckCard() {
           </div>
         </>
       }
-      demo={<CrosscheckDemo />}
+      demo={demo}
       caption="Live · real parser + corpus, live Datamuse"
       captionClassName="text-[#5E5A50]"
       dotClassName="bg-[#2B4C7E]"

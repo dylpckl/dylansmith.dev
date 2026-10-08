@@ -1,13 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
 import { ROSTER } from "@/lib/demos/prompt-fighter/roster";
 import { SplitCard } from "./SplitCard";
 import { PixelSprite } from "./PixelSprite";
-import { pressStart } from "./fonts";
+import { pressStart, PF_MONO } from "./fonts";
 import { useFinePointer } from "./useFinePointer";
 
 const PromptFighterDemo = dynamic(() => import("./PromptFighterDemo").then((m) => m.PromptFighterDemo), {
@@ -15,7 +15,6 @@ const PromptFighterDemo = dynamic(() => import("./PromptFighterDemo").then((m) =
   loading: () => <div className="mx-auto h-[600px] w-full max-w-[560px] animate-pulse rounded-md bg-[#141417] ring-1 ring-[#2a2a31]" />,
 });
 
-const MONO = 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace';
 
 // Stepped pixel corners — the cabinet bezel.
 const BEZEL =
@@ -61,7 +60,11 @@ function usePixelTrail() {
     if (!live) return;
     const id = window.setInterval(() => {
       const now = performance.now();
-      setTrail((tr) => tr.filter((c) => now - c.t < TRAIL_MS));
+      // Same array back when nothing expired, so React skips the render.
+      setTrail((tr) => {
+        const kept = tr.filter((c) => now - c.t < TRAIL_MS);
+        return kept.length === tr.length ? tr : kept;
+      });
     }, 50);
     return () => window.clearInterval(id);
   }, [live]);
@@ -71,17 +74,20 @@ function usePixelTrail() {
 
 export function FighterCard() {
   const { trail, onPointerMove, onPointerLeave } = usePixelTrail();
-  const now = typeof performance !== "undefined" ? performance.now() : 0;
+  // Created once: cursor-effect renders reuse this element, so React skips
+  // the whole demo subtree instead of re-rendering it per mouse move.
+  const demo = useMemo(() => <PromptFighterDemo />, []);
   return (
     <SplitCard
       flip
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
       className="text-[#e9e9ec]"
-      style={{ background: "#0b0b0c", fontFamily: MONO, clipPath: BEZEL }}
+      style={{ background: "#0b0b0c", fontFamily: PF_MONO, clipPath: BEZEL }}
       background={
         <>
           <div className="absolute inset-0 [background-image:linear-gradient(rgba(42,42,49,.5)_1px,transparent_1px),linear-gradient(90deg,rgba(42,42,49,.5)_1px,transparent_1px)] [background-size:16px_16px]" />
+          <style>{`@keyframes pf-trail-fade { from { opacity: 1 } to { opacity: 0 } }`}</style>
           {trail.map((c) => (
             <span
               key={`${c.cx}-${c.cy}-${c.t}`}
@@ -91,7 +97,8 @@ export function FighterCard() {
                 top: c.cy * CELL,
                 width: CELL,
                 height: CELL,
-                opacity: Math.max(0, 1 - (now - c.t) / TRAIL_MS),
+                // Fades itself out; no re-render needed to animate it.
+                animation: `pf-trail-fade ${TRAIL_MS}ms linear forwards`,
               }}
             />
           ))}
@@ -177,7 +184,7 @@ export function FighterCard() {
           </a>
         </>
       }
-      demo={<PromptFighterDemo />}
+      demo={demo}
       caption="Replay · real generations, real sim"
       captionClassName="text-[#83838f]"
       dotClassName="rounded-none bg-[#d9503c]"

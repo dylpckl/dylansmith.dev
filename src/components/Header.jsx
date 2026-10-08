@@ -9,6 +9,7 @@ import Logo from "/public/images/ds-logo.png";
 import { Socials, SocialLink } from "@/components/SocialLink";
 import { Button } from "@/components/Button";
 import { FileText } from "lucide-react";
+import { RESUME_PATH, SECTIONS } from "@/lib/site";
 
 const NavItem = ({ href, children }) => {
   let isActive = usePathname().includes(href);
@@ -56,7 +57,7 @@ const DesktopNavigation = (props) => {
         <NavItem href="/about">about</NavItem>
         <span className="text-xs text-slate-400">{"//"}</span>
         <a
-          href="/Dylan Smith - UX Engineer - April 2026.docx.pdf"
+          href={RESUME_PATH}
           target="_blank"
           className="p-1 font-mono text-sm text-slate-200 hover:text-teal-300 md:px-3 md:py-2"
         >
@@ -88,7 +89,7 @@ const Nav = ({ links, activeSection }) => {
 
 export function Header({ activeSection }) {
   const [mobileNavIsOpen, setMobileNavIsOpen] = useState(false);
-  let links = ["intro", "outcomes", "work"];
+  const links = SECTIONS;
 
   const handleMobileNav = () => {
     setMobileNavIsOpen(!mobileNavIsOpen);
@@ -193,7 +194,7 @@ export function Header({ activeSection }) {
       </div>
       <div className="mt-6 flex w-fit flex-col gap-3">
         <Button
-          href="/Dylan Smith - UX Engineer - April 2026.docx.pdf"
+          href={RESUME_PATH}
           target="_blank"
           rel="noreferrer"
           variant="primary"
