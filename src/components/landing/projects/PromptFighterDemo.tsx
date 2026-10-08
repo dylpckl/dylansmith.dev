@@ -387,7 +387,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
             type="button"
             onClick={() => fight(finished ? newSeed() : seed)}
             disabled={running}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition enabled:hover:-translate-y-px enabled:hover:brightness-110 enabled:active:translate-y-0 disabled:opacity-40"
             style={{
               background: t.accent,
               color: "#fff",
@@ -401,7 +401,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
             onClick={() => fight(seed)}
             disabled={running || !finished}
             title="Same fighters, same seed — the sim is deterministic, so this replays the identical fight."
-            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition enabled:hover:brightness-200 disabled:opacity-40"
             style={{
               background: "transparent",
               color: t.dim,
@@ -928,7 +928,7 @@ function Builder({
           <button
             type="button"
             onClick={() => onSend(seed)}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em]"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition hover:-translate-y-px hover:brightness-110 active:translate-y-0"
             style={{
               background: t.accent,
               color: "#fff",
@@ -940,7 +940,7 @@ function Builder({
           <button
             type="button"
             onClick={nextPrompts}
-            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em]"
+            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition hover:brightness-200"
             style={{
               background: "transparent",
               color: t.dim,
@@ -957,7 +957,7 @@ function Builder({
             type="button"
             onClick={generate}
             disabled={phase === "generating" || phase === "revealed"}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition enabled:hover:-translate-y-px enabled:hover:brightness-110 enabled:active:translate-y-0 disabled:opacity-40"
             style={{
               background: t.accent,
               color: "#fff",
@@ -991,7 +991,8 @@ export function PromptFighterDemo() {
 
   return (
     <div
-      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px]"
+      // Same "this is live" cue as the phone demos: lift + red ring on hover.
+      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_0_2px_#d9503c,0_0_48px_-8px_#d9503c] motion-reduce:hover:translate-y-0"
       style={{
         background: t.bg,
         color: t.text,
@@ -1032,7 +1033,7 @@ export function PromptFighterDemo() {
               role="tab"
               aria-selected={mode === m}
               onClick={() => setMode(m)}
-              className="px-2.5 py-1.5 transition-colors"
+              className="px-2.5 py-1.5 transition hover:brightness-200"
               style={{
                 color: mode === m ? t.text : t.faint,
                 borderBottom: `2px solid ${mode === m ? t.accent : "transparent"}`,

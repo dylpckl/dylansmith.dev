@@ -262,7 +262,7 @@ export function RarebrewDemo() {
   };
 
   return (
-    <PhoneFrame screen={C.g800} ink={C.g100}>
+    <PhoneFrame screen={C.g800} ink={C.g100} glow={C.brand}>
       <div
         ref={rootRef}
         onPointerDown={touch}
@@ -330,7 +330,7 @@ export function RarebrewDemo() {
                     aria-selected={on}
                     data-tab={s.id}
                     onClick={() => jumpTo(s.id)}
-                    className="relative flex shrink-0 items-center gap-1.5 uppercase"
+                    className="relative flex shrink-0 items-center gap-1.5 uppercase hover:brightness-150"
                     style={{
                       fontFamily: MONO,
                       fontSize: 12,
@@ -383,7 +383,7 @@ export function RarebrewDemo() {
                   type="button"
                   onClick={() => setCollapsed((c) => ({ ...c, [s.id]: !c[s.id] }))}
                   aria-expanded={!isCollapsed}
-                  className="flex w-full items-center gap-2 pb-2 pl-2 pr-2 pt-3.5 text-left"
+                  className="flex w-full items-center gap-2 rounded-md pb-2 pl-2 pr-2 pt-3.5 text-left transition-colors hover:bg-white/[0.05]"
                 >
                   <ChevronDown
                     size={16}
@@ -445,7 +445,7 @@ export function RarebrewDemo() {
             <button
               type="button"
               onClick={() => setInsights(true)}
-              className="pointer-events-auto flex h-12 w-full items-center gap-3 px-3 text-left"
+              className="pointer-events-auto flex h-12 w-full items-center gap-3 px-3 text-left transition hover:brightness-125"
               style={{ background: C.g800, borderTop: `1px solid ${C.border}` }}
               aria-label="Open deck insights"
             >
@@ -580,7 +580,7 @@ function CardRow({
         onClick={() => onToggle(ref.current)}
         aria-expanded={open}
         aria-label={`${card.name}${open ? ", collapse" : ", expand"}`}
-        className="relative col-start-2 row-start-1 w-full overflow-hidden text-left"
+        className="relative col-start-2 row-start-1 w-full overflow-hidden text-left outline outline-2 -outline-offset-1 outline-transparent hover:brightness-110 hover:outline-[#E0A83C] focus-visible:outline-[#E0A83C]"
         style={{
           height: open ? cardH(w) : rowH(w),
           // Collapsed strips are top-rounded with no bottom edge, so the seams
@@ -590,7 +590,7 @@ function CardRow({
           borderBottomColor: open ? C.g500 : "transparent",
           boxShadow: STRIP_DOWN_SHADOW,
           background: C.g800,
-          transition: `height .28s ${STANDARD}, border-radius .28s ${STANDARD}`,
+          transition: `height .28s ${STANDARD}, border-radius .28s ${STANDARD}, filter .15s ease, outline-color .15s ease`,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -630,7 +630,7 @@ function CardRow({
           <button
             type="button"
             onClick={() => setBack((b) => !b)}
-            className="mt-16 rounded-full px-2 py-1 text-[10px] font-bold uppercase"
+            className="mt-16 rounded-full px-2 py-1 text-[10px] font-bold uppercase transition hover:brightness-110 hover:scale-105"
             style={{ background: C.brand, color: C.brandText, fontFamily: MONO }}
             aria-label={`Flip ${card.name}`}
           >

@@ -212,7 +212,7 @@ export function CrosscheckDemo() {
         .cc-tile { animation: cc-flip 380ms cubic-bezier(.2,.8,.3,1) both; transform-origin: 50% 0; }
         @media (prefers-reduced-motion: reduce) { .cc-tile { animation: none; } }
       `}</style>
-      <PhoneFrame screen="#E6DFD0" ink="#1B1B1B">
+      <PhoneFrame screen="#E6DFD0" ink="#1B1B1B" glow="#2B4C7E">
         <div
           className="flex min-h-0 flex-1 flex-col"
           style={{
@@ -279,7 +279,7 @@ export function CrosscheckDemo() {
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear clue"
-                    className="grid h-6 w-6 place-items-center rounded-full"
+                    className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-[rgba(27,27,27,.08)]"
                     style={{ color: "var(--ink-3)" }}
                   >
                     ✕
@@ -289,7 +289,7 @@ export function CrosscheckDemo() {
               <button
                 type="submit"
                 aria-label="Solve"
-                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl transition hover:brightness-125"
                 style={{ background: "var(--blue)", color: "#fff" }}
               >
                 <svg
@@ -359,7 +359,7 @@ export function CrosscheckDemo() {
                       type="button"
                       onClick={() => runPreset(p)}
                       aria-pressed={on}
-                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none"
+                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none transition hover:-translate-y-px hover:brightness-95"
                       style={{
                         border: `1px solid ${on ? "var(--blue)" : "var(--rule)"}`,
                         background: on ? "var(--blue-tint)" : "transparent",
@@ -417,7 +417,7 @@ export function CrosscheckDemo() {
                           type="button"
                           aria-pressed={on}
                           onClick={() => setLengthFilter(n)}
-                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums"
+                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums transition hover:brightness-95"
                           style={{
                             borderLeft: i ? "1px solid var(--rule)" : 0,
                             background: on ? "var(--blue)" : "transparent",
@@ -539,7 +539,7 @@ function AnswerRow({
       type="button"
       onClick={() => onCopy(a)}
       aria-label={`${a.display}, ${a.length} letters. Tap to copy.`}
-      className="grid w-full gap-1.5 py-3 text-left transition-colors first:border-t-0 active:bg-[var(--rule-2)]"
+      className="group grid w-full gap-1.5 rounded-md py-3 text-left transition-colors first:border-t-0 hover:bg-[rgba(230,223,208,.55)] active:bg-[var(--rule-2)]"
       style={{
         borderTop: "1px solid var(--rule-2)",
         opacity: a.fitsPattern === false ? 0.38 : 1,
@@ -591,7 +591,14 @@ function AnswerRow({
           className="ml-1.5 text-[12px] tabular-nums"
           style={{ color: copied ? "var(--blue)" : "var(--ink-3)" }}
         >
-          {copied ? "Copied" : a.length}
+          {copied ? (
+            "Copied"
+          ) : (
+            <>
+              <span className="group-hover:hidden">{a.length}</span>
+              <span className="hidden group-hover:inline">Tap to copy</span>
+            </>
+          )}
         </span>
       </span>
       {a.gloss && (

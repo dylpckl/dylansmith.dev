@@ -97,9 +97,8 @@ export function CrosscheckCard() {
               </span>
             ))}
           </h3>
-          <span className="order-3 hidden text-right text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:block lg:w-56 lg:whitespace-nowrap">
-            No backend · Works offline
-          </span>
+          {/* Balances the left label so the tiles stay centered. */}
+          <span aria-hidden="true" className="order-3 hidden lg:block lg:w-56" />
         </header>
       }
       copyClassName="lg:border-r lg:border-[#D8D0BE] lg:my-8 lg:py-2"
