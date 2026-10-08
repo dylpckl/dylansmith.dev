@@ -78,10 +78,7 @@ export function CrosscheckCard() {
       className="rounded-md text-[#1B1B1B]"
       style={{ background: "#EFE9DD", fontFamily: CC_SANS }}
       masthead={
-        <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:flex-row lg:justify-between lg:pt-8">
-          <span className="order-2 text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:order-1 lg:w-56 lg:whitespace-nowrap">
-            Mobile-first PWA
-          </span>
+        <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:pt-8">
           {/* Tiles flex to fit the column on narrow phones (10 fixed tiles
               overflowed at 320px), then settle at a fixed size from sm up. */}
           <h3 className="order-1 flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1 lg:order-2" aria-label="crosscheck">
@@ -98,8 +95,6 @@ export function CrosscheckCard() {
               </span>
             ))}
           </h3>
-          {/* Balances the left label so the tiles stay centered. */}
-          <span aria-hidden="true" className="order-3 hidden lg:block lg:w-56" />
         </header>
       }
       copyClassName="lg:border-r lg:border-[#D8D0BE] lg:my-8 lg:py-2"
@@ -138,11 +133,10 @@ export function CrosscheckCard() {
       copy={
         <>
           <p className="text-xl leading-snug lg:text-2xl" style={{ fontFamily: CC_SERIF }}>
-            Type a crossword clue, get candidate answers as letter tiles plus what the word means.
+            Stuck on a crossword clue? Type it in and get likely answers, plus what each word means.
           </p>
           <p className="max-w-[60ch] text-sm leading-relaxed text-[#5E5A50] lg:text-base">
-            It&apos;s installable and works offline, and there&apos;s no backend: every source is called straight from
-            the browser.
+            It runs entirely in the browser and works offline.
           </p>
 
           <dl className="flex flex-col gap-4">
@@ -184,9 +178,6 @@ export function CrosscheckCard() {
         </>
       }
       demo={demo}
-      caption="Live · real parser + corpus, live Datamuse"
-      captionClassName="text-[#5E5A50]"
-      dotClassName="bg-[#2B4C7E]"
     />
   );
 }

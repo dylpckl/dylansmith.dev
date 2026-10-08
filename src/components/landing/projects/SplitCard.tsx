@@ -16,7 +16,8 @@ type SplitCardProps = {
   figureClassName?: string;
   /** Decorative layers behind the demo only. */
   figureBackground?: ReactNode;
-  caption: string;
+  /** Small line under the demo; omit for none. */
+  caption?: string;
   captionClassName?: string;
   dotClassName?: string;
   /** Demo on the left at lg — alternate down the page. */
@@ -57,13 +58,22 @@ export function SplitCard({
       onPointerLeave={onPointerLeave}
     >
       {background && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+        >
           {background}
         </div>
       )}
       {masthead}
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-        <div className={cn("relative flex flex-col gap-5 p-6 md:p-8 lg:p-10", flip && "lg:order-2", copyClassName)}>
+        <div
+          className={cn(
+            "relative flex flex-col gap-5 p-6 md:p-8 lg:p-10",
+            flip && "lg:order-2",
+            copyClassName,
+          )}
+        >
           {copy}
         </div>
         <figure
@@ -74,24 +84,38 @@ export function SplitCard({
           )}
         >
           {figureBackground && (
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 -z-10"
+            >
               {figureBackground}
             </div>
           )}
           <div className="relative w-full">{demo}</div>
-          <figcaption
-            className={cn(
-              "relative flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest",
-              captionClassName,
-            )}
-          >
-            <span className={cn("h-1.5 w-1.5 animate-pulse rounded-full", dotClassName)} aria-hidden="true" />
-            {caption}
-          </figcaption>
+          {caption && (
+            <figcaption
+              className={cn(
+                "relative flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest",
+                captionClassName,
+              )}
+            >
+              <span
+                className={cn(
+                  "h-1.5 w-1.5 animate-pulse rounded-full",
+                  dotClassName,
+                )}
+                aria-hidden="true"
+              />
+              {caption}
+            </figcaption>
+          )}
         </figure>
       </div>
       {overlay && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-10"
+        >
           {overlay}
         </div>
       )}
