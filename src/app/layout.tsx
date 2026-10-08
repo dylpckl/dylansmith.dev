@@ -12,7 +12,6 @@ import "./globals.css";
 
 // Components
 import { Header } from "@/components/Header";
-import Footer from "@/components/Footer";
 import Mountains from "/public/images/mountain.jpg";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { PhotoCredit } from "@/components/PhotoCredit";

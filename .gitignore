@@ -41,3 +41,6 @@ bash.exe.stackdump
 
 # Claude Code: track shared settings + CLAUDE.md, ignore per-machine overrides
 .claude/settings.local.json
+
+# local agent-tooling state
+.superpowers/

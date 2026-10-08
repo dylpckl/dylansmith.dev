@@ -2,13 +2,11 @@
 
 import type { RefObject } from "react";
 import Image from "next/image";
-import { ArrowUpRight, CreditCard, Layers } from "lucide-react";
 import VerticalText from "@/components/VerticalText";
 import { SectionLabel } from "@/components/SectionLabel";
-import { TagGroup } from "@/components/Tag";
 import { Tile } from "@/components/bento/Tile";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
-import { ManaCurve } from "./visuals/ManaCurve";
+import { SideProjects } from "./SideProjects";
 
 import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
 import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
@@ -19,22 +17,12 @@ type WorkProps = {
   sectionRef: RefObject<HTMLDivElement>;
 };
 
-const RAREBREW_TAGS = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "TailwindCSS",
-  "Supabase",
-  "Recharts",
-  "PWA",
-];
-
 export function Work({ sectionRef }: WorkProps) {
   return (
     <section
       ref={sectionRef}
       id="work"
-      className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pt-32"
+      className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pr-[120px] lg:pt-32"
     >
       <VerticalText text="WORK" />
       <div className="flex w-full flex-col gap-4">
@@ -184,36 +172,7 @@ export function Work({ sectionRef }: WorkProps) {
           </div>
         </Tile>
 
-        <Tile label="Side Project" labelIcon={Layers} decorative>
-          <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-            <div className="flex flex-col gap-3">
-              <div className="group relative w-fit">
-                <h3 className="font-serif text-3xl font-semibold leading-tight text-slate-100 lg:text-4xl">
-                  rarebrew.gg
-                </h3>
-                <span
-                  aria-hidden="true"
-                  className="absolute left-0 top-full h-1 w-full max-w-0 bg-teal-300 transition-all duration-300 group-hover:max-w-full"
-                />
-              </div>
-              <p className="max-w-[60ch] text-base leading-snug text-slate-300 lg:text-lg">
-                A desktop-first PWA deckbuilder for Magic: The Gathering
-                Commander &mdash; custom component library on design tokens,
-                Recharts visualizations, Scryfall + EDHREC data layer.
-              </p>
-              <TagGroup tags={RAREBREW_TAGS} className="mt-1 gap-2" />
-              <a
-                href="https://rarebrew.gg"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-2 inline-flex w-fit items-center gap-1 self-start rounded-md font-mono text-xs uppercase tracking-widest text-teal-300 transition hover:text-teal-200 focus:outline-none focus:ring-2 focus:ring-teal-300"
-              >
-                Visit rarebrew.gg ↗
-              </a>
-            </div>
-            <ManaCurve />
-          </div>
-        </Tile>
+        <SideProjects />
       </div>
     </section>
   );

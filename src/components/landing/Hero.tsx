@@ -4,6 +4,7 @@ import { FileText } from "lucide-react";
 import { SocialLink } from "@/components/SocialLink";
 import { Button } from "@/components/Button";
 import { Canvas, Ruler } from "@/components/canvas";
+import { RESUME_PATH } from "@/lib/site";
 
 export function Hero() {
   return (
@@ -48,7 +49,7 @@ export function Hero() {
 
       <div className="flex flex-wrap items-center gap-3 lg:hidden">
         <Button
-          href="/Dylan Smith - UX Engineer - April 2026.docx.pdf"
+          href={RESUME_PATH}
           target="_blank"
           rel="noreferrer"
           variant="primary"
