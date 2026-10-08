@@ -31,7 +31,7 @@ src/
       Outcomes.tsx            # the only bento on the page
       Work.tsx                # case-study tiles (drag reveals), then <SideProjects>
       SideProjects.tsx        # full-width side-project cards, each with a live demo (next/dynamic, ssr:false)
-      projects/               # ProjectCard, PhoneFrame, and one *Demo.tsx per side project
+      projects/               # SplitCard (layout shell), PhoneFrame, and per project a *Card.tsx (its own look) + *Demo.tsx
       visuals/                # inline graphics (MiniSystemDemo, OneOffConsolidation, ScatteredFiles)
     bento/                    # reusable bento primitives (Tile, Feature, Support, StatTile, BeforeAfterReveal, MiniTokenStrip, StateChips)
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
