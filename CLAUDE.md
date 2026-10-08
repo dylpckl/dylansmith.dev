@@ -29,13 +29,17 @@ src/
       Hero.tsx
       Intro.tsx               # First Principles + Tools/Languages + Practices
       Outcomes.tsx            # the only bento on the page
-      Work.tsx                # case-study tiles (drag reveals)
-      visuals/                # inline graphics (MiniSystemDemo, OneOffConsolidation, ManaCurve, ScatteredFiles)
+      Work.tsx                # case-study tiles (drag reveals), then <SideProjects>
+      SideProjects.tsx        # full-width side-project cards, each with a live demo (next/dynamic, ssr:false)
+      projects/               # ProjectCard, PhoneFrame, and one *Demo.tsx per side project
+      visuals/                # inline graphics (MiniSystemDemo, OneOffConsolidation, ScatteredFiles)
     bento/                    # reusable bento primitives (Tile, Feature, Support, StatTile, BeforeAfterReveal, MiniTokenStrip, StateChips)
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
     Tag.tsx                   # Tag + TagGroup — the canonical chip/badge component
     TechLogo.tsx              # mask-based brand SVG with hover-colorize via per-element --brand var
     Header.jsx                # sticky sidebar nav; tracks activeSection from page.tsx
+  lib/
+    demos/                    # code vendored from the side-project repos + static data snapshots the demos run on
 public/
   case-studies/<slug>/legacy.png + refreshed.png   # before/after pairs
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
@@ -50,6 +54,7 @@ Section flow on the landing page: **Hero → Intro → Outcomes → Work**.
 - **Brand logos:** drop SVGs from [simpleicons.org](https://simpleicons.org) (CC0) into `public/logos/` named with the simple-icons slug (e.g. `nextdotjs.svg`). Render via `<TechLogo name="..." label="..." brandColor="#XXXXXX" />`. Default render is monochrome `currentColor`; brand color shows on hover.
 - **Section refs:** Intro/Outcomes/Work each take a `sectionRef: RefObject<HTMLDivElement>` prop — page.tsx owns the refs and forwards them so the `IntersectionObserver` can highlight the sidebar nav. Hero no longer takes a sectionRef (it owns its own measurement via `Canvas`).
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.
+- **Side-project demos run real code.** `src/lib/demos/<project>/` holds files copied verbatim from that project's repo (only import paths touched) plus a dated data snapshot. Refresh by re-copying, not by editing in place. Demos render in the project's own visual language (its tokens, fonts), not the portfolio's.
 - **BeforeAfterReveal:** the drag handle accepts `initial` (0–100). Vary it across tiles for visual interest (current values: 75/62/32). Pair with `<Image fill object-cover>` inside a fixed-height container.
 
 ## Design Requirements
