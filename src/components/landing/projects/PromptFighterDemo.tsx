@@ -8,16 +8,16 @@ import {
   METER_TO_SPECIAL,
   SPIRIT_KEYS,
   SPIRIT_TOTAL,
-  SPRITE_SIZE,
   STAT_TOTAL,
 } from "@/lib/demos/prompt-fighter/types";
-import type { Side, Sprite as SpriteData, Stats, TurnEvent } from "@/lib/demos/prompt-fighter/types";
+import type { Side, Stats, TurnEvent } from "@/lib/demos/prompt-fighter/types";
 import {
   PRESSURE_THRESHOLD,
   PRESSURE_TRACKS,
   VICTORY_LABELS,
   victoryText,
 } from "@/lib/demos/prompt-fighter/victory";
+import { PixelSprite } from "./PixelSprite";
 
 // prompt-fighter's own theme (src/theme.ts).
 const t = {
@@ -205,7 +205,7 @@ export function PromptFighterDemo() {
                           transition: "opacity 400ms ease",
                         }}
                       >
-                        <PixelSprite sprite={f.sprite} flip={side === "b"} />
+                        <PixelSprite sprite={f.sprite} flip={side === "b"} className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]" />
                       </div>
                     </div>
                   </div>
@@ -335,33 +335,6 @@ export function PromptFighterDemo() {
         </div>
       </div>
     </div>
-  );
-}
-
-function PixelSprite({ sprite, flip }: { sprite: SpriteData; flip?: boolean }) {
-  const ref = useRef<HTMLCanvasElement>(null);
-  useEffect(() => {
-    const ctx = ref.current?.getContext("2d");
-    if (!ctx) return;
-    ctx.clearRect(0, 0, SPRITE_SIZE, SPRITE_SIZE);
-    for (let y = 0; y < SPRITE_SIZE; y++) {
-      const row = sprite.rows[y] ?? "";
-      for (let x = 0; x < SPRITE_SIZE; x++) {
-        const i = Number(row[x] ?? "0");
-        if (!i) continue;
-        ctx.fillStyle = sprite.palette[i] ?? "#ff00ff";
-        ctx.fillRect(x, y, 1, 1);
-      }
-    }
-  }, [sprite]);
-  return (
-    <canvas
-      ref={ref}
-      width={SPRITE_SIZE}
-      height={SPRITE_SIZE}
-      className="block h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]"
-      style={{ imageRendering: "pixelated", transform: flip ? "scaleX(-1)" : undefined }}
-    />
   );
 }
 

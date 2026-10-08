@@ -2,13 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
-import { DM_Sans, Space_Grotesk } from "next/font/google";
 import { ArrowLeft, ChevronDown, Layers, Library, MoreVertical, Play, Plus, Rss, Search, SlidersHorizontal, User, X } from "lucide-react";
 import { CARDS, COMMANDER, DECK_NAME, scryfallImage, type DeckCard } from "@/lib/demos/rarebrew/deck";
 import { PhoneFrame } from "./PhoneFrame";
+import { dmSans, spaceGrotesk as grotesk } from "./fonts";
 
-const grotesk = Space_Grotesk({ subsets: ["latin"], weight: ["500", "700"], display: "swap" });
-const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"], display: "swap" });
 
 // rarebrew's tokens (app/globals.css, dark).
 const C = {
