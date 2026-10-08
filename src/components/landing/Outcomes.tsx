@@ -18,7 +18,7 @@ export function Outcomes({ sectionRef }: OutcomesProps) {
     <section
       ref={sectionRef}
       id="outcomes"
-      className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pt-16"
+      className="relative flex flex-col px-6 pb-12 pt-16 md:px-12 md:pt-24 lg:flex-row lg:gap-6 lg:pr-[120px] lg:pt-16"
     >
       <VerticalText text="outcomes" />
       <div className="flex w-full flex-col gap-6">

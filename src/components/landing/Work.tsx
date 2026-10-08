@@ -22,7 +22,7 @@ export function Work({ sectionRef }: WorkProps) {
     <section
       ref={sectionRef}
       id="work"
-      className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pt-32"
+      className="relative flex flex-col px-6 pb-24 md:px-12 lg:flex-row lg:gap-6 lg:pr-[120px] lg:pt-32"
     >
       <VerticalText text="WORK" />
       <div className="flex w-full flex-col gap-4">
