@@ -64,51 +64,7 @@ function TileTitle({ children }: { children: React.ReactNode }) {
 export function Work() {
   return (
     <div className="flex flex-col gap-4">
-      <Tile tags={["Design System", "ASP.NET", "Tokens", "WCAG"]} decorative>
-        <div className="flex flex-1 flex-col gap-4">
-          <TileTitle>SmartAdvocate UI Refresh</TileTitle>
-          <p className="text-md text-ink-2 lg:text-base">
-            Sole designer &amp; developer on the site-wide UI refresh &mdash;
-            first design system at the company, shipped into a legacy ASP.NET
-            / DevExpress codebase with no regressions.
-          </p>
-          <div className="mt-2">
-            <BeforeAfterReveal
-              beforeLabel="Legacy"
-              afterLabel="Refreshed"
-              initial={75}
-              before={
-                <div className={SHOT}>
-                  <Image
-                    src="/case-studies/smartadvocate/legacy.png"
-                    alt="Legacy SmartAdvocate case management UI"
-                    fill
-                    className="object-cover object-left-top"
-                    sizes="100vw"
-                  />
-                </div>
-              }
-              after={
-                <div className={SHOT}>
-                  <Image
-                    src="/case-studies/smartadvocate/refreshed.png"
-                    alt="Refreshed SmartAdvocate case management UI"
-                    fill
-                    className="object-cover object-left-top"
-                    sizes="100vw"
-                  />
-                </div>
-              }
-            />
-          </div>
-          <TileLinks
-            links={[
-              { label: "smartadvocate.com", href: "https://www.smartadvocate.com/", primary: true },
-            ]}
-          />
-        </div>
-      </Tile>
-
+      {/* SmartAdvocate lives in Outcomes now (token-layer story + slider). */}
       <Tile decorative>
         <div className="flex flex-1 flex-col gap-4">
           <TileTitle>Bank Reconciliation</TileTitle>
