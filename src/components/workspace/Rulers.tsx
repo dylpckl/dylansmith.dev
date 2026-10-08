@@ -37,25 +37,14 @@ type TopRulerProps = {
  */
 export function TopRuler({ canvasRef }: TopRulerProps) {
   const [width, setWidth] = useState(0);
-  // The canvas is centered in its column, so the ruler's 0 sits at the
-  // canvas's left edge, not the column's.
-  const [origin, setOrigin] = useState(0);
-  const rulerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = canvasRef.current;
     if (!el) return;
-    const measure = () => {
-      setWidth(el.clientWidth);
-      const ruler = rulerRef.current;
-      if (ruler) setOrigin(el.getBoundingClientRect().left - ruler.getBoundingClientRect().left);
-    };
+    const measure = () => setWidth(el.clientWidth);
     measure();
     const ro = new ResizeObserver(measure);
     ro.observe(el);
-    // At wide windows the canvas keeps its max width while its centering
-    // offset changes, so watch the (full-width) ruler too.
-    if (rulerRef.current) ro.observe(rulerRef.current);
     return () => ro.disconnect();
   }, [canvasRef]);
 
@@ -65,19 +54,19 @@ export function TopRuler({ canvasRef }: TopRulerProps) {
   return (
     <div
       aria-hidden="true"
-      ref={rulerRef}
       className="pointer-events-none sticky top-0 z-30 hidden w-full border-b border-line/20 bg-panel/90 backdrop-blur-sm lg:block"
-      style={{
-        height: RULER,
-        ...tickBackground("x"),
-        backgroundPosition: `${origin}px 0, ${origin}px 100%`,
-      }}
+      style={{ height: RULER }}
     >
-      {labels.map((x) => (
-        <span key={x} className={cn(labelClass, "top-1")} style={{ left: origin + x + 3 }}>
-          {x}
-        </span>
-      ))}
+      {/* Ticks live on a strip that's centered exactly like the canvas
+          (mx-auto max-w-7xl in Workspace), so 0 is the canvas's left edge
+          and nothing draws in the gutter beside it — no measuring needed. */}
+      <div className="relative mx-auto h-full max-w-7xl" style={tickBackground("x")}>
+        {labels.map((x) => (
+          <span key={x} className={cn(labelClass, "top-1")} style={{ left: x + 3 }}>
+            {x}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

@@ -580,7 +580,7 @@ function CardRow({
         onClick={() => onToggle(ref.current)}
         aria-expanded={open}
         aria-label={`${card.name}${open ? ", collapse" : ", expand"}`}
-        className="relative col-start-2 row-start-1 w-full overflow-hidden text-left outline outline-2 -outline-offset-1 outline-transparent hover:brightness-110 hover:outline-[#E0A83C] focus-visible:outline-[#E0A83C]"
+        className="group/row relative col-start-2 row-start-1 w-full overflow-hidden text-left outline-none hover:brightness-110"
         style={{
           height: open ? cardH(w) : rowH(w),
           // Collapsed strips are top-rounded with no bottom edge, so the seams
@@ -590,7 +590,7 @@ function CardRow({
           borderBottomColor: open ? C.g500 : "transparent",
           boxShadow: STRIP_DOWN_SHADOW,
           background: C.g800,
-          transition: `height .28s ${STANDARD}, border-radius .28s ${STANDARD}, filter .15s ease, outline-color .15s ease`,
+          transition: `height .28s ${STANDARD}, border-radius .28s ${STANDARD}, filter .15s ease`,
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -613,6 +613,14 @@ function CardRow({
             style={{ opacity: back ? 1 : 0, transition: "opacity 200ms ease" }}
           />
         )}
+        {/* Hover/focus highlight: gold on the top and sides only while the
+            strip is stacked, so the seam into the next card stays hidden. */}
+        <span
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-0 border-2 border-[#E0A83C] opacity-0 transition-opacity group-hover/row:opacity-100 group-focus-visible/row:opacity-100 ${
+            open ? "rounded-[12px]" : "rounded-t-[10px] border-b-0"
+          }`}
+        />
         {tapped > 0 && (
           <span
             key={tapped}

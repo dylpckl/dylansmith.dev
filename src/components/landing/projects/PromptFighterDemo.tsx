@@ -991,8 +991,9 @@ export function PromptFighterDemo() {
 
   return (
     <div
-      // Same "this is live" cue as the phone demos: lift + red ring on hover.
-      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_0_0_2px_#d9503c,0_0_48px_-8px_#d9503c] motion-reduce:hover:translate-y-0"
+      // Same "this is live" cue as the phone demos: a red ring on hover (glow
+      // only, so nothing moves under the cursor).
+      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px] transition-shadow duration-300 ease-out hover:shadow-[0_0_0_2px_#d9503c,0_0_48px_-8px_#d9503c]"
       style={{
         background: t.bg,
         color: t.text,

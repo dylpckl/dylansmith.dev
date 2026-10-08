@@ -81,7 +81,7 @@ export function CrosscheckCard() {
         <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:pt-8">
           {/* Tiles flex to fit the column on narrow phones (10 fixed tiles
               overflowed at 320px), then settle at a fixed size from sm up. */}
-          <h3 className="order-1 flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1 lg:order-2" aria-label="crosscheck">
+          <h3 className="flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1" aria-label="crosscheck">
             {"CROSSCHECK".split("").map((ch, i) => (
               <span
                 key={i}

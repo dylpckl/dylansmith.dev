@@ -175,7 +175,8 @@ export function FighterCard() {
             tagClassName="rounded-none bg-[#141417] text-[#a3a3ad] ring-[#2a2a31]"
           />
 
-          <div className="mt-auto flex items-center gap-3 self-end">
+          {/* Full width on phones (CTA stretches beside the icon), right-aligned from sm up. */}
+          <div className="mt-auto flex w-full items-center gap-3 sm:w-auto sm:self-end">
             <a
               href="https://github.com/dylpckl/prompt-fighter"
               target="_blank"
@@ -189,7 +190,7 @@ export function FighterCard() {
               href="https://prompt-fight.vercel.app"
               target="_blank"
               rel="noreferrer"
-              className={`${pressStart.className} inline-flex h-14 w-full items-center justify-center gap-3 bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:w-fit sm:text-sm`}
+              className={`${pressStart.className} inline-flex h-14 min-w-0 flex-1 items-center justify-center gap-3 bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:flex-none sm:text-sm`}
             >
               Play prompt fighter ▶
             </a>

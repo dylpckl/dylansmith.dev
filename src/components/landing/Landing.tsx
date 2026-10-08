@@ -12,23 +12,18 @@ import { Hero } from "./Hero";
 import { Principles } from "./Principles";
 import { Outcomes } from "./Outcomes";
 import { Work } from "./Work";
-// Writing frame is hidden for now. To bring it back: import { Writing },
-// add a writingRef (and to the observer's refs), render
+// Writing frame is hidden for now. To bring it back: load posts in
+// app/page.tsx (getAllPosts → PostSummary[]) and pass them here as `posts`,
+// import { Writing }, add a writingRef (and to the observer's refs), render
 // <Frame id="writing" label="Writing" sectionRef={writingRef}><Writing posts={posts} /></Frame>
 // after Projects, and restore its SECTIONS entry in lib/site.ts.
-import type { PostSummary } from "./Writing";
 import { SideProjects } from "./SideProjects";
-
-type LandingProps = {
-  posts: PostSummary[];
-};
 
 /**
  * Client composer for the landing page: owns the section refs and the
- * IntersectionObserver that drives the sidebar's active state. The server
- * page loads posts and hands them in.
+ * IntersectionObserver that drives the sidebar's active state.
  */
-export function Landing({ posts: _posts }: LandingProps) {
+export function Landing() {
   const [activeSection, setActiveSection] = useState("intro");
 
   const introRef = useRef<HTMLElement>(null);

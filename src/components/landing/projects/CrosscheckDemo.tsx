@@ -15,6 +15,7 @@ import {
   mapAnswers,
   type DatamuseWord,
 } from "@/lib/demos/crosscheck/datamuse";
+import { Copy } from "lucide-react";
 import { PhoneFrame } from "./PhoneFrame";
 import { CC_MONO, CC_SANS, CC_SERIF } from "./fonts";
 
@@ -538,7 +539,7 @@ function AnswerRow({
     <button
       type="button"
       onClick={() => onCopy(a)}
-      aria-label={`${a.display}, ${a.length} letters. Tap to copy.`}
+      aria-label={`${a.display}, ${a.length} letters. Copy.`}
       className="group grid w-full gap-1.5 rounded-md py-3 text-left transition-colors first:border-t-0 hover:bg-[rgba(230,223,208,.55)] active:bg-[var(--rule-2)]"
       style={{
         borderTop: "1px solid var(--rule-2)",
@@ -591,15 +592,17 @@ function AnswerRow({
           className="ml-1.5 text-[12px] tabular-nums"
           style={{ color: copied ? "var(--blue)" : "var(--ink-3)" }}
         >
-          {copied ? (
-            "Copied"
-          ) : (
-            <>
-              <span className="group-hover:hidden">{a.length}</span>
-              <span className="hidden group-hover:inline">Tap to copy</span>
-            </>
-          )}
+          {copied ? "Copied" : a.length}
         </span>
+        {/* Copy affordance: always takes its space (fades in on hover), so
+            the row never reflows under the cursor. */}
+        {!copied && (
+          <Copy
+            aria-hidden="true"
+            className="ml-1 h-3 w-3 opacity-0 transition-opacity group-hover:opacity-60"
+            style={{ color: "var(--ink-3)" }}
+          />
+        )}
       </span>
       {a.gloss && (
         <span

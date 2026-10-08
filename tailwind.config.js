@@ -2,6 +2,11 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
+  // hover: styles only apply on devices that can really hover (mouse), so a
+  // tap on a phone doesn't leave things stuck in their hover state.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
