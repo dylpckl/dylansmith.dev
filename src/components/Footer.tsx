@@ -16,7 +16,7 @@ export default function Footer() {
     // Full-bleed: edge to edge of the window, above the fixed sidebar (z-30) so
     // the page ends on the footer. Inner content tracks the main column's
     // margins (see page.tsx) so it lines up with the cards.
-    <footer className="relative z-30 border-t border-slate-700/80 bg-slate-950/90 backdrop-blur-md">
+    <footer className="relative z-30 border-t border-slate-600/70 bg-slate-800/60 backdrop-blur-md">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-40 [background-image:radial-gradient(rgb(100_116_139/0.3)_1px,transparent_1px)] [background-size:16px_16px]"
