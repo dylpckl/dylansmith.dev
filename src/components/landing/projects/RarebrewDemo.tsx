@@ -34,7 +34,14 @@ const MANA = { W: "#f8e7a1", U: "#6495ed", B: "#a798a1" } as const;
 const CARD_W = 214;
 const CARD_RATIO = 680 / 488;
 const cardH = (w: number) => Math.round(w * CARD_RATIO);
-const rowH = (w: number) => Math.round(cardH(w) * 0.12) + 9;
+// Stacked-deck rows (rarebrew's `rowLayout=overlap`): each strip tucks under
+// the one before it, so the collapsed height pays back that tuck to keep the
+// whole name plate visible. Values from components/card/stackedStripStyle.ts.
+const STACK_OVERLAP = 4;
+const STACK_UP_SHADOW = "drop-shadow(0 -3px 6px rgba(0,0,0,0.7))";
+const STRIP_DOWN_SHADOW = "0 1px 2px rgba(0,0,0,0.4)";
+const ROW_GAP_AFTER_OPEN = 12;
+const rowH = (w: number) => Math.round(cardH(w) * 0.12) + STACK_OVERLAP;
 const HEADER_H = 96;
 
 const GROUPS: { id: string; label: string; match: (c: DeckCard) => boolean }[] = [
@@ -259,14 +266,17 @@ export function RarebrewDemo() {
                   style={{ gridTemplateRows: isCollapsed ? "0fr" : "1fr", transition: `grid-template-rows 240ms ${DECEL}` }}
                 >
                   <div className="min-h-0 overflow-hidden">
-                    <ul className="flex flex-col gap-3 pb-4 pt-1">
-                      {s.cards.map((c) => {
+                    <ul className="flex flex-col pb-4 pt-1">
+                      {s.cards.map((c, i) => {
                         const key = `${s.id}:${c.name}`;
+                        const prevKey = i > 0 ? `${s.id}:${s.cards[i - 1].name}` : null;
                         return (
                           <CardRow
                             key={key}
                             card={c}
+                            index={i}
                             open={expanded === key}
+                            prevOpen={prevKey !== null && expanded === prevKey}
                             onToggle={(node) => toggleRow(key, node)}
                           />
                         );
@@ -358,7 +368,19 @@ function CountBadge({ n, on }: { n: number; on: boolean }) {
   );
 }
 
-function CardRow({ card, open, onToggle }: { card: DeckCard; open: boolean; onToggle: (node: HTMLElement | null) => void }) {
+function CardRow({
+  card,
+  index,
+  open,
+  prevOpen,
+  onToggle,
+}: {
+  card: DeckCard;
+  index: number;
+  open: boolean;
+  prevOpen: boolean;
+  onToggle: (node: HTMLElement | null) => void;
+}) {
   const ref = useRef<HTMLLIElement>(null);
   const btnRef = useRef<HTMLButtonElement>(null);
   const [back, setBack] = useState(false);
@@ -376,7 +398,18 @@ function CardRow({ card, open, onToggle }: { card: DeckCard; open: boolean; onTo
   }, [open]);
 
   return (
-    <li ref={ref} className="grid items-start" style={{ gridTemplateColumns: `minmax(26px,1fr) minmax(0,${CARD_W}px) minmax(46px,1fr)` }}>
+    <li
+      ref={ref}
+      className="relative grid items-start"
+      style={{
+        gridTemplateColumns: `minmax(26px,1fr) minmax(0,${CARD_W}px) minmax(46px,1fr)`,
+        // Tuck under the previous strip; an open card above gets breathing room instead.
+        marginTop: index === 0 ? 0 : prevOpen || open ? ROW_GAP_AFTER_OPEN : -STACK_OVERLAP,
+        // The covering card casts its shadow up onto the one behind it.
+        filter: index > 0 && !open && !prevOpen ? STACK_UP_SHADOW : "none",
+        transition: `margin-top .2s ease, filter .2s ease`,
+      }}
+    >
       <span className="flex h-full justify-center pt-3">
         {card.qty > 1 && (
           <span className="text-[11px] font-bold tabular-nums" style={{ fontFamily: MONO, color: C.g300 }}>
@@ -393,8 +426,12 @@ function CardRow({ card, open, onToggle }: { card: DeckCard; open: boolean; onTo
         className="relative w-full overflow-hidden text-left"
         style={{
           height: open ? cardH(w) : rowH(w),
-          borderRadius: open ? 12 : 10,
+          // Collapsed strips are top-rounded with no bottom edge, so the seams
+          // between stacked cards read as one deck rather than a list of chips.
+          borderRadius: open ? 12 : "10px 10px 0 0",
           border: `1px solid ${C.g500}`,
+          borderBottomColor: open ? C.g500 : "transparent",
+          boxShadow: STRIP_DOWN_SHADOW,
           background: C.g800,
           transition: `height .28s ${STANDARD}, border-radius .28s ${STANDARD}`,
         }}
