@@ -28,15 +28,15 @@ export function StatTile({
         {Icon && (
           <Icon
             aria-hidden="true"
-            className="mb-3 h-6 w-6 shrink-0 text-teal-300"
+            className="mb-3 h-6 w-6 shrink-0 text-accent"
             strokeWidth={1.5}
           />
         )}
         <CountUp
           to={number}
-          className="font-sans text-3xl font-bold leading-none text-slate-100 xl:text-4xl 2xl:text-5xl"
+          className="font-sans text-3xl font-bold leading-none text-ink xl:text-4xl 2xl:text-5xl"
         />
-        <p className="mt-3 max-w-[34ch] text-xs leading-snug text-slate-300 lg:text-base xl:text-base 2xl:text-lg">
+        <p className="mt-3 max-w-[34ch] text-xs leading-snug text-ink-2 lg:text-base xl:text-base 2xl:text-lg">
           {caption}
         </p>
       </div>

@@ -3,7 +3,7 @@
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0 4px,
-    #d78775ce 4px 8px
+    rgb(var(--m-accent) / 0.8) 4px 8px
   );
 }
 
@@ -12,6 +12,6 @@
   background-image: repeating-linear-gradient(
     90deg,
     transparent 0 4px,
-    #d78775 4px 8px
+    rgb(var(--m-accent) / 0.8) 4px 8px
   );
 }

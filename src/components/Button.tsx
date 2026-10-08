@@ -5,9 +5,9 @@ import { cn } from "@/lib/utils";
 
 const variants = {
   primary:
-    "bg-teal-300 text-teal-900 hover:bg-teal-200 ring-1 ring-transparent",
+    "bg-accent text-accent-ink hover:bg-accent/80 ring-1 ring-transparent",
   ghost:
-    "bg-slate-800/60 text-slate-300 ring-1 ring-slate-700 hover:bg-slate-800 hover:text-teal-300 hover:ring-teal-300/60 backdrop-blur-sm",
+    "bg-surface/60 text-ink-2 ring-1 ring-line/25 hover:bg-surface hover:text-accent hover:ring-accent/60 backdrop-blur-sm",
 };
 
 const sizes = {
@@ -43,7 +43,7 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 rounded-md font-mono text-xs font-semibold uppercase tracking-widest transition focus:outline-none focus:ring-2 focus:ring-teal-300 focus:ring-offset-2 focus:ring-offset-slate-900",
+    "inline-flex items-center justify-center gap-2 rounded-md font-mono text-xs font-semibold uppercase tracking-widest transition focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-paper",
     variants[variant],
     sizes[size],
     className,

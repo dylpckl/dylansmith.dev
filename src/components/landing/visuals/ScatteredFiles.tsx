@@ -17,17 +17,17 @@ const FILES = [
 function styleFor(name: string) {
   if (name.endsWith(".sql"))
     return {
-      cell: "bg-violet-500/10 ring-violet-300/40 text-violet-200",
-      icon: "text-violet-300",
+      cell: "bg-violet-500/10 ring-violet-300/40 text-ink-2",
+      icon: "text-violet-400",
     };
   if (name.endsWith(".py"))
     return {
-      cell: "bg-pink-500/10 ring-pink-300/40 text-pink-200",
-      icon: "text-pink-300",
+      cell: "bg-pink-500/10 ring-pink-300/40 text-ink-2",
+      icon: "text-pink-400",
     };
   return {
-    cell: "bg-slate-800 ring-slate-700 text-slate-300",
-    icon: "text-slate-500",
+    cell: "bg-surface ring-line/25 text-ink-2",
+    icon: "text-ink-4",
   };
 }
 

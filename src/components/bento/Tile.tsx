@@ -29,9 +29,9 @@ type TileProps =
   | (CommonProps & { decorative: true; onClickModal?: never; href?: never });
 
 const baseClasses =
-  "group relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-slate-800/60 p-6 ring-1 ring-slate-700 backdrop-blur-sm";
+  "group relative flex flex-col gap-3 overflow-hidden rounded-2xl bg-card p-6 ring-1 ring-line/25 backdrop-blur-sm";
 const interactiveClasses =
-  "transition-all duration-300 hover:bg-slate-800 hover:ring-teal-300/60 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-teal-300";
+  "transition-all duration-300 hover:bg-card-strong hover:ring-accent/60 cursor-pointer text-left focus:outline-none focus:ring-2 focus:ring-accent";
 
 function TileHeader({
   label,
@@ -46,7 +46,7 @@ function TileHeader({
   const hasTags = !!tags && tags.length > 0;
   if (!hasLabel && !hasTags) return null;
   return (
-    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-slate-400">
+    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 text-ink-3">
       {hasLabel && (
         <div className="flex items-center gap-2">
           {Icon && <Icon className="h-4 w-4" aria-hidden="true" />}

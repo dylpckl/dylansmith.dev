@@ -87,7 +87,7 @@ export function RarebrewCard() {
       copy={
         <>
 
-          <h3 className={`${spaceGrotesk.className} text-4xl font-bold leading-none tracking-tight min-[360px]:text-5xl lg:text-6xl`}>
+          <h3 className={`${spaceGrotesk.className} text-3xl font-bold leading-none tracking-tight min-[360px]:text-4xl sm:text-5xl lg:text-6xl`}>
             rarebrew<span className="text-[#E0A83C]">.gg</span>
           </h3>
 
@@ -111,15 +111,23 @@ export function RarebrewCard() {
             tagClassName="bg-[#1f1f1f] text-[#bfbfbf] ring-[#333333]"
           />
 
-          <a
-            href="https://rarebrew.gg"
-            target="_blank"
-            rel="noreferrer"
-            className="mt-auto inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#E0A83C] px-7 text-base font-bold text-[#1a1304] shadow-[0_10px_30px_-10px_rgba(224,168,60,.6)] sm:w-fit transition hover:bg-[#F0BD52] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
-          >
-            Open rarebrew.gg
-            <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
-          </a>
+          <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3">
+            <a
+              href="https://rarebrew.gg"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#E0A83C] px-7 text-base font-bold text-[#1a1304] shadow-[0_10px_30px_-10px_rgba(224,168,60,.6)] sm:w-fit transition hover:bg-[#F0BD52] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
+            >
+              Open rarebrew.gg
+              <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
+            </a>
+            <a
+              href="/blog/rare-brew"
+              className="font-mono text-xs uppercase tracking-widest text-[#E0A83C] underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52]"
+            >
+              Read the notes →
+            </a>
+          </div>
         </>
       }
       demo={

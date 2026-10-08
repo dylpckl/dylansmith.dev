@@ -24,17 +24,17 @@ const SIZE: Record<TagSize, string> = {
 
 // Solid: dark bg with intent-colored text + ring. Reads on busy backgrounds.
 const SOLID: Record<TagIntent, string> = {
-  default: "bg-slate-800 text-slate-300 ring-1 ring-slate-700",
-  teal: "bg-slate-900/70 text-teal-200 ring-1 ring-teal-300/30",
-  orange: "bg-slate-900/70 text-orange-200 ring-1 ring-orange-300/30",
+  default: "bg-surface text-ink-2 ring-1 ring-line/25",
+  teal: "bg-paper/70 text-accent ring-1 ring-accent/30",
+  orange: "bg-paper/70 text-warm ring-1 ring-warm/30",
 };
 
 // Tinted: translucent intent-colored bg, no ring. For nested labels inside an
 // already-colored container.
 const TINTED: Record<TagIntent, string> = {
-  default: "bg-slate-700/40 text-slate-300",
-  teal: "bg-teal-300/20 text-teal-200",
-  orange: "bg-orange-300/20 text-orange-200",
+  default: "bg-surface-2/40 text-ink-2",
+  teal: "bg-accent/20 text-accent",
+  orange: "bg-warm/20 text-warm",
 };
 
 export function Tag({
