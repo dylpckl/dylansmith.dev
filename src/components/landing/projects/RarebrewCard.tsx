@@ -103,10 +103,10 @@ export function RarebrewCard() {
             href="https://rarebrew.gg"
             target="_blank"
             rel="noreferrer"
-            className="mt-auto inline-flex h-11 w-fit items-center gap-1.5 rounded-[10px] bg-[#E0A83C] px-5 text-sm font-bold text-[#1a1304] transition hover:bg-[#F0BD52] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
+            className="mt-auto inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#E0A83C] px-7 text-base font-bold text-[#1a1304] shadow-[0_10px_30px_-10px_rgba(224,168,60,.6)] sm:w-fit transition hover:bg-[#F0BD52] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52] focus-visible:ring-offset-2 focus-visible:ring-offset-[#121212]"
           >
-            Visit rarebrew.gg
-            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            Open rarebrew.gg
+            <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
           </a>
         </>
       }

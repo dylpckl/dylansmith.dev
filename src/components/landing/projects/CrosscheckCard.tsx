@@ -110,21 +110,23 @@ export function CrosscheckCard() {
             tagClassName="bg-[#FBF8F1] text-[#5E5A50] ring-[#D8D0BE]"
           />
 
-          <div className="mt-auto flex flex-wrap gap-x-6 gap-y-2 border-t border-[#D8D0BE] pt-4">
-            {[
-              { href: "https://dylpckl.github.io/crosscheck/", label: "Try crosscheck" },
-              { href: "https://github.com/dylpckl/crosscheck", label: "Source" },
-            ].map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                target="_blank"
-                rel="noreferrer"
-                className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2B4C7E] underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E]"
-              >
-                {l.label} ↗
-              </a>
-            ))}
+          <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[#D8D0BE] pt-5">
+            <a
+              href="https://dylpckl.github.io/crosscheck/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#2B4C7E] px-7 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(43,76,126,.8)] transition hover:bg-[#1d3559] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EFE9DD] sm:w-fit"
+            >
+              Try crosscheck ↗
+            </a>
+            <a
+              href="https://github.com/dylpckl/crosscheck"
+              target="_blank"
+              rel="noreferrer"
+              className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2B4C7E] underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E]"
+            >
+              Source ↗
+            </a>
           </div>
         </>
       }

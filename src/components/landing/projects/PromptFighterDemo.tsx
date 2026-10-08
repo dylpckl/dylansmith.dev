@@ -17,6 +17,7 @@ import {
   VICTORY_LABELS,
   victoryText,
 } from "@/lib/demos/prompt-fighter/victory";
+import { SEEDS, type SeedFighter } from "@/lib/demos/prompt-fighter/seeds";
 import { PixelSprite } from "./PixelSprite";
 
 // prompt-fighter's own theme (src/theme.ts).
@@ -52,8 +53,18 @@ function newSeed() {
   return (Math.random() * 0xffffffff) >>> 0;
 }
 
-export function PromptFighterDemo() {
-  const [pick, setPick] = useState<Record<Side, number>>({ a: 0, b: 1 });
+type PoolFighter = (typeof ROSTER)[number] | SeedFighter;
+
+function Arena({ built }: { built: SeedFighter | null }) {
+  // A freshly built fighter takes side A against a random roster opponent.
+  const pool: PoolFighter[] = useMemo(
+    () => (built ? [built, ...ROSTER.filter((r) => r.name !== built.name)] : ROSTER),
+    [built],
+  );
+  const [pick, setPick] = useState<Record<Side, number>>(() => ({
+    a: 0,
+    b: built ? 1 + Math.floor(Math.random() * (pool.length - 1)) : 1,
+  }));
   const [seed, setSeed] = useState(0x5eed1e55);
   const [step, setStep] = useState(0);
   const [running, setRunning] = useState(false);
@@ -61,8 +72,8 @@ export function PromptFighterDemo() {
   const timer = useRef<number | null>(null);
   const logRef = useRef<HTMLDivElement>(null);
 
-  const a = ROSTER[pick.a];
-  const b = ROSTER[pick.b];
+  const a = pool[pick.a];
+  const b = pool[pick.b];
   // The whole fight is decided here, up front, exactly like the app's server.
   // The replay below only animates a finished log.
   const result = useMemo(() => simulate(a, b, seed), [a, b, seed]);
@@ -101,7 +112,7 @@ export function PromptFighterDemo() {
     setPick((p) => {
       const other = side === "a" ? p.b : p.a;
       let next = p[side];
-      do next = (next + dir + ROSTER.length) % ROSTER.length;
+      do next = (next + dir + pool.length) % pool.length;
       while (next === other);
       return { ...p, [side]: next };
     });
@@ -113,30 +124,7 @@ export function PromptFighterDemo() {
     current && current.damage > 0 ? (current.actor === "a" ? "b" : "a") : null;
 
   return (
-    <div
-      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px]"
-      style={{ background: t.bg, color: t.text, fontFamily: MONO, border: `1px solid ${t.line}` }}
-    >
-      <style>{`
-        @keyframes pf-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
-        @keyframes pf-hit { 0% { filter: brightness(3) saturate(0); transform: translateX(0) } 30% { transform: translateX(-4px) } 60% { transform: translateX(3px) } 100% { filter: none; transform: translateX(0) } }
-        @keyframes pf-lunge-r { 0%,100% { transform: translateX(0) } 40% { transform: translateX(18px) } }
-        @keyframes pf-lunge-l { 0%,100% { transform: translateX(0) } 40% { transform: translateX(-18px) } }
-        @keyframes pf-pop { 0% { opacity: 0; transform: translateY(4px) scale(.96) } 100% { opacity: 1; transform: none } }
-        @keyframes pf-float { 0% { opacity: 0; transform: translateY(0) } 15% { opacity: 1 } 100% { opacity: 0; transform: translateY(-28px) } }
-        @media (prefers-reduced-motion: reduce) { .pf-anim { animation: none !important } }
-      `}</style>
-
-      {/* chrome */}
-      <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: `1px solid ${t.line}` }}>
-        <span className="text-[12px] uppercase tracking-[0.22em]" style={{ color: t.text }}>
-          prompt <span style={{ color: t.accent }}>fighter</span>
-        </span>
-        <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
-          seed {seed.toString(16).padStart(8, "0")}
-        </span>
-      </div>
-
+    <>
       <div className="grid gap-3 p-3 sm:p-4">
         {/* health */}
         <div className="grid grid-cols-2 gap-3">
@@ -333,8 +321,11 @@ export function PromptFighterDemo() {
             Replay seed
           </button>
         </div>
+        <p className="text-center text-[10px] uppercase tracking-[0.14em]" style={{ color: t.faint }}>
+          seed {seed.toString(16).padStart(8, "0")}
+        </p>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -446,6 +437,303 @@ function StatBudget({ stats, name, flaw, moves }: { stats: Stats; name: string; 
       <p className="text-[11px] leading-snug" style={{ color: t.dim }}>
         Moves: <span style={{ color: t.text }}>{moves.join(" / ")}</span> · Flaw: <span style={{ color: t.text }}>{flaw}</span>
       </p>
+    </div>
+  );
+}
+
+const SLOTS = [
+  { key: "body", label: "Body" },
+  { key: "weapon", label: "Weapon" },
+  { key: "move", label: "Signature move" },
+  { key: "flaw", label: "Flaw" },
+] as const;
+
+const GEN_STEPS = [
+  "Reading four prompts…",
+  "Spending 30 body points, 20 spirit…",
+  "Picking moves from the effect list…",
+  "Drawing a 16×16 sprite…",
+];
+
+type Phase = "typing" | "ready" | "generating" | "revealed";
+
+/**
+ * The fun part of the real app, replayed: a seed fighter's prompts type
+ * themselves into the four slots, "Generate" walks the steps the server takes,
+ * and the fighter Claude actually produced for those prompts draws in.
+ */
+function Builder({ onSend, active }: { onSend: (f: SeedFighter) => void; active: boolean }) {
+  const [index, setIndex] = useState(0);
+  const [typed, setTyped] = useState(0);
+  const [phase, setPhase] = useState<Phase>("typing");
+  const [genStep, setGenStep] = useState(0);
+  const [rows, setRows] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  const seed = SEEDS[index];
+  const texts = SLOTS.map((s) => seed.prompts[s.key]);
+  const total = texts.reduce((n, x) => n + x.length, 0);
+
+  // Start typing only once the demo is on screen.
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => e.isIntersecting && setVisible(true), { threshold: 0.3 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!visible || !active || phase !== "typing") return;
+    if (typed >= total) {
+      setPhase("ready");
+      return;
+    }
+    const id = window.setTimeout(() => setTyped((n) => Math.min(total, n + 2)), 22);
+    return () => window.clearTimeout(id);
+  }, [visible, active, phase, typed, total]);
+
+  useEffect(() => {
+    if (phase !== "generating") return;
+    if (genStep >= GEN_STEPS.length) {
+      setPhase("revealed");
+      setRows(0);
+      return;
+    }
+    const id = window.setTimeout(() => setGenStep((n) => n + 1), 480);
+    return () => window.clearTimeout(id);
+  }, [phase, genStep]);
+
+  useEffect(() => {
+    if (phase !== "revealed" || rows >= 16) return;
+    const id = window.setTimeout(() => setRows((n) => n + 1), 45);
+    return () => window.clearTimeout(id);
+  }, [phase, rows]);
+
+  const nextPrompts = () => {
+    setIndex((i) => (i + 1) % SEEDS.length);
+    setTyped(0);
+    setGenStep(0);
+    setRows(0);
+    setPhase("typing");
+  };
+
+  const generate = () => {
+    setTyped(total);
+    setGenStep(0);
+    setPhase("generating");
+  };
+
+  // Which characters of each slot are typed so far.
+  let budget = typed;
+  const shown = texts.map((x) => {
+    const n = Math.max(0, Math.min(x.length, budget));
+    budget -= x.length;
+    return x.slice(0, n);
+  });
+  const typingSlot = phase === "typing" ? shown.findIndex((x, i) => x.length < texts[i].length) : -1;
+  const revealed = phase === "revealed";
+  const done = revealed && rows >= 16;
+
+  return (
+    <div ref={rootRef} className="grid gap-3 p-3 sm:p-4">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+          Seed pool · {index + 1}/{SEEDS.length}
+        </span>
+        <button
+          type="button"
+          onClick={nextPrompts}
+          disabled={phase === "generating"}
+          className="rounded-[3px] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.14em] transition-colors hover:bg-white/5 disabled:opacity-40"
+          style={{ color: t.dim, border: `1px solid ${t.line}` }}
+        >
+          ↻ New prompts
+        </button>
+      </div>
+
+      <div className="grid gap-2">
+        {SLOTS.map((slot, i) => (
+          <div key={slot.key} className="grid gap-1">
+            <div className="flex justify-between text-[10px] uppercase tracking-[0.14em]" style={{ color: t.dim }}>
+              <span>{slot.label}</span>
+              <span className="tabular-nums" style={{ color: t.faint }}>
+                {shown[i].length}/80
+              </span>
+            </div>
+            <div
+              aria-readonly="true"
+              className="min-h-[38px] rounded-[3px] px-2.5 py-2 text-[12px] leading-snug"
+              style={{
+                background: t.panel,
+                border: `1px solid ${typingSlot === i ? t.accent : t.line}`,
+                color: t.text,
+                transition: "border-color 160ms ease",
+              }}
+            >
+              {shown[i]}
+              {typingSlot === i && (
+                <span className="ml-px inline-block h-[13px] w-[7px] translate-y-[2px] animate-pulse" style={{ background: t.accent }} />
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Reveal area: fixed height, so nothing below moves as the fighter draws in. */}
+      <div className="relative h-[176px] overflow-hidden rounded-[4px]" style={{ background: t.panel, border: `1px solid ${t.line}` }}>
+        {phase === "generating" ? (
+          <div className="grid h-full content-center gap-1.5 px-4">
+            {GEN_STEPS.map((step, i) => (
+              <p
+                key={step}
+                className="text-[12px]"
+                style={{ color: i < genStep ? t.dim : i === genStep ? t.text : t.faint, opacity: i <= genStep ? 1 : 0.4 }}
+              >
+                <span style={{ color: i < genStep ? t.good : t.accent }}>{i < genStep ? "✓" : "▶"}</span> {step}
+              </p>
+            ))}
+          </div>
+        ) : revealed ? (
+          <div className="pf-anim flex h-full gap-4 p-3" style={{ animation: "pf-pop 220ms ease-out" }}>
+            <div className="grid shrink-0 place-items-center rounded-[3px] px-2" style={{ background: "#0e0e11", border: `1px solid ${t.line}` }}>
+              <PixelSprite sprite={seed.sprite} rows={rows} className="h-[96px] w-[96px] sm:h-[112px] sm:w-[112px]" />
+            </div>
+            <div className="grid min-w-0 flex-1 content-start gap-2">
+              <div style={{ opacity: rows >= 8 ? 1 : 0, transition: "opacity 300ms ease" }}>
+                <p className="truncate text-[14px]">{seed.name}</p>
+                <p className="truncate text-[11px]" style={{ color: t.dim }}>{seed.title}</p>
+              </div>
+              <div className="flex gap-[2px]" style={{ opacity: rows >= 12 ? 1 : 0, transition: "opacity 300ms ease" }}>
+                {BODY_KEYS.flatMap((k, ki) =>
+                  Array.from({ length: seed.stats[k] }, (_, j) => (
+                    <span key={`${k}-${j}`} className="h-2 flex-1" style={{ background: BODY_COLORS[ki] }} />
+                  )),
+                )}
+              </div>
+              <p className="text-[10px] tabular-nums" style={{ color: t.faint, opacity: rows >= 12 ? 1 : 0 }}>
+                HP {seed.stats.hp} · ATK {seed.stats.atk} · DEF {seed.stats.def} · SPD {seed.stats.spd} = 30
+              </p>
+              <p className="text-[11px] leading-snug" style={{ color: t.dim, opacity: done ? 1 : 0, transition: "opacity 300ms ease" }}>
+                <span style={{ color: t.text }}>{seed.moves[0].name}</span> / <span style={{ color: t.text }}>{seed.moves[1].name}</span>
+                <br />
+                Flaw: <span style={{ color: t.text }}>{seed.flaw.name}</span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid h-full place-items-center px-6 text-center text-[12px]" style={{ color: t.faint }}>
+            Your fighter appears here.
+          </div>
+        )}
+      </div>
+
+      {done ? (
+        <div className="grid grid-cols-[1fr_auto] gap-2">
+          <button
+            type="button"
+            onClick={() => onSend(seed)}
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em]"
+            style={{ background: t.accent, color: "#fff", border: `1px solid ${t.accent}` }}
+          >
+            Send to the arena ▶
+          </button>
+          <button
+            type="button"
+            onClick={nextPrompts}
+            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em]"
+            style={{ background: "transparent", color: t.dim, border: `1px solid ${t.line}` }}
+          >
+            Build another
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={generate}
+          disabled={phase === "generating" || phase === "revealed"}
+          className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+          style={{ background: t.accent, color: "#fff", border: `1px solid ${t.accent}` }}
+        >
+          {phase === "generating" ? "Generating…" : "Generate fighter"}
+        </button>
+      )}
+
+      <p className="text-center text-[10px] leading-relaxed" style={{ color: t.faint }}>
+        A replay of real generations: my seed prompts and the fighters Claude made from them.
+      </p>
+    </div>
+  );
+}
+
+export function PromptFighterDemo() {
+  const [mode, setMode] = useState<"build" | "fight">("build");
+  const [built, setBuilt] = useState<SeedFighter | null>(null);
+
+  const send = (f: SeedFighter) => {
+    setBuilt(f);
+    setMode("fight");
+  };
+
+  return (
+    <div
+      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px]"
+      style={{ background: t.bg, color: t.text, fontFamily: MONO, border: `1px solid ${t.line}` }}
+    >
+      <style>{`
+        @keyframes pf-bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
+        @keyframes pf-hit { 0% { filter: brightness(3) saturate(0); transform: translateX(0) } 30% { transform: translateX(-4px) } 60% { transform: translateX(3px) } 100% { filter: none; transform: translateX(0) } }
+        @keyframes pf-lunge-r { 0%,100% { transform: translateX(0) } 40% { transform: translateX(18px) } }
+        @keyframes pf-lunge-l { 0%,100% { transform: translateX(0) } 40% { transform: translateX(-18px) } }
+        @keyframes pf-pop { 0% { opacity: 0; transform: translateY(4px) scale(.96) } 100% { opacity: 1; transform: none } }
+        @keyframes pf-float { 0% { opacity: 0; transform: translateY(0) } 15% { opacity: 1 } 100% { opacity: 0; transform: translateY(-28px) } }
+        @media (prefers-reduced-motion: reduce) { .pf-anim { animation: none !important } }
+      `}</style>
+
+      {/* chrome */}
+      <div className="flex items-center justify-between gap-3 px-4 py-2.5" style={{ borderBottom: `1px solid ${t.line}` }}>
+        <span className="text-[12px] uppercase tracking-[0.22em]" style={{ color: t.text }}>
+          prompt <span style={{ color: t.accent }}>fighter</span>
+        </span>
+        <div role="tablist" aria-label="Demo mode" className="flex text-[10px] uppercase tracking-[0.14em]">
+          {(["build", "fight"] as const).map((m) => (
+            <button
+              key={m}
+              type="button"
+              role="tab"
+              aria-selected={mode === m}
+              onClick={() => setMode(m)}
+              className="px-2.5 py-1.5 transition-colors"
+              style={{
+                color: mode === m ? t.text : t.faint,
+                borderBottom: `2px solid ${mode === m ? t.accent : "transparent"}`,
+              }}
+            >
+              {m === "build" ? "Build" : "Arena"}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Both screens share one grid cell, so the card is always as tall as the
+          taller of the two and switching never shifts the layout. */}
+      <div className="grid">
+        <div
+          className="[grid-area:1/1]"
+          style={{ visibility: mode === "build" ? "visible" : "hidden" }}
+          aria-hidden={mode !== "build"}
+        >
+          <Builder onSend={send} active={mode === "build"} />
+        </div>
+        <div
+          className="[grid-area:1/1]"
+          style={{ visibility: mode === "fight" ? "visible" : "hidden" }}
+          aria-hidden={mode !== "fight"}
+        >
+          <Arena key={built?.id ?? "roster"} built={built} />
+        </div>
+      </div>
     </div>
   );
 }

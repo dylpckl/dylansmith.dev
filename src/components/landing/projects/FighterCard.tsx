@@ -41,7 +41,7 @@ export function FighterCard() {
         <>
           <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.2em] text-[#83838f]">
             <span>LLM game</span>
-            <span className="bg-[#c9a227]/15 px-2 py-0.5 text-[10px] tracking-[0.14em] text-[#e0bf4f]">Hosted app paused</span>
+            <span className="bg-[#5aa86f]/15 px-2 py-0.5 text-[10px] tracking-[0.14em] text-[#7cc68f]">Live</span>
           </div>
 
           <h3 className={`${pressStart.className} text-2xl uppercase leading-[1.4] md:text-3xl`}>
@@ -102,13 +102,22 @@ export function FighterCard() {
 
           <TagGroup
             tags={["Next.js", "Supabase", "Claude API", "Vitest"]}
-            className="mt-auto gap-2"
+            className="gap-2"
             tagClassName="rounded-none bg-[#141417] text-[#a3a3ad] ring-[#2a2a31]"
           />
+
+          <a
+            href="https://prompt-fight.vercel.app"
+            target="_blank"
+            rel="noreferrer"
+            className={`${pressStart.className} mt-auto inline-flex h-14 w-full items-center justify-center gap-3 bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:w-fit sm:text-sm`}
+          >
+            Play prompt fighter ▶
+          </a>
         </>
       }
       demo={<PromptFighterDemo />}
-      caption="Live · the real sim, six fighters from the pool"
+      caption="Replay · real generations, real sim"
       captionClassName="text-[#83838f]"
       dotClassName="rounded-none bg-[#d9503c]"
     />
