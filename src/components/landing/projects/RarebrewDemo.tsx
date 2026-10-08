@@ -101,6 +101,10 @@ export function RarebrewDemo() {
   // Any visitor input — pointer, key, wheel, focus — cancels the autoplay.
   const touched = useRef(false);
   const touch = () => (touched.current = true);
+  // Simulated taps for the autoplay tour: which row shows a ripple (and a
+  // counter so a repeat tap restarts it), and which double-faced card to flip.
+  const [tap, setTap] = useState<{ key: string; n: number } | null>(null);
+  const [autoFlip, setAutoFlip] = useState<string | null>(null);
   // One width for every row: they all share the list's center column.
   const [listW, setListW] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -181,15 +185,46 @@ export function RarebrewDemo() {
           return;
         }
         setDealt(true);
-        const commander = `${sections[0].id}:${sections[0].cards[0].name}`;
-        const settle = DEAL_MAX * DEAL_STEP + 600;
-        timers.push(window.setTimeout(() => !touched.current && setExpanded(commander), settle));
-        timers.push(
-          window.setTimeout(
-            () => !touched.current && setExpanded((cur) => (cur === commander ? null : cur)),
-            settle + 1900,
-          ),
-        );
+
+        // The tour: tap a card (ripple), it expands, hold, tap the next. One
+        // double-faced card gets flipped mid-hold. Every step checks `touched`
+        // so the visitor can take over at any moment.
+        const at = (ms: number, fn: () => void) =>
+          timers.push(window.setTimeout(() => !touched.current && fn(), ms));
+        const keyOf = (name: string) => {
+          const sec = sections.find((x) => x.cards.some((c) => c.name.startsWith(name)));
+          const card = sec?.cards.find((c) => c.name.startsWith(name));
+          return sec && card ? `${sec.id}:${card.name}` : null;
+        };
+        const tapOpen = (key: string) => {
+          setTap({ key, n: Date.now() });
+          window.setTimeout(() => {
+            if (touched.current) return;
+            setExpanded(key);
+            window.setTimeout(() => {
+              const list = scrollRef.current;
+              const row = list?.querySelector<HTMLElement>(`[data-row="${CSS.escape(key)}"]`);
+              if (list && row) list.scrollTo({ top: Math.max(0, row.offsetTop - 8), behavior: "smooth" });
+            }, 300);
+          }, 320);
+        };
+        const tour = ["The Destined Warrior", "Archpriest of Iona", "Sygg", "Path to Exile"]
+          .map(keyOf)
+          .filter((k): k is string => !!k);
+        let t = DEAL_MAX * DEAL_STEP + 700; // let the deal-in land first
+        for (const key of tour) {
+          at(t, () => tapOpen(key));
+          if (key.includes("Sygg")) {
+            at(t + 1500, () => setAutoFlip(key));
+            t += 3200;
+          } else {
+            t += 2400;
+          }
+        }
+        at(t, () => {
+          setExpanded(null);
+          window.setTimeout(() => scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" }), 300);
+        });
       },
       { threshold: 0.4 },
     );
@@ -237,6 +272,7 @@ export function RarebrewDemo() {
         className={`${dmSans.className} relative flex min-h-0 flex-1 flex-col`}
         style={{ background: C.g900, color: C.g100 }}
       >
+        <style>{`@keyframes rb-tap { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4) } 25% { opacity: 1 } 100% { opacity: 0; transform: translate(-50%,-50%) scale(1.8) } }`}</style>
         {/* sticky header */}
         <header className="relative z-20 shrink-0" style={{ background: C.g800, height: HEADER_H }}>
           <div className="flex h-14 items-center gap-1.5 pl-1.5 pr-1">
@@ -381,6 +417,9 @@ export function RarebrewDemo() {
                             dealt={dealt}
                             dealDelay={instant ? null : Math.min(offsets[si] + i, DEAL_MAX) * DEAL_STEP}
                             cardW={rowCardW(listW)}
+                            rowKey={key}
+                            tapped={tap?.key === key ? tap.n : 0}
+                            flipNow={autoFlip === key}
                             onToggle={(node) => toggleRow(key, node)}
                           />
                         );
@@ -480,6 +519,9 @@ function CardRow({
   dealt,
   dealDelay,
   cardW: w,
+  rowKey,
+  tapped,
+  flipNow,
   onToggle,
 }: {
   card: DeckCard;
@@ -490,6 +532,11 @@ function CardRow({
   /** null = no deal-in animation (reduced motion). */
   dealDelay: number | null;
   cardW: number;
+  rowKey: string;
+  /** Non-zero = show a tap ripple; a new value restarts it. */
+  tapped: number;
+  /** Autoplay asks this (double-faced) card to show its back. */
+  flipNow: boolean;
   onToggle: (node: HTMLElement | null) => void;
 }) {
   const ref = useRef<HTMLLIElement>(null);
@@ -497,10 +544,14 @@ function CardRow({
   useEffect(() => {
     if (!open) setBack(false);
   }, [open]);
+  useEffect(() => {
+    if (flipNow && open && card.dfc) setBack(true);
+  }, [flipNow, open, card.dfc]);
 
   return (
     <li
       ref={ref}
+      data-row={rowKey}
       className="relative grid items-start"
       style={{
         gridTemplateColumns: `minmax(26px,1fr) minmax(0,${CARD_W}px) minmax(46px,1fr)`,
@@ -555,9 +606,19 @@ function CardRow({
           <img
             src={scryfallImage(card.print, "normal", "back")}
             alt=""
-            loading="lazy"
+            // Only rendered once the card is open, so fetch it right away —
+            // lazy here left the autoplay flip showing a blank face.
+            loading="eager"
             className="absolute inset-x-0 top-0 h-auto w-full"
             style={{ opacity: back ? 1 : 0, transition: "opacity 200ms ease" }}
+          />
+        )}
+        {tapped > 0 && (
+          <span
+            key={tapped}
+            aria-hidden="true"
+            className="pointer-events-none absolute left-1/2 top-[22px] h-10 w-10 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{ background: "rgba(224,168,60,.35)", boxShadow: `0 0 0 2px ${C.brand}`, animation: "rb-tap 560ms ease-out forwards" }}
           />
         )}
       </button>

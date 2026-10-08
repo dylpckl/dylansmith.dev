@@ -144,7 +144,7 @@ export function RarebrewCard() {
           <RarebrewDemo />
         </div>
       }
-      caption="Recreated · my Light Party deck, real data"
+      caption="Recreated · my Light Party deck"
       captionClassName="text-[#a6a6a6] lg:self-end lg:pr-2"
       dotClassName="bg-[#E0A83C]"
     />

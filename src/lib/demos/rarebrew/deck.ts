@@ -1,6 +1,9 @@
 // Snapshot of the "Light Party" main build from rarebrew.gg (a public deck),
 // taken 2026-10. Prices are USD at snapshot time. `print` is the Scryfall
 // printing id; images come straight off Scryfall's CDN, same as the app.
+//
+// One deliberate edit: the live build runs 103 cards, so three basic Plains
+// are trimmed (6 → 3) to make the demo a legal 100-card Commander deck.
 
 export type DeckCard = {
   name: string;
@@ -46,7 +49,7 @@ const ROWS: Row[] = [
   ["Morphic Pool", "", 0, "Land", "48e40927-dd87-42ed-b805-0ae8ba81f5fb", 31.78],
   ["Otawara, Soaring City", "", 0, "Legendary Land", "486d7edc-d983-41f0-8b78-c99aecd72996", 29.6, ["Removal"]],
   ["Path of Ancestry", "", 0, "Land", "9335e773-4b45-4b91-8140-5159fe7e0395", 0.32],
-  ["Plains", "", 0, "Basic Land — Plains", "5f9b6584-ad27-410d-b6f1-c25c91630aea", 0.11, [], { qty: 6 }],
+  ["Plains", "", 0, "Basic Land — Plains", "5f9b6584-ad27-410d-b6f1-c25c91630aea", 0.11, [], { qty: 3 }],
   ["Prairie Stream", "", 0, "Land — Plains Island", "ce3a0ad9-6b7a-470c-8e49-4121fea72c89", 0.34],
   ["Raffine's Tower", "", 0, "Land — Plains Island Swamp", "a2c56479-4bee-4edb-80d7-4af010b7c793", 14.31, ["Card Draw"]],
   ["Rogue's Passage", "", 0, "Land", "a2a424ea-ef32-4ac5-8f8c-3ea1839f01d4", 0.43],
