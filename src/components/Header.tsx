@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MaterialToggle } from "@/components/workspace/MaterialToggle";
+import { RESUME_PATH } from "@/lib/site";
 
 export type NavSection = { id: string; label: string };
 
@@ -10,14 +11,12 @@ type HeaderProps = {
   /** Id of the section currently in view, or "blog" on blog pages. */
   activeSection?: string;
   /** Landing-page sections. Omit on pages that have none. */
-  sections?: NavSection[];
+  sections?: readonly NavSection[];
 };
-
-const RESUME_HREF = "/Dylan Smith - UX Engineer - April 2026.docx.pdf";
 
 const ELSEWHERE = [
   { id: "blog", label: "Blog", href: "/blog", mark: "" },
-  { id: "resume", label: "Resume", href: RESUME_HREF, mark: "↓", external: true },
+  { id: "resume", label: "Resume", href: RESUME_PATH, mark: "↓", external: true },
   { id: "github", label: "GitHub", href: "https://github.com/dylpckl", mark: "↗", external: true },
   {
     id: "linkedin",

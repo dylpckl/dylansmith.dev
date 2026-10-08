@@ -5,7 +5,7 @@ import { Canvas, Ruler } from "@/components/canvas";
 import { Button } from "@/components/Button";
 import { SocialLink } from "@/components/SocialLink";
 
-const RESUME_HREF = "/Dylan Smith - UX Engineer - April 2026.docx.pdf";
+import { RESUME_PATH as RESUME_HREF } from "@/lib/site";
 
 export function Hero() {
   return (

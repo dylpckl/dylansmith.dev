@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button";
+import { EMAIL } from "@/lib/site";
 
 export const GitHubIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -32,7 +33,7 @@ export function SocialLink({ site }: SocialLinkProps) {
       ? "https://github.com/dylpckl"
       : site === "linkedin"
         ? "https://www.linkedin.com/in/dylanjbsmith/"
-        : "mailto:dylanjbsmith@gmail.com";
+        : `mailto:${EMAIL}`;
 
   const Icon =
     site === "github"

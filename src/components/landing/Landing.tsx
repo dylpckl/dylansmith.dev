@@ -2,7 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { Header, type NavSection } from "@/components/Header";
+import { Header } from "@/components/Header";
+import Footer from "@/components/Footer";
+import { SECTIONS } from "@/lib/site";
 import { Workspace } from "@/components/workspace/Workspace";
 import { Frame } from "@/components/workspace/Frame";
 
@@ -11,14 +13,7 @@ import { Principles } from "./Principles";
 import { Outcomes } from "./Outcomes";
 import { Work } from "./Work";
 import { Writing, type PostSummary } from "./Writing";
-
-export const SECTIONS: NavSection[] = [
-  { id: "intro", label: "Intro" },
-  { id: "principles", label: "Principles" },
-  { id: "outcomes", label: "Outcomes" },
-  { id: "work", label: "Work" },
-  { id: "writing", label: "Writing" },
-];
+import { SideProjects } from "./SideProjects";
 
 type LandingProps = {
   posts: PostSummary[];
@@ -36,10 +31,18 @@ export function Landing({ posts }: LandingProps) {
   const principlesRef = useRef<HTMLElement>(null);
   const outcomesRef = useRef<HTMLElement>(null);
   const workRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
   const writingRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const refs = [introRef, principlesRef, outcomesRef, workRef, writingRef];
+    const refs = [
+      introRef,
+      principlesRef,
+      outcomesRef,
+      workRef,
+      projectsRef,
+      writingRef,
+    ];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -56,31 +59,41 @@ export function Landing({ posts }: LandingProps) {
   }, []);
 
   return (
-    <div className="relative min-h-screen lg:flex">
-      <div className="ws-grid" aria-hidden="true" />
-      <div className="ws-veil" aria-hidden="true" />
+    <>
+      <div id="top" className="relative min-h-screen lg:flex">
+        <div className="ws-grid" aria-hidden="true" />
+        <div className="ws-veil" aria-hidden="true" />
 
-      <Header activeSection={activeSection} sections={SECTIONS} />
+        <Header activeSection={activeSection} sections={SECTIONS} />
 
-      <main className="min-w-0 flex-1">
-        <Workspace>
-          <Frame id="intro" label="Intro" sectionRef={introRef}>
-            <Hero />
-          </Frame>
-          <Frame id="principles" label="Principles" sectionRef={principlesRef}>
-            <Principles />
-          </Frame>
-          <Frame id="outcomes" label="Outcomes" sectionRef={outcomesRef}>
-            <Outcomes />
-          </Frame>
-          <Frame id="work" label="Work" sectionRef={workRef}>
-            <Work />
-          </Frame>
-          <Frame id="writing" label="Writing" sectionRef={writingRef}>
-            <Writing posts={posts} />
-          </Frame>
-        </Workspace>
-      </main>
-    </div>
+        <main className="min-w-0 flex-1">
+          <Workspace>
+            <Frame id="intro" label="Intro" sectionRef={introRef}>
+              <Hero />
+            </Frame>
+            <Frame
+              id="principles"
+              label="Principles"
+              sectionRef={principlesRef}
+            >
+              <Principles />
+            </Frame>
+            <Frame id="outcomes" label="Outcomes" sectionRef={outcomesRef}>
+              <Outcomes />
+            </Frame>
+            <Frame id="work" label="Work" sectionRef={workRef}>
+              <Work />
+            </Frame>
+            <Frame id="projects" label="Projects" sectionRef={projectsRef}>
+              <SideProjects />
+            </Frame>
+            <Frame id="writing" label="Writing" sectionRef={writingRef}>
+              <Writing posts={posts} />
+            </Frame>
+          </Workspace>
+        </main>
+      </div>
+      <Footer />
+    </>
   );
 }

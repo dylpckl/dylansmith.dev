@@ -2,26 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Layers } from "lucide-react";
-import { TagGroup } from "@/components/Tag";
 import { Tile } from "@/components/bento/Tile";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
-import { ManaCurve } from "./visuals/ManaCurve";
 
 import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
 import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
 import rapidpayLegacy from "/public/case-studies/rapidpay/legacy.png";
 import rapidpaySpire from "/public/case-studies/rapidpay/spire.png";
-
-const RAREBREW_TAGS = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "TailwindCSS",
-  "Supabase",
-  "Recharts",
-  "PWA",
-];
 
 const SHOT =
   "relative h-72 w-full bg-paper md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]";
@@ -201,27 +188,6 @@ export function Work() {
               { label: "Shipped at MDS", href: "https://multidataservices.com/", primary: true },
             ]}
           />
-        </div>
-      </Tile>
-
-      <Tile label="Side Project" labelIcon={Layers} decorative>
-        <div className="flex flex-1 flex-col gap-4 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
-          <div className="flex flex-col gap-3">
-            <TileTitle>rarebrew.gg</TileTitle>
-            <p className="max-w-[60ch] text-base leading-snug text-ink-2 lg:text-lg">
-              A desktop-first PWA deckbuilder for Magic: The Gathering
-              Commander &mdash; custom component library on design tokens,
-              Recharts visualizations, Scryfall + EDHREC data layer.
-            </p>
-            <TagGroup tags={RAREBREW_TAGS} className="mt-1 gap-2" />
-            <TileLinks
-              links={[
-                { label: "Read the notes", href: "/blog/rare-brew", primary: true },
-                { label: "rarebrew.gg", href: "https://rarebrew.gg" },
-              ]}
-            />
-          </div>
-          <ManaCurve />
         </div>
       </Tile>
     </div>

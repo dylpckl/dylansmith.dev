@@ -14,7 +14,7 @@ Personal portfolio site. Single-page landing for case studies, plus a `/blog/[sl
 npm run dev        # http://localhost:3000
 npm run lint
 npx tsc --noEmit   # typecheck only (skip the next/types/* errors after deletes)
-npm run build
+npm run build      # NOT while `npm run dev` is running — both write .next and the dev page goes unstyled
 ```
 
 ## Layout
@@ -32,13 +32,21 @@ src/
         opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
     landing/                  # one file per landing frame
-      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + four Frames
+      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
       Hero.tsx                # Intro frame content
       Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
       Outcomes.tsx            # the stats bento (Feature + StatTile)
       Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
       Writing.tsx             # post list for the Writing frame (PostSummary type lives here)
-      visuals/                # inline graphics (MiniSystemDemo, ScriptsToToolkit, ManaCurve, ScatteredFiles)
+      SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
+      projects/               # side-project cards — see "Side-project cards" below
+        SplitCard.tsx         #   layout shell: copy | demo, stacked below lg; all styling is the caller's
+        RarebrewCard.tsx …    #   one *Card.tsx per project (its look + cursor effect) + its *Demo.tsx (next/dynamic, ssr:false)
+        PhoneFrame.tsx        #   device bezel; the screen is its own scroll container
+        PixelSprite.tsx       #   prompt-fighter 16×16 sprite → canvas
+        fonts.ts              #   next/font instances + system stacks shared by each card and its demo
+        useFinePointer.ts     #   gate for cursor effects (hovering mouse, no reduced motion)
+      visuals/                # inline graphics (MiniSystemDemo, ScriptsToToolkit, ScatteredFiles)
     workspace/                # the "design canvas" furniture
       Workspace.tsx           # canvas column + edge rulers
       Frame.tsx               # labeled, bordered section; chip shows live W × H
@@ -51,17 +59,20 @@ src/
     TechLogo.tsx              # mask-based brand SVG with hover-colorize via per-element --brand var
     ThemeProvider.tsx         # next-themes wrapper writing data-material on <html>
     Header.tsx                # panel-styled sidebar nav (desktop) / top strip (mobile); takes activeSection + sections
+    Footer.tsx                # full-bleed panel footer; inner column mirrors the canvas offsets so it aligns with the frames
   content/
     blog/<slug>.md            # one MD file per post — frontmatter + prose
   lib/
     blog/                     # types, post loader (gray-matter), body parser
+    site.ts                   # RESUME_PATH, EMAIL, SECTIONS (frame ids + labels) — shared by Header, Hero, Landing, Footer, SocialLink
+    demos/<project>/          # vendored code + dated data snapshots the demos run on (each has a README on refreshing)
 public/
   case-studies/<slug>/legacy.png + refreshed.png   # before/after pairs
   blog/<slug>/<section-id>.png                     # per-section screenshots
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Writing**, each a `Frame`. Principles are three short cards with an "in practice" proof link each; Outcomes is the stats bento. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects → Writing**, each a `Frame`, then the footer. Work is the three day-job case-study tiles; Projects is the side-project cards. Principles are three short cards with an "in practice" proof link each; Outcomes is the stats bento. (Folding Outcomes into Principles was tried and rejected as too crowded.)
 
 ## Materials (theming)
 
@@ -80,6 +91,14 @@ Two materials share one layout: **Slate** (dark, default) and **Paper** (light n
 - **Frames:** every landing section is `<Frame id label sectionRef>` from `@/components/workspace/Frame`. `Landing.tsx` owns the refs and the `IntersectionObserver` (band-based `rootMargin`, so the top of the page reads as Intro). Section components (`Hero`, `Principles`, `Work`, `Writing`) render content only; no section wrappers, no `VerticalText`/`SectionLabel`.
 - **Rulers are furniture.** `TopRuler`/`LeftRuler` are `aria-hidden`, desktop-only, and purely decorative. Don't hang behavior on them.
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.
+- **Side-project cards** (rarebrew.gg, prompt fighter, crosscheck) in the Projects frame. Design record: `docs/superpowers/specs/2026-10-07-side-project-cards-design.md`.
+  - `src/lib/demos/<project>/` holds files copied verbatim from that project's repo (only import paths touched) plus dated data snapshots — prompt-fighter and crosscheck run their real code; rarebrew is a UI recreation over a data snapshot. Refresh by re-copying, not by editing in place.
+  - Each card dresses in its project's own language (rarebrew: dark/gold, Space Grotesk; prompt fighter: arcade cabinet, pixel font, scanlines; crosscheck: newsprint, letter tiles). They are content, so they're exempt from the semantic-token rule and look the same in both materials.
+  - **Cursor effects** are mouse-only (`useFinePointer`), live behind the card content so the demo's opaque panels cover them, and must never re-render the demo: drive them with CSS variables (rarebrew parallax) or memoize the demo element (`useMemo(() => <Demo />, [])`).
+  - **Autoplay** runs once when a demo scrolls into view (deal-in + card tour / build a fighter / type a clue), cancels on *any* input inside the demo (pointer, key, wheel, focus), and under `prefers-reduced-motion` the demo just starts in its finished state.
+  - **No layout shift.** A demo's height may not change while it runs: reserve space (fixed-height logs and reveal areas, always-rendered meters, Build/Arena share one grid cell).
+  - **Data is snapshotted, not fetched** — except crosscheck's Datamuse call, which only fires once the phone is on screen. prompt-fighter players' prompts are private in the app: only the seed-pool prompts I wrote (`seeds.ts`) may appear.
+  - Cards sit inside a Frame's padding, so they're ~50px narrower than the column on phones: check titles at 320px.
 - **BeforeAfterReveal:** the drag handle accepts `initial` (0–100). Vary it across tiles for visual interest (current values: 75/62/32). Pair with `<Image fill object-cover>` inside a fixed-height container.
 
 ## Design Requirements
@@ -103,6 +122,8 @@ Feature-focused project writeups. Each post is a handful of specific features an
 - Don't add inline tag/badge spans — use `Tag`.
 - Don't suggest installing `@svgr/webpack` for the brand logos — `TechLogo`'s mask-image trick covers the use case without a build dep.
 - Don't put SHAs, real commit dates, or branch names in any file under `src/content/blog/` or `src/lib/blog/` — those ride along into the static HTML and leak private-repo metadata.
+- **Don't invent facts in copy** — status pills ("Live", "Active"), stats, or claims about a project that aren't verified. They were removed as hallucinations once already.
+- Don't put `mix-blend-mode` inside a wrapper that has `opacity`, `z-index`, or `isolate` — the blend isolates against nothing and renders as a flat wash (why the foil sheen and two spotlight attempts failed).
 
 ## Visual verification
 
