@@ -7,6 +7,7 @@ import { TagGroup } from "@/components/Tag";
 import { SplitCard } from "./SplitCard";
 import { PhonePlaceholder } from "./PhonePlaceholder";
 import { dmSans, spaceGrotesk } from "./fonts";
+import { useFinePointer } from "./useFinePointer";
 
 const RarebrewDemo = dynamic(() => import("./RarebrewDemo").then((m) => m.RarebrewDemo), {
   ssr: false,
@@ -29,6 +30,12 @@ const FAN = [
 // Mostly toward the copy side, so the fan reads around the phone's left edge.
 const FAN_ANGLES = [-42, -31, -20, -9, 6];
 
+// Gold spotlight, positioned in viewport coordinates (background-attachment:
+// fixed) so the copy-side and art-side layers line up into one glow even
+// though they're separate stacking contexts.
+const SPOT =
+  "pointer-events-none absolute inset-0 transition-opacity duration-300 [background-attachment:fixed] [background-image:radial-gradient(440px_circle_at_var(--spot-x,-999px)_var(--spot-y,-999px),rgba(224,168,60,.22),transparent_60%)] [opacity:var(--spot-on,0)]";
+
 const PIPS = ["#F8F6D8", "#C1D7E9", "#CAC5C0"]; // W U B, rarebrew's mana discs
 
 const NOTES = [
@@ -43,12 +50,26 @@ const NOTES = [
 ];
 
 export function RarebrewCard() {
+  const spot = useFinePointer();
   return (
     <SplitCard
+      // CSS variables, not state: the glow repaints on every move without
+      // re-rendering the demo.
+      onPointerMove={(e) => {
+        if (!spot) return;
+        const el = e.currentTarget;
+        el.style.setProperty("--spot-x", `${e.clientX}px`);
+        el.style.setProperty("--spot-y", `${e.clientY}px`);
+        el.style.setProperty("--spot-on", "1");
+      }}
+      onPointerLeave={(e) => e.currentTarget.style.setProperty("--spot-on", "0")}
       className={`${dmSans.className} rounded-2xl text-[#f2f2f2] ring-1 ring-[#E0A83C]/35`}
       style={{ background: "#121212" }}
       background={
-        <div className="absolute inset-0 opacity-60 [background-image:radial-gradient(rgba(224,168,60,.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+        <>
+          <div className="absolute inset-0 opacity-60 [background-image:radial-gradient(rgba(224,168,60,.14)_1px,transparent_1px)] [background-size:22px_22px]" />
+          <div className={SPOT} />
+        </>
       }
       overlay={<div className="absolute inset-x-0 bottom-0 h-[3px] bg-[#E0A83C]" />}
       figureBackground={
@@ -61,6 +82,7 @@ export function RarebrewCard() {
           {/* Veil: the art bleeds out of the copy column — from the left at lg, from the top when stacked. */}
           <div className="absolute inset-0 bg-[linear-gradient(180deg,#121212_0%,rgba(18,18,18,.5)_22%,rgba(18,18,18,.15)_100%)] lg:hidden" />
           <div className="absolute inset-0 hidden bg-[linear-gradient(90deg,#121212_0%,rgba(18,18,18,.7)_16%,rgba(18,18,18,.2)_42%,rgba(18,18,18,.1)_100%)] lg:block" />
+          <div className={SPOT} />
         </>
       }
       copy={
