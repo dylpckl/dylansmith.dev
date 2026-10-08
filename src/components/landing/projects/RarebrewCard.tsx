@@ -7,6 +7,7 @@ import { TagGroup } from "@/components/Tag";
 import { SplitCard } from "./SplitCard";
 import { PhonePlaceholder } from "./PhonePlaceholder";
 import { dmSans, spaceGrotesk } from "./fonts";
+import { useFinePointer } from "./useFinePointer";
 
 const RarebrewDemo = dynamic(() => import("./RarebrewDemo").then((m) => m.RarebrewDemo), {
   ssr: false,
@@ -43,8 +44,18 @@ const NOTES = [
 ];
 
 export function RarebrewCard() {
+  const foil = useFinePointer();
   return (
     <SplitCard
+      // Drive the foil with CSS variables rather than state: it repaints on
+      // every pointer move, so it shouldn't re-render the demo.
+      onPointerMove={(e) => {
+        if (!foil) return;
+        const r = e.currentTarget.getBoundingClientRect();
+        e.currentTarget.style.setProperty("--foil-x", String(Math.round(((e.clientX - r.left) / r.width) * 100)));
+        e.currentTarget.style.setProperty("--foil-on", "1");
+      }}
+      onPointerLeave={(e) => e.currentTarget.style.setProperty("--foil-on", "0")}
       className={`${dmSans.className} rounded-2xl text-[#f2f2f2] ring-1 ring-[#E0A83C]/35`}
       style={{ background: "#121212" }}
       background={
@@ -114,13 +125,26 @@ export function RarebrewCard() {
         <div className="relative mx-auto w-full max-w-[340px] lg:mr-0">
           <div aria-hidden="true" className="absolute left-1/2 top-[80%] -z-10 h-0 w-0">
             {FAN.map((src, i) => (
-              <img
+              <div
                 key={src}
-                src={src}
-                alt=""
-                className="absolute left-[-80px] top-[-112px] w-[160px] max-w-none rounded-[9px] shadow-[0_18px_40px_rgba(0,0,0,.75)] sm:left-[-95px] sm:top-[-132px] sm:w-[190px]"
+                className="absolute left-[-80px] top-[-112px] w-[160px] overflow-hidden rounded-[9px] shadow-[0_18px_40px_rgba(0,0,0,.75)] sm:left-[-95px] sm:top-[-132px] sm:w-[190px]"
                 style={{ transformOrigin: "50% 210%", transform: `rotate(${FAN_ANGLES[i]}deg)` }}
-              />
+              >
+                <img src={src} alt="" className="block w-full max-w-none" />
+                {/* Foil: a narrow holo band that slides across the card as the
+                    cursor moves (--foil-x / --foil-on, set on the article). Each
+                    card is offset a little so the band ripples down the fan. */}
+                <span
+                  className="absolute inset-0 mix-blend-color-dodge transition-opacity duration-300"
+                  style={{
+                    opacity: "calc(var(--foil-on, 0) * 0.75)",
+                    backgroundImage:
+                      "linear-gradient(115deg, transparent 38%, rgba(255,70,170,.55) 44%, rgba(255,215,80,.55) 48%, rgba(80,255,210,.55) 52%, rgba(90,150,255,.55) 56%, transparent 62%)",
+                    backgroundSize: "300% 100%",
+                    backgroundPosition: `calc((var(--foil-x, 50) + ${i * 6}) * 1%) 0`,
+                  }}
+                />
+              </div>
             ))}
           </div>
           <RarebrewDemo />

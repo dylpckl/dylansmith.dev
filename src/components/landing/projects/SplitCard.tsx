@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { CSSProperties, PointerEventHandler, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type SplitCardProps = {
@@ -21,6 +21,9 @@ type SplitCardProps = {
   dotClassName?: string;
   /** Demo on the left at lg — alternate down the page. */
   flip?: boolean;
+  /** Cursor effects hook in here; see useFinePointer. */
+  onPointerMove?: PointerEventHandler<HTMLElement>;
+  onPointerLeave?: PointerEventHandler<HTMLElement>;
 };
 
 /**
@@ -43,9 +46,16 @@ export function SplitCard({
   captionClassName,
   dotClassName,
   flip = false,
+  onPointerMove,
+  onPointerLeave,
 }: SplitCardProps) {
   return (
-    <article className={cn("relative isolate overflow-hidden", className)} style={style}>
+    <article
+      className={cn("relative isolate overflow-hidden", className)}
+      style={style}
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
+    >
       {background && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
           {background}

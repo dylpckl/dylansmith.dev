@@ -1,11 +1,14 @@
 "use client";
 
+import { useCallback, useEffect, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
 import { ROSTER } from "@/lib/demos/prompt-fighter/roster";
 import { SplitCard } from "./SplitCard";
 import { PixelSprite } from "./PixelSprite";
 import { pressStart } from "./fonts";
+import { useFinePointer } from "./useFinePointer";
 
 const PromptFighterDemo = dynamic(() => import("./PromptFighterDemo").then((m) => m.PromptFighterDemo), {
   ssr: false,
@@ -20,15 +23,78 @@ const BEZEL =
 
 const champ = ROSTER.reduce((best, f) => (f.wins > best.wins ? f : best));
 
+const CELL = 16; // matches the background grid
+const TRAIL_MS = 600;
+const TRAIL_MAX = 16;
+
+type TrailCell = { cx: number; cy: number; t: number };
+
+/**
+ * Arcade cursor: the grid cell under the pointer lights red and leaves a short
+ * fading trail. Lives in the card's background layer, so the opaque panels
+ * (the demo, the notes) cover it and it only shows in the open grid.
+ */
+function usePixelTrail() {
+  const enabled = useFinePointer();
+  const [trail, setTrail] = useState<TrailCell[]>([]);
+  const last = useRef<{ cx: number; cy: number } | null>(null);
+
+  const onPointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLElement>) => {
+      if (!enabled) return;
+      const r = e.currentTarget.getBoundingClientRect();
+      const cx = Math.floor((e.clientX - r.left) / CELL);
+      const cy = Math.floor((e.clientY - r.top) / CELL);
+      if (last.current?.cx === cx && last.current?.cy === cy) return;
+      last.current = { cx, cy };
+      setTrail((tr) => [...tr, { cx, cy, t: performance.now() }].slice(-TRAIL_MAX));
+    },
+    [enabled],
+  );
+  const onPointerLeave = useCallback(() => {
+    last.current = null;
+  }, []);
+
+  // Age the trail out, even when the pointer stops moving.
+  const live = trail.length > 0;
+  useEffect(() => {
+    if (!live) return;
+    const id = window.setInterval(() => {
+      const now = performance.now();
+      setTrail((tr) => tr.filter((c) => now - c.t < TRAIL_MS));
+    }, 50);
+    return () => window.clearInterval(id);
+  }, [live]);
+
+  return { trail, onPointerMove, onPointerLeave };
+}
+
 export function FighterCard() {
+  const { trail, onPointerMove, onPointerLeave } = usePixelTrail();
+  const now = typeof performance !== "undefined" ? performance.now() : 0;
   return (
     <SplitCard
       flip
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       className="text-[#e9e9ec]"
       style={{ background: "#0b0b0c", fontFamily: MONO, clipPath: BEZEL }}
       background={
         <>
           <div className="absolute inset-0 [background-image:linear-gradient(rgba(42,42,49,.5)_1px,transparent_1px),linear-gradient(90deg,rgba(42,42,49,.5)_1px,transparent_1px)] [background-size:16px_16px]" />
+          {trail.map((c) => (
+            <span
+              key={`${c.cx}-${c.cy}-${c.t}`}
+              className="absolute bg-[#d9503c] shadow-[0_0_12px_rgba(217,80,60,.6)]"
+              style={{
+                left: c.cx * CELL,
+                top: c.cy * CELL,
+                width: CELL,
+                height: CELL,
+                opacity: Math.max(0, 1 - (now - c.t) / TRAIL_MS),
+              }}
+            />
+          ))}
           <div className="absolute inset-[6px] border-4 border-[#d9503c]" />
         </>
       }

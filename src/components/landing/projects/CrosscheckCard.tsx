@@ -1,9 +1,12 @@
 "use client";
 
+import { useCallback, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
 import { SplitCard } from "./SplitCard";
 import { PhonePlaceholder } from "./PhonePlaceholder";
+import { useFinePointer } from "./useFinePointer";
 
 const CrosscheckDemo = dynamic(() => import("./CrosscheckDemo").then((m) => m.CrosscheckDemo), {
   ssr: false,
@@ -24,6 +27,36 @@ const BLACKS: [number, number][] = [
   [11, 16], [6, 17], [14, 17], [0, 18], [9, 18], [4, 19], [12, 19],
 ];
 
+const BLACK_SET = new Set(BLACKS.map(([c, r]) => `${c},${r}`));
+
+/**
+ * Crossword-app cursor: over the grid behind the phone, the square under the
+ * pointer becomes the active cell and its row the active word. Black squares
+ * can't be selected, same as a real grid.
+ */
+function useActiveCell() {
+  const enabled = useFinePointer();
+  const [cell, setCell] = useState<{ c: number; r: number } | null>(null);
+  const onPointerMove = useCallback(
+    (e: ReactPointerEvent<HTMLElement>) => {
+      if (!enabled) return;
+      const fig = e.currentTarget.querySelector("figure");
+      if (!fig) return;
+      const b = fig.getBoundingClientRect();
+      const x = e.clientX - b.left;
+      const y = e.clientY - b.top;
+      if (x < 0 || y < 0 || x > b.width || y > b.height) return setCell(null);
+      const c = Math.floor(x / CELL);
+      const r = Math.floor(y / CELL);
+      if (BLACK_SET.has(`${c},${r}`)) return;
+      setCell((cur) => (cur?.c === c && cur?.r === r ? cur : { c, r }));
+    },
+    [enabled],
+  );
+  const onPointerLeave = useCallback(() => setCell(null), []);
+  return { cell, onPointerMove, onPointerLeave };
+}
+
 const NOTES = [
   {
     title: "Convention over association",
@@ -36,8 +69,11 @@ const NOTES = [
 ];
 
 export function CrosscheckCard() {
+  const { cell, onPointerMove, onPointerLeave } = useActiveCell();
   return (
     <SplitCard
+      onPointerMove={onPointerMove}
+      onPointerLeave={onPointerLeave}
       className="rounded-md text-[#1B1B1B]"
       style={{ background: "#EFE9DD", fontFamily: SANS }}
       masthead={
@@ -66,6 +102,7 @@ export function CrosscheckCard() {
       }
       copyClassName="lg:border-r lg:border-[#D8D0BE] lg:my-8 lg:py-2"
       figureBackground={
+        <>
         <div className="absolute inset-0 opacity-60">
           <div
             className="absolute inset-0"
@@ -82,6 +119,19 @@ export function CrosscheckCard() {
             />
           ))}
         </div>
+        {cell && (
+          <>
+            <span
+              className="absolute inset-x-0 bg-[#2B4C7E]/10 transition-[top] duration-75"
+              style={{ top: cell.r * CELL, height: CELL + 1 }}
+            />
+            <span
+              className="absolute box-border border-2 border-[#2B4C7E] bg-[#E3E9F3] transition-[left,top] duration-75"
+              style={{ left: cell.c * CELL, top: cell.r * CELL, width: CELL + 1, height: CELL + 1 }}
+            />
+          </>
+        )}
+        </>
       }
       copy={
         <>
