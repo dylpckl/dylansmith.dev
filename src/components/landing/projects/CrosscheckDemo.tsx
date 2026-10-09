@@ -280,7 +280,7 @@ export function CrosscheckDemo() {
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear clue"
-                    className="grid h-6 w-6 place-items-center rounded-full transition hover:bg-[rgba(27,27,27,.08)]"
+                    className="grid h-6 w-6 place-items-center rounded-full transition can-hover:hover:bg-[rgba(27,27,27,.08)]"
                     style={{ color: "var(--ink-3)" }}
                   >
                     ✕
@@ -290,7 +290,7 @@ export function CrosscheckDemo() {
               <button
                 type="submit"
                 aria-label="Solve"
-                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl transition hover:brightness-125"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl transition can-hover:hover:brightness-125"
                 style={{ background: "var(--blue)", color: "#fff" }}
               >
                 <svg
@@ -360,7 +360,7 @@ export function CrosscheckDemo() {
                       type="button"
                       onClick={() => runPreset(p)}
                       aria-pressed={on}
-                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none transition hover:-translate-y-px hover:brightness-95"
+                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none transition can-hover:hover:-translate-y-px can-hover:hover:brightness-95"
                       style={{
                         border: `1px solid ${on ? "var(--blue)" : "var(--rule)"}`,
                         background: on ? "var(--blue-tint)" : "transparent",
@@ -418,7 +418,7 @@ export function CrosscheckDemo() {
                           type="button"
                           aria-pressed={on}
                           onClick={() => setLengthFilter(n)}
-                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums transition hover:brightness-95"
+                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums transition can-hover:hover:brightness-95"
                           style={{
                             borderLeft: i ? "1px solid var(--rule)" : 0,
                             background: on ? "var(--blue)" : "transparent",
@@ -539,8 +539,8 @@ function AnswerRow({
     <button
       type="button"
       onClick={() => onCopy(a)}
-      aria-label={`${a.display}, ${a.length} letters. Copy.`}
-      className="group grid w-full gap-1.5 rounded-md py-3 text-left transition-colors first:border-t-0 hover:bg-[rgba(230,223,208,.55)] active:bg-[var(--rule-2)]"
+      aria-label={`${a.display}, ${a.length} letters. Tap to copy.`}
+      className="group grid w-full gap-1.5 rounded-md py-3 text-left transition-colors first:border-t-0 can-hover:hover:bg-[rgba(230,223,208,.55)] active:bg-[var(--rule-2)]"
       style={{
         borderTop: "1px solid var(--rule-2)",
         opacity: a.fitsPattern === false ? 0.38 : 1,
@@ -594,15 +594,16 @@ function AnswerRow({
         >
           {copied ? "Copied" : a.length}
         </span>
-        {/* Copy affordance: always takes its space (fades in on hover), so
-            the row never reflows under the cursor. */}
-        {!copied && (
-          <Copy
-            aria-hidden="true"
-            className="ml-1 h-3 w-3 opacity-0 transition-opacity group-hover:opacity-60"
-            style={{ color: "var(--ink-3)" }}
-          />
-        )}
+        {/* Copy affordance: always mounted (only its opacity changes), so the
+            row never reflows on hover or click. Faint on touch, where there's
+            no hover to reveal it; brighter on hover with a mouse. */}
+        <Copy
+          aria-hidden="true"
+          className={`ml-1 h-3 w-3 transition-opacity ${
+            copied ? "opacity-0" : "opacity-40 can-hover:opacity-0 can-hover:group-hover:opacity-60"
+          }`}
+          style={{ color: "var(--ink-3)" }}
+        />
       </span>
       {a.gloss && (
         <span

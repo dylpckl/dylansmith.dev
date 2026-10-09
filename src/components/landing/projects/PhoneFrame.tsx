@@ -32,7 +32,7 @@ export function PhoneFrame({
         // Hover rings the device in the project's color: the "this is live,
         // go ahead" cue. Glow only, no movement, so the target doesn't shift
         // out from under the cursor.
-        "relative mx-auto w-full max-w-[340px] rounded-[2.75rem] bg-slate-950 p-[10px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] ring-1 ring-slate-700 transition-shadow duration-300 ease-out hover:shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85),0_0_0_2px_var(--glow),0_0_48px_-8px_var(--glow)]",
+        "relative mx-auto w-full max-w-[340px] rounded-[2.75rem] bg-slate-950 p-[10px] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.8)] ring-1 ring-slate-700 transition-shadow duration-300 ease-out can-hover:hover:shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85),0_0_0_2px_var(--glow),0_0_48px_-8px_var(--glow)]",
         className,
       )}
       style={{ ["--glow" as string]: glow, ...style }}
