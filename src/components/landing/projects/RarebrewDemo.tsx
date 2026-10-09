@@ -330,7 +330,7 @@ export function RarebrewDemo() {
                     aria-selected={on}
                     data-tab={s.id}
                     onClick={() => jumpTo(s.id)}
-                    className="relative flex shrink-0 items-center gap-1.5 uppercase hover:brightness-150"
+                    className="relative flex shrink-0 items-center gap-1.5 uppercase can-hover:hover:brightness-150"
                     style={{
                       fontFamily: MONO,
                       fontSize: 12,
@@ -383,7 +383,7 @@ export function RarebrewDemo() {
                   type="button"
                   onClick={() => setCollapsed((c) => ({ ...c, [s.id]: !c[s.id] }))}
                   aria-expanded={!isCollapsed}
-                  className="flex w-full items-center gap-2 rounded-md pb-2 pl-2 pr-2 pt-3.5 text-left transition-colors hover:bg-white/[0.05]"
+                  className="flex w-full items-center gap-2 rounded-md pb-2 pl-2 pr-2 pt-3.5 text-left transition-colors can-hover:hover:bg-white/[0.05]"
                 >
                   <ChevronDown
                     size={16}
@@ -445,7 +445,7 @@ export function RarebrewDemo() {
             <button
               type="button"
               onClick={() => setInsights(true)}
-              className="pointer-events-auto flex h-12 w-full items-center gap-3 px-3 text-left transition hover:brightness-125"
+              className="pointer-events-auto flex h-12 w-full items-center gap-3 px-3 text-left transition can-hover:hover:brightness-125"
               style={{ background: C.g800, borderTop: `1px solid ${C.border}` }}
               aria-label="Open deck insights"
             >
@@ -580,7 +580,7 @@ function CardRow({
         onClick={() => onToggle(ref.current)}
         aria-expanded={open}
         aria-label={`${card.name}${open ? ", collapse" : ", expand"}`}
-        className="group/row relative col-start-2 row-start-1 w-full overflow-hidden text-left outline-none hover:brightness-110"
+        className="group/row relative col-start-2 row-start-1 w-full overflow-hidden text-left outline-none can-hover:hover:brightness-110"
         style={{
           height: open ? cardH(w) : rowH(w),
           // Collapsed strips are top-rounded with no bottom edge, so the seams
@@ -617,7 +617,7 @@ function CardRow({
             strip is stacked, so the seam into the next card stays hidden. */}
         <span
           aria-hidden="true"
-          className={`pointer-events-none absolute inset-0 border-2 border-[#E0A83C] opacity-0 transition-opacity group-hover/row:opacity-100 group-focus-visible/row:opacity-100 ${
+          className={`pointer-events-none absolute inset-0 border-2 border-[#E0A83C] opacity-0 transition-opacity can-hover:group-hover/row:opacity-100 group-focus-visible/row:opacity-100 ${
             open ? "rounded-[12px]" : "rounded-t-[10px] border-b-0"
           }`}
         />
@@ -638,7 +638,7 @@ function CardRow({
           <button
             type="button"
             onClick={() => setBack((b) => !b)}
-            className="mt-16 rounded-full px-2 py-1 text-[10px] font-bold uppercase transition hover:brightness-110 hover:scale-105"
+            className="mt-16 rounded-full px-2 py-1 text-[10px] font-bold uppercase transition can-hover:hover:brightness-110 can-hover:hover:scale-105"
             style={{ background: C.brand, color: C.brandText, fontFamily: MONO }}
             aria-label={`Flip ${card.name}`}
           >

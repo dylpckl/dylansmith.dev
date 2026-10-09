@@ -162,7 +162,7 @@ export function CrosscheckCard() {
               target="_blank"
               rel="noreferrer"
               aria-label="crosscheck on GitHub"
-              className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border-[1.5px] border-[#D8D0BE] bg-[#FBF8F1] text-[#2B4C7E] transition hover:border-[#2B4C7E] hover:bg-[#E3E9F3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] [&>svg]:h-6 [&>svg]:w-6"
+              className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border-[1.5px] border-[#D8D0BE] bg-[#FBF8F1] text-[#2B4C7E] transition can-hover:hover:border-[#2B4C7E] can-hover:hover:bg-[#E3E9F3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] [&>svg]:h-6 [&>svg]:w-6"
             >
               <GitHubIcon />
             </a>
@@ -170,7 +170,7 @@ export function CrosscheckCard() {
               href="https://dylpckl.github.io/crosscheck/"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#2B4C7E] px-7 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(43,76,126,.8)] transition hover:bg-[#1d3559] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EFE9DD] sm:w-fit"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#2B4C7E] px-7 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(43,76,126,.8)] transition can-hover:hover:bg-[#1d3559] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EFE9DD] sm:w-fit"
             >
               Try crosscheck ↗
             </a>

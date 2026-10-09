@@ -2,11 +2,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  // hover: styles only apply on devices that can really hover (mouse), so a
-  // tap on a phone doesn't leave things stuck in their hover state.
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -99,5 +94,12 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    // can-hover: only on devices with a real hovering pointer. Used for the
+    // side-project demos' hover cues so a tap on a phone doesn't leave them
+    // stuck "on". Not global: other hover reveals (e.g. PhotoCredit) still
+    // rely on the sticky tap-hover as their touch fallback.
+    function ({ addVariant }) {
+      addVariant('can-hover', '@media (hover: hover) and (pointer: fine)')
+    },
   ],
 }
