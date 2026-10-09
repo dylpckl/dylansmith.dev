@@ -14,14 +14,16 @@ export function Outcomes() {
   return (
     <div className="flex flex-col gap-10 lg:gap-12">
       {/* Claim + how it worked */}
-      <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-10">
+      {/* Claim above the diagram at every width: the diagram needs the full
+          column to keep its labels and proof beside the planes. */}
+      <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-accent">SmartAdvocate</span>
             <span aria-hidden="true" className="h-px w-4 bg-line/40" />
             <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-3">UI refresh</span>
           </div>
-          <h3 className="text-3xl font-bold leading-[1.08] tracking-tight text-ink md:text-4xl">
+          <h3 className="max-w-[24ch] text-3xl font-bold leading-[1.08] tracking-tight text-ink [text-wrap:balance] md:text-4xl">
             I restyled every screen of SmartAdvocate without rewriting it.
           </h3>
           <p className="max-w-[52ch] text-base leading-relaxed text-ink-2">

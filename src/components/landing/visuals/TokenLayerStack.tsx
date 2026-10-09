@@ -1,3 +1,5 @@
+import { Tag } from "@/components/Tag";
+
 // Three planes, read bottom to top: the app as it was, the token layer I
 // added, and what users see. Colors come from the material tokens, so it
 // reads in both Slate and Paper.
@@ -31,7 +33,7 @@ const BG = "rgb(var(--m-paper))";
 
 function Stack() {
   return (
-    <svg aria-hidden="true" width="300" height="440" viewBox="0 0 300 440" fill="none" className="shrink-0 overflow-visible">
+    <svg aria-hidden="true" viewBox="0 0 300 440" fill="none" className="block h-auto w-full overflow-visible">
       <g stroke={MUTED} strokeWidth="1" strokeDasharray="3 4">
         <path d="M5 70V370" />
         <path d="M295 70V370" />
@@ -76,31 +78,50 @@ function Stack() {
   );
 }
 
-function Chip({ children, accent }: { children: string; accent: boolean }) {
+// Plane centers in the 300×440 viewBox (y = 70 / 220 / 370), as % of its
+// height, so labels and proof stay pinned to their plane at any width.
+const ROW_TOP = ["16%", "50%", "84%"];
+
+function Proof({ items, accent }: { items: readonly string[]; accent: boolean }) {
   return (
-    <span
-      className={`whitespace-nowrap rounded-md border px-2.5 py-1.5 font-mono text-xs ${
-        accent ? "border-accent/50 bg-accent/10 text-accent" : "border-line/30 text-ink"
-      }`}
-    >
-      {children}
-    </span>
+    <div className="flex flex-col items-start gap-1.5">
+      {items.map((p) => (
+        <Tag
+          key={p}
+          intent={accent ? "teal" : "default"}
+          variant={accent ? "tinted" : "solid"}
+          size="sm"
+          className="whitespace-normal"
+        >
+          {p}
+        </Tag>
+      ))}
+    </div>
   );
 }
 
 export function TokenLayerStack() {
   return (
     <figure className="m-0">
-      <figcaption className="sr-only">
+      {/* One accessible description: phones get the visible list below instead. */}
+      <figcaption className="sr-only max-md:hidden">
         Three stacked layers. Bottom: the existing ASP.NET and DevExpress app. Middle: a CSS token layer that
         overrides its styles. Top: the restyled product, every screen at WCAG AA contrast.
       </figcaption>
 
-      {/* md+: labels | planes | proof, rows aligned to the plane centers */}
-      <div className="hidden h-[440px] items-stretch gap-4 md:flex" aria-hidden="true">
-        <div className="relative w-40 shrink-0">
+      {/* md+: labels | planes | proof. Fluid: the drawing scales with the
+          column, and both side columns pin their rows to the plane centers. */}
+      <div
+        className="mx-auto hidden max-w-[760px] grid-cols-[minmax(0,1fr)_minmax(160px,300px)_minmax(0,1fr)] gap-4 md:grid"
+        aria-hidden="true"
+      >
+        <div className="relative">
           {LAYERS.map((l, i) => (
-            <div key={l.step} className="absolute right-0 flex flex-col items-end gap-1 text-right" style={{ top: 46 + i * 150 }}>
+            <div
+              key={l.step}
+              className="absolute right-0 flex -translate-y-1/2 flex-col items-end gap-1 text-right"
+              style={{ top: ROW_TOP[i] }}
+            >
               <span className={`font-mono text-[10px] uppercase tracking-[0.16em] ${l.accent ? "text-accent" : "text-ink-3"}`}>
                 {l.step}
               </span>
@@ -109,20 +130,13 @@ export function TokenLayerStack() {
           ))}
         </div>
         <Stack />
-        <ul className="relative m-0 min-w-0 flex-1 list-none p-0">
+        <div className="relative">
           {LAYERS.map((l, i) => (
-            <li key={l.step} className="absolute left-0 flex items-center gap-2.5" style={{ top: 44 + i * 150 }}>
-              <span className={`h-0 w-5 shrink-0 border-t border-dashed ${l.accent ? "border-accent/50" : "border-ink-4"}`} />
-              <div className="flex flex-col gap-1.5">
-                {l.proof.map((p) => (
-                  <Chip key={p} accent={l.accent && i === 0}>
-                    {p}
-                  </Chip>
-                ))}
-              </div>
-            </li>
+            <div key={l.step} className="absolute left-0 right-0 -translate-y-1/2" style={{ top: ROW_TOP[i] }}>
+              <Proof items={l.proof} accent={l.accent} />
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* phones: the same three layers as a top-down list */}
@@ -136,13 +150,7 @@ export function TokenLayerStack() {
               {l.step}
             </span>
             <span className="text-base font-semibold">{l.name}</span>
-            <div className="flex flex-wrap gap-1.5">
-              {l.proof.map((p) => (
-                <Chip key={p} accent={false}>
-                  {p}
-                </Chip>
-              ))}
-            </div>
+            <Proof items={l.proof} accent={l.accent} />
           </li>
         ))}
       </ol>

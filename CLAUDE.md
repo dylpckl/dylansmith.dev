@@ -35,9 +35,9 @@ src/
       Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
       Hero.tsx                # Intro frame content
       Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
-      Outcomes.tsx            # the stats bento (Feature + StatTile)
+      Outcomes.tsx            # SmartAdvocate token-layer story: claim, TokenLayerStack, TokenCompare slider, supporting row
       Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
-      Writing.tsx             # post list for the Writing frame (PostSummary type lives here)
+      Writing.tsx             # post list for the Writing frame (hidden for now; see Landing.tsx)
       SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
       projects/               # side-project cards — see "Side-project cards" below
         SplitCard.tsx         #   layout shell: copy | demo, stacked below lg; all styling is the caller's
@@ -46,13 +46,13 @@ src/
         PixelSprite.tsx       #   prompt-fighter 16×16 sprite → canvas
         fonts.ts              #   next/font instances + system stacks shared by each card and its demo
         useFinePointer.ts     #   gate for cursor effects (hovering mouse, no reduced motion)
-      visuals/                # inline graphics (MiniSystemDemo, ScriptsToToolkit, ScatteredFiles)
+      visuals/                # inline graphics (TokenLayerStack, TokenCompare, ScatteredFiles)
     workspace/                # the "design canvas" furniture
       Workspace.tsx           # canvas column + edge rulers
       Frame.tsx               # labeled, bordered section; chip shows live W × H
       Rulers.tsx              # TopRuler / LeftRuler (lg+ only; left one tracks scroll)
       MaterialToggle.tsx      # Slate / Paper segmented control
-    bento/                    # reusable bento primitives (Tile, Feature, Support, StatTile, BeforeAfterReveal, MiniTokenStrip, StateChips)
+    bento/                    # reusable primitives (Tile, Support, BeforeAfterReveal)
     blog/                     # BlogHero, SectionCard, PostCard
     canvas/                   # Canvas + Ruler compound: dimension annotations (guidelines + px brackets) shared via React context
     Tag.tsx                   # Tag + TagGroup — the canonical chip/badge component
@@ -72,7 +72,9 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects → Writing**, each a `Frame`, then the footer. Work is the three day-job case-study tiles; Projects is the side-project cards. Principles are three short cards with an "in practice" proof link each; Outcomes is the stats bento. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are three short cards with an "in practice" proof link each. Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case-study tiles; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+
+- **Outcomes copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 
 ## Materials (theming)
 
