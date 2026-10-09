@@ -94,5 +94,12 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/typography'),
+    // can-hover: only on devices with a real hovering pointer. Used for the
+    // side-project demos' hover cues so a tap on a phone doesn't leave them
+    // stuck "on". Not global: other hover reveals (e.g. PhotoCredit) still
+    // rely on the sticky tap-hover as their touch fallback.
+    function ({ addVariant }) {
+      addVariant('can-hover', '@media (hover: hover) and (pointer: fine)')
+    },
   ],
 }

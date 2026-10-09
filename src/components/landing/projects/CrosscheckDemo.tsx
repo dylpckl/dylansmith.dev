@@ -15,6 +15,7 @@ import {
   mapAnswers,
   type DatamuseWord,
 } from "@/lib/demos/crosscheck/datamuse";
+import { Copy } from "lucide-react";
 import { PhoneFrame } from "./PhoneFrame";
 import { CC_MONO, CC_SANS, CC_SERIF } from "./fonts";
 
@@ -212,7 +213,7 @@ export function CrosscheckDemo() {
         .cc-tile { animation: cc-flip 380ms cubic-bezier(.2,.8,.3,1) both; transform-origin: 50% 0; }
         @media (prefers-reduced-motion: reduce) { .cc-tile { animation: none; } }
       `}</style>
-      <PhoneFrame screen="#E6DFD0" ink="#1B1B1B">
+      <PhoneFrame screen="#E6DFD0" ink="#1B1B1B" glow="#2B4C7E">
         <div
           className="flex min-h-0 flex-1 flex-col"
           style={{
@@ -279,7 +280,7 @@ export function CrosscheckDemo() {
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear clue"
-                    className="grid h-6 w-6 place-items-center rounded-full"
+                    className="grid h-6 w-6 place-items-center rounded-full transition can-hover:hover:bg-[rgba(27,27,27,.08)]"
                     style={{ color: "var(--ink-3)" }}
                   >
                     ✕
@@ -289,7 +290,7 @@ export function CrosscheckDemo() {
               <button
                 type="submit"
                 aria-label="Solve"
-                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl"
+                className="grid h-11 w-11 shrink-0 place-items-center rounded-xl transition can-hover:hover:brightness-125"
                 style={{ background: "var(--blue)", color: "#fff" }}
               >
                 <svg
@@ -359,7 +360,7 @@ export function CrosscheckDemo() {
                       type="button"
                       onClick={() => runPreset(p)}
                       aria-pressed={on}
-                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none"
+                      className="shrink-0 rounded-full px-3 py-1.5 text-[13px] leading-none transition can-hover:hover:-translate-y-px can-hover:hover:brightness-95"
                       style={{
                         border: `1px solid ${on ? "var(--blue)" : "var(--rule)"}`,
                         background: on ? "var(--blue-tint)" : "transparent",
@@ -417,7 +418,7 @@ export function CrosscheckDemo() {
                           type="button"
                           aria-pressed={on}
                           onClick={() => setLengthFilter(n)}
-                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums"
+                          className="h-8 min-w-[38px] px-3 text-[14px] tabular-nums transition can-hover:hover:brightness-95"
                           style={{
                             borderLeft: i ? "1px solid var(--rule)" : 0,
                             background: on ? "var(--blue)" : "transparent",
@@ -539,7 +540,7 @@ function AnswerRow({
       type="button"
       onClick={() => onCopy(a)}
       aria-label={`${a.display}, ${a.length} letters. Tap to copy.`}
-      className="grid w-full gap-1.5 py-3 text-left transition-colors first:border-t-0 active:bg-[var(--rule-2)]"
+      className="group grid w-full gap-1.5 rounded-md py-3 text-left transition-colors first:border-t-0 can-hover:hover:bg-[rgba(230,223,208,.55)] active:bg-[var(--rule-2)]"
       style={{
         borderTop: "1px solid var(--rule-2)",
         opacity: a.fitsPattern === false ? 0.38 : 1,
@@ -593,6 +594,16 @@ function AnswerRow({
         >
           {copied ? "Copied" : a.length}
         </span>
+        {/* Copy affordance: always mounted (only its opacity changes), so the
+            row never reflows on hover or click. Faint on touch, where there's
+            no hover to reveal it; brighter on hover with a mouse. */}
+        <Copy
+          aria-hidden="true"
+          className={`ml-1 h-3 w-3 transition-opacity ${
+            copied ? "opacity-0" : "opacity-40 can-hover:opacity-0 can-hover:group-hover:opacity-60"
+          }`}
+          style={{ color: "var(--ink-3)" }}
+        />
       </span>
       {a.gloss && (
         <span

@@ -10,8 +10,14 @@ import bankRecSpire from "/public/case-studies/bank-rec/spire.png";
 import rapidpayLegacy from "/public/case-studies/rapidpay/legacy.png";
 import rapidpaySpire from "/public/case-studies/rapidpay/spire.png";
 
+// Screenshot height follows the screen's height, not its width, so a whole
+// tile fits in one viewport. The tile's chrome around the image (padding,
+// tags, title, blurb, link row) measures ~250px on the tallest tile; 420px
+// covers that plus the sticky 20px ruler and ~150px of breathing room.
+// Measured: tallest tile 595 / 727 / 767px at 768 / 900 / 1080px tall.
+// Capped at 520px so large screens don't balloon.
 const SHOT =
-  "relative h-72 w-full bg-paper md:h-[460px] lg:h-[460px] xl:h-[560px] 2xl:h-[700px]";
+  "relative h-72 w-full bg-paper md:h-[clamp(240px,calc(100svh_-_420px),520px)]";
 
 const linkClass =
   "inline-flex w-fit items-center gap-1 rounded-md font-mono text-xs uppercase tracking-widest transition focus:outline-none focus-visible:ring-2 focus-visible:ring-accent";

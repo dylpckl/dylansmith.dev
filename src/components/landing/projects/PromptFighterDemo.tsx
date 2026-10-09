@@ -273,7 +273,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
                     type="button"
                     onClick={() => cycle(side, -1)}
                     aria-label={`Previous fighter for side ${side.toUpperCase()}`}
-                    className="grid h-8 w-6 shrink-0 place-items-center rounded-[3px] transition-colors hover:bg-white/5 sm:w-7"
+                    className="grid h-8 w-6 shrink-0 place-items-center rounded-[3px] transition-colors can-hover:hover:bg-white/5 sm:w-7"
                     style={{ color: t.dim }}
                   >
                     ‹
@@ -293,7 +293,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
                     type="button"
                     onClick={() => cycle(side, 1)}
                     aria-label={`Next fighter for side ${side.toUpperCase()}`}
-                    className="grid h-8 w-6 shrink-0 place-items-center rounded-[3px] transition-colors hover:bg-white/5 sm:w-7"
+                    className="grid h-8 w-6 shrink-0 place-items-center rounded-[3px] transition-colors can-hover:hover:bg-white/5 sm:w-7"
                     style={{ color: t.dim }}
                   >
                     ›
@@ -312,7 +312,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
                       setStatsOpen((s) => (s === side ? null : side))
                     }
                     aria-expanded={statsOpen === side}
-                    className="uppercase tracking-[0.14em] underline-offset-2 hover:underline"
+                    className="uppercase tracking-[0.14em] underline-offset-2 can-hover:hover:underline"
                     style={{ color: statsOpen === side ? t.text : t.dim }}
                   >
                     {statsOpen === side ? "Hide stats" : "Stats"}
@@ -387,7 +387,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
             type="button"
             onClick={() => fight(finished ? newSeed() : seed)}
             disabled={running}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition can-hover:enabled:hover:-translate-y-px can-hover:enabled:hover:brightness-110 enabled:active:translate-y-0 disabled:opacity-40"
             style={{
               background: t.accent,
               color: "#fff",
@@ -401,7 +401,7 @@ function Arena({ built }: { built: SeedFighter | null }) {
             onClick={() => fight(seed)}
             disabled={running || !finished}
             title="Same fighters, same seed — the sim is deterministic, so this replays the identical fight."
-            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition can-hover:enabled:hover:brightness-200 disabled:opacity-40"
             style={{
               background: "transparent",
               color: t.dim,
@@ -783,7 +783,7 @@ function Builder({
           type="button"
           onClick={nextPrompts}
           disabled={phase === "generating"}
-          className="rounded-[3px] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.14em] transition-colors hover:bg-white/5 disabled:opacity-40"
+          className="rounded-[3px] px-2.5 py-1.5 text-[10px] uppercase tracking-[0.14em] transition-colors can-hover:hover:bg-white/5 disabled:opacity-40"
           style={{ color: t.dim, border: `1px solid ${t.line}` }}
         >
           ↻ New prompts
@@ -928,7 +928,7 @@ function Builder({
           <button
             type="button"
             onClick={() => onSend(seed)}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em]"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition can-hover:hover:-translate-y-px can-hover:hover:brightness-110 active:translate-y-0"
             style={{
               background: t.accent,
               color: "#fff",
@@ -940,7 +940,7 @@ function Builder({
           <button
             type="button"
             onClick={nextPrompts}
-            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em]"
+            className="rounded-[3px] px-3 py-3 text-[12px] uppercase tracking-[0.12em] transition can-hover:hover:brightness-200"
             style={{
               background: "transparent",
               color: t.dim,
@@ -957,7 +957,7 @@ function Builder({
             type="button"
             onClick={generate}
             disabled={phase === "generating" || phase === "revealed"}
-            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition-opacity disabled:opacity-40"
+            className="rounded-[3px] px-4 py-3 text-[12px] uppercase tracking-[0.12em] transition can-hover:enabled:hover:-translate-y-px can-hover:enabled:hover:brightness-110 enabled:active:translate-y-0 disabled:opacity-40"
             style={{
               background: t.accent,
               color: "#fff",
@@ -991,7 +991,9 @@ export function PromptFighterDemo() {
 
   return (
     <div
-      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px]"
+      // Same "this is live" cue as the phone demos: a red ring on hover (glow
+      // only, so nothing moves under the cursor).
+      className="mx-auto w-full max-w-[560px] overflow-hidden rounded-md text-[13px] transition-shadow duration-300 ease-out can-hover:hover:shadow-[0_0_0_2px_#d9503c,0_0_48px_-8px_#d9503c]"
       style={{
         background: t.bg,
         color: t.text,
@@ -1032,7 +1034,7 @@ export function PromptFighterDemo() {
               role="tab"
               aria-selected={mode === m}
               onClick={() => setMode(m)}
-              className="px-2.5 py-1.5 transition-colors"
+              className="px-2.5 py-1.5 transition can-hover:hover:brightness-200"
               style={{
                 color: mode === m ? t.text : t.faint,
                 borderBottom: `2px solid ${mode === m ? t.accent : "transparent"}`,

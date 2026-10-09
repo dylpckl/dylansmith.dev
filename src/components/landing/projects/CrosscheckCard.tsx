@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
+import { GitHubIcon } from "@/components/SocialLink";
 import { SplitCard } from "./SplitCard";
 import { CC_MONO, CC_SANS, CC_SERIF } from "./fonts";
 import { PhonePlaceholder } from "./PhonePlaceholder";
@@ -77,13 +78,10 @@ export function CrosscheckCard() {
       className="rounded-md text-[#1B1B1B]"
       style={{ background: "#EFE9DD", fontFamily: CC_SANS }}
       masthead={
-        <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:flex-row lg:justify-between lg:pt-8">
-          <span className="order-2 text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:order-1 lg:w-56 lg:whitespace-nowrap">
-            Mobile-first PWA
-          </span>
+        <header className="mx-6 flex flex-col items-center gap-3 border-b-[3px] border-double border-[#1B1B1B] pb-4 pt-7 md:mx-8 lg:mx-10 lg:pt-8">
           {/* Tiles flex to fit the column on narrow phones (10 fixed tiles
               overflowed at 320px), then settle at a fixed size from sm up. */}
-          <h3 className="order-1 flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1 lg:order-2" aria-label="crosscheck">
+          <h3 className="flex w-full max-w-[430px] gap-[2px] sm:w-auto sm:gap-1" aria-label="crosscheck">
             {"CROSSCHECK".split("").map((ch, i) => (
               <span
                 key={i}
@@ -97,9 +95,6 @@ export function CrosscheckCard() {
               </span>
             ))}
           </h3>
-          <span className="order-3 hidden text-right text-[11px] uppercase tracking-[0.16em] text-[#5E5A50] lg:block lg:w-56 lg:whitespace-nowrap">
-            No backend · Works offline
-          </span>
         </header>
       }
       copyClassName="lg:border-r lg:border-[#D8D0BE] lg:my-8 lg:py-2"
@@ -138,11 +133,10 @@ export function CrosscheckCard() {
       copy={
         <>
           <p className="text-xl leading-snug lg:text-2xl" style={{ fontFamily: CC_SERIF }}>
-            Type a crossword clue, get candidate answers as letter tiles plus what the word means.
+            Stuck on a crossword clue? Type it in and get likely answers, plus what each word means.
           </p>
           <p className="max-w-[60ch] text-sm leading-relaxed text-[#5E5A50] lg:text-base">
-            It&apos;s installable and works offline, and there&apos;s no backend: every source is called straight from
-            the browser.
+            It runs entirely in the browser and works offline.
           </p>
 
           <dl className="flex flex-col gap-4">
@@ -162,30 +156,28 @@ export function CrosscheckCard() {
             tagClassName="bg-[#FBF8F1] text-[#5E5A50] ring-[#D8D0BE]"
           />
 
-          <div className="mt-auto flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[#D8D0BE] pt-5">
-            <a
-              href="https://dylpckl.github.io/crosscheck/"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#2B4C7E] px-7 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(43,76,126,.8)] transition hover:bg-[#1d3559] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EFE9DD] sm:w-fit"
-            >
-              Try crosscheck ↗
-            </a>
+          <div className="mt-auto flex items-center gap-3 border-t border-[#D8D0BE] pt-5">
             <a
               href="https://github.com/dylpckl/crosscheck"
               target="_blank"
               rel="noreferrer"
-              className="text-xs font-semibold uppercase tracking-[0.12em] text-[#2B4C7E] underline-offset-4 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E]"
+              aria-label="crosscheck on GitHub"
+              className="grid h-14 w-14 shrink-0 place-items-center rounded-xl border-[1.5px] border-[#D8D0BE] bg-[#FBF8F1] text-[#2B4C7E] transition can-hover:hover:border-[#2B4C7E] can-hover:hover:bg-[#E3E9F3] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] [&>svg]:h-6 [&>svg]:w-6"
             >
-              Source ↗
+              <GitHubIcon />
+            </a>
+            <a
+              href="https://dylpckl.github.io/crosscheck/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-[#2B4C7E] px-7 text-base font-semibold text-white shadow-[0_10px_24px_-12px_rgba(43,76,126,.8)] transition can-hover:hover:bg-[#1d3559] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2B4C7E] focus-visible:ring-offset-2 focus-visible:ring-offset-[#EFE9DD] sm:w-fit"
+            >
+              Try crosscheck ↗
             </a>
           </div>
         </>
       }
       demo={demo}
-      caption="Live · real parser + corpus, live Datamuse"
-      captionClassName="text-[#5E5A50]"
-      dotClassName="bg-[#2B4C7E]"
     />
   );
 }

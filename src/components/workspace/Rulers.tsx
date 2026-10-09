@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const MAJOR = 100; // px between labeled ticks
@@ -26,42 +26,28 @@ const tickBackground = (axis: "x" | "y") =>
 const labelClass =
   "absolute select-none font-mono text-[9px] leading-none text-ruler";
 
-type TopRulerProps = {
-  /** The canvas column the x-coordinates are measured from. */
-  canvasRef: RefObject<HTMLElement>;
-};
+// The tick strip shares the canvas's box (mx-auto max-w-7xl = 1280px), so its
+// labels are fixed: 0–1200 every 100px, clipped when the canvas is narrower.
+const TOP_LABELS = Array.from({ length: 13 }, (_, i) => i * MAJOR);
 
 /**
  * Sticky x-axis ruler across the top of the canvas column. Labels every
- * 100px from the canvas's left edge; re-measured on resize.
+ * 100px from the canvas's left edge.
  */
-export function TopRuler({ canvasRef }: TopRulerProps) {
-  const [width, setWidth] = useState(0);
-
-  useEffect(() => {
-    const el = canvasRef.current;
-    if (!el) return;
-    const measure = () => setWidth(el.clientWidth);
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [canvasRef]);
-
-  const labels = [];
-  for (let x = 0; x <= width; x += MAJOR) labels.push(x);
-
+export function TopRuler() {
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none sticky top-0 z-30 hidden w-full border-b border-line/20 bg-panel/90 backdrop-blur-sm lg:block"
-      style={{ height: RULER, ...tickBackground("x") }}
+      style={{ height: RULER }}
     >
-      {labels.map((x) => (
-        <span key={x} className={cn(labelClass, "top-1")} style={{ left: x + 3 }}>
-          {x}
-        </span>
-      ))}
+      <div className="relative mx-auto h-full max-w-7xl overflow-hidden" style={tickBackground("x")}>
+        {TOP_LABELS.map((x) => (
+          <span key={x} className={cn(labelClass, "top-1")} style={{ left: x + 3 }}>
+            {x}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

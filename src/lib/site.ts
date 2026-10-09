@@ -10,6 +10,6 @@ export const SECTIONS = [
   { id: "outcomes", label: "Outcomes" },
   { id: "work", label: "Work" },
   { id: "projects", label: "Projects" },
-  { id: "writing", label: "Writing" },
+  // { id: "writing", label: "Writing" }, — hidden for now (see Landing.tsx)
 ] as const;
 export type SectionId = (typeof SECTIONS)[number]["id"];

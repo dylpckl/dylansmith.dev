@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import dynamic from "next/dynamic";
 import { TagGroup } from "@/components/Tag";
+import { GitHubIcon } from "@/components/SocialLink";
 import { ROSTER } from "@/lib/demos/prompt-fighter/roster";
 import { SplitCard } from "./SplitCard";
 import { PixelSprite } from "./PixelSprite";
@@ -174,14 +175,27 @@ export function FighterCard() {
             tagClassName="rounded-none bg-[#141417] text-[#a3a3ad] ring-[#2a2a31]"
           />
 
-          <a
-            href="https://prompt-fight.vercel.app"
-            target="_blank"
-            rel="noreferrer"
-            className={`${pressStart.className} mt-auto inline-flex h-14 w-full items-center justify-center gap-3 self-end bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition hover:-translate-y-px hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:w-fit sm:text-sm`}
-          >
-            Play prompt fighter ▶
-          </a>
+          {/* Phones: the pixel-font CTA needs the full row, so it goes first and
+              GitHub drops below it. From sm up: GitHub left of Play, right-aligned. */}
+          <div className="mt-auto flex w-full flex-wrap items-center gap-3 sm:w-auto sm:flex-nowrap sm:self-end">
+            <a
+              href="https://github.com/dylpckl/prompt-fighter"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="prompt fighter on GitHub"
+              className="grid h-14 w-14 shrink-0 place-items-center border-2 border-[#2a2a31] bg-[#141417] text-[#e9e9ec] shadow-[4px_4px_0_#000] transition can-hover:hover:-translate-y-px can-hover:hover:border-[#d9503c] can-hover:hover:text-[#d9503c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] [&>svg]:h-6 [&>svg]:w-6"
+            >
+              <GitHubIcon />
+            </a>
+            <a
+              href="https://prompt-fight.vercel.app"
+              target="_blank"
+              rel="noreferrer"
+              className={`${pressStart.className} order-first inline-flex h-14 w-full items-center justify-center gap-3 bg-[#d9503c] px-7 text-xs uppercase tracking-wider text-white shadow-[4px_4px_0_#7a1f17] transition can-hover:hover:-translate-y-px can-hover:hover:bg-[#e2604c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e9e9ec] sm:order-none sm:w-auto sm:text-sm`}
+            >
+              Play prompt fighter ▶
+            </a>
+          </div>
         </>
       }
       demo={demo}
