@@ -37,7 +37,8 @@ function TapToggle({
       type="button"
       onClick={() => setShowAfter((v) => !v)}
       aria-label={`Show ${showAfter ? beforeLabel : afterLabel}`}
-      className={`relative block w-full select-none overflow-hidden rounded-lg text-left ring-1 ring-line/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-paper ${className}`}
+      // Phones only (md:hidden): square, top/bottom rules, so callers can run it edge to edge.
+      className={`relative block w-full select-none overflow-hidden border-y border-line/25 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${className}`}
     >
       <div className="relative">{after}</div>
       <div

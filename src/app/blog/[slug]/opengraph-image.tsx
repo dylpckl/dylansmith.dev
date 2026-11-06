@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
+import { notFound } from "next/navigation";
 import { getPostBySlug } from "@/lib/blog/posts";
+import { BLOG_ENABLED } from "@/lib/site";
 
 export const runtime = "nodejs";
 export const size = { width: 1200, height: 630 };
@@ -7,6 +9,7 @@ export const contentType = "image/png";
 export const alt = "Dylan Smith — Blog post";
 
 export default async function Image({ params }: { params: { slug: string } }) {
+  if (!BLOG_ENABLED) notFound();
   const post = await getPostBySlug(params.slug);
   const title = post?.title ?? "Dylan Smith";
   const summary = post?.summary ?? "Designer & developer";

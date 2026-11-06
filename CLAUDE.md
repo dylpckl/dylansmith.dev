@@ -34,9 +34,9 @@ src/
     landing/                  # one file per landing frame
       Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
       Hero.tsx                # Intro frame content
-      Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
+      Principles.tsx          # three numbered principles + a plain-text tools line
       Outcomes.tsx            # SmartAdvocate token-layer story: claim, TokenLayerStack, TokenCompare slider, supporting row
-      Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
+      Work.tsx                # case studies as flat articles (title + MDS link, blurb, drag/tap reveal)
       Writing.tsx             # post list for the Writing frame (hidden for now; see Landing.tsx)
       SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
       projects/               # side-project cards — see "Side-project cards" below
@@ -72,7 +72,7 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are three short cards with an "in practice" proof link each. Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case-study tiles; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are a numbered list (no cards, no quote, no blog links). Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case studies; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
 
 - **Outcomes copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 
@@ -90,6 +90,8 @@ Two materials share one layout: **Slate** (dark, default) and **Paper** (light n
 - **Tags/chips:** always use [`Tag`](src/components/Tag.tsx) (`intent: default|teal|orange`, `size: xs|sm|md`, `variant: solid|tinted`) and `TagGroup` for arrays. Don't add new inline tag styles.
 - **Tile:** [`Tile`](src/components/bento/Tile.tsx) takes optional `label`, `labelIcon`, `tags`, plus a discriminated variant (`href`, `onClickModal`, or `decorative`). Header collapses entirely when neither label nor tags are passed. Use `decorative` for non-clickable tiles.
 - **Brand logos:** drop SVGs from [simpleicons.org](https://simpleicons.org) (CC0) into `public/logos/` named with the simple-icons slug (e.g. `nextdotjs.svg`). Render via `<TechLogo name="..." label="..." brandColor="#XXXXXX" />`. Default render is monochrome `currentColor`; brand color shows on hover.
+- **Blog is hidden** (`BLOG_ENABLED = false` in `lib/site.ts`): no links to it, out of the sitemap, and `app/blog/layout.tsx` 404s every `/blog` route. Gate any new blog link on the flag.
+- **Mobile is flat.** Below `md` a `Frame` has no border, fill, corners or padding; its chip becomes an inline label + hairline. Don't nest cards inside frames. Media and side-project cards run edge to edge on phones via `max-md:-mx-5` (the workspace gutter is `px-5`).
 - **Frames:** every landing section is `<Frame id label sectionRef>` from `@/components/workspace/Frame`. `Landing.tsx` owns the refs and the `IntersectionObserver` (band-based `rootMargin`, so the top of the page reads as Intro). Section components (`Hero`, `Principles`, `Work`, `Writing`) render content only; no section wrappers, no `VerticalText`/`SectionLabel`.
 - **Rulers are furniture.** `TopRuler`/`LeftRuler` are `aria-hidden`, desktop-only, and purely decorative. Don't hang behavior on them.
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.

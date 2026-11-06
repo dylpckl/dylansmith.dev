@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MaterialToggle } from "@/components/workspace/MaterialToggle";
-import { RESUME_PATH } from "@/lib/site";
+import { BLOG_ENABLED, RESUME_PATH } from "@/lib/site";
 
 export type NavSection = { id: string; label: string };
 
@@ -15,7 +15,7 @@ type HeaderProps = {
 };
 
 const ELSEWHERE = [
-  { id: "blog", label: "Blog", href: "/blog", mark: "" },
+  ...(BLOG_ENABLED ? [{ id: "blog", label: "Blog", href: "/blog", mark: "" }] : []),
   { id: "resume", label: "Resume", href: RESUME_PATH, mark: "↓", external: true },
   { id: "github", label: "GitHub", href: "https://github.com/dylpckl", mark: "↗", external: true },
   {
@@ -111,15 +111,17 @@ export function Header({ activeSection, sections }: HeaderProps) {
           Dylan Smith
         </Link>
         <div className="flex items-center gap-4">
-          <Link
-            href="/blog"
-            className={cn(
-              "font-mono text-xs uppercase tracking-widest",
-              activeSection === "blog" ? "text-panel-accent" : "text-panel-ink-2",
-            )}
-          >
-            Blog
-          </Link>
+          {BLOG_ENABLED && (
+            <Link
+              href="/blog"
+              className={cn(
+                "font-mono text-xs uppercase tracking-widest",
+                activeSection === "blog" ? "text-panel-accent" : "text-panel-ink-2",
+              )}
+            >
+              Blog
+            </Link>
+          )}
           {showMaterial && <MaterialToggle className="w-auto" />}
         </div>
       </header>

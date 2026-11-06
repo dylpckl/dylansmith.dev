@@ -52,7 +52,13 @@ export function SplitCard({
 }: SplitCardProps) {
   return (
     <article
-      className={cn("relative isolate overflow-hidden", className)}
+      // Edge to edge below md: cancel the workspace gutter and drop the
+      // card's corners so the demo gets the full phone width.
+      className={cn(
+        "relative isolate overflow-hidden",
+        className,
+        "max-md:-mx-5 max-md:rounded-none",
+      )}
       style={style}
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
@@ -69,7 +75,7 @@ export function SplitCard({
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         <div
           className={cn(
-            "relative flex flex-col gap-5 p-6 md:p-8 lg:p-10",
+            "relative flex flex-col gap-5 px-5 py-7 md:p-8 lg:p-10",
             flip && "lg:order-2",
             copyClassName,
           )}
@@ -78,7 +84,7 @@ export function SplitCard({
         </div>
         <figure
           className={cn(
-            "relative isolate flex flex-col items-center justify-center gap-4 overflow-hidden px-3 py-8 sm:px-8 lg:py-10",
+            "relative isolate flex flex-col items-center justify-center gap-4 overflow-hidden px-3 pb-8 pt-2 sm:px-8 md:pt-8 lg:py-10",
             flip && "lg:order-1",
             figureClassName,
           )}

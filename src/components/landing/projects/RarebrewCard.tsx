@@ -4,6 +4,7 @@
 import dynamic from "next/dynamic";
 import { ArrowUpRight } from "lucide-react";
 import { TagGroup } from "@/components/Tag";
+import { BLOG_ENABLED } from "@/lib/site";
 import { SplitCard } from "./SplitCard";
 import { PhonePlaceholder } from "./PhonePlaceholder";
 import { dmSans, spaceGrotesk } from "./fonts";
@@ -96,10 +97,10 @@ export function RarebrewCard() {
             design tokens, a Scryfall + EDHREC data layer, and insights meant to help you decide what to cut.
           </p>
 
-          <dl className="grid gap-3 sm:grid-cols-2">
+          <dl className="grid border-t border-[#2c2c2c] sm:grid-cols-2 sm:gap-x-6">
             {NOTES.map((n) => (
-              <div key={n.title} className="flex flex-col gap-1.5 rounded-xl bg-[#1f1f1f]/90 p-4">
-                <dt className="font-mono text-[11px] uppercase tracking-widest text-[#E0A83C]">{n.title}</dt>
+              <div key={n.title} className="flex flex-col gap-1 border-b border-[#2c2c2c] py-3">
+                <dt className="text-sm font-semibold text-[#E0A83C]">{n.title}</dt>
                 <dd className="text-sm leading-relaxed text-[#bfbfbf]">{n.body}</dd>
               </div>
             ))}
@@ -121,12 +122,14 @@ export function RarebrewCard() {
               Open rarebrew.gg
               <ArrowUpRight className="h-5 w-5" aria-hidden="true" />
             </a>
-            <a
-              href="/blog/rare-brew"
-              className="font-mono text-xs uppercase tracking-widest text-[#E0A83C] underline-offset-4 can-hover:hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52]"
-            >
-              Read the notes →
-            </a>
+            {BLOG_ENABLED && (
+              <a
+                href="/blog/rare-brew"
+                className="font-mono text-xs uppercase tracking-widest text-[#E0A83C] underline-offset-4 can-hover:hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F0BD52]"
+              >
+                Read the notes →
+              </a>
+            )}
           </div>
         </>
       }

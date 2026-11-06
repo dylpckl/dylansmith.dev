@@ -39,8 +39,8 @@ export function Outcomes() {
       <TokenCompare />
 
       {/* Supporting */}
-      <div className="grid gap-6 rounded-xl border border-line/25 bg-card p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-0 md:p-7">
-        <div className="flex items-start gap-4 md:pr-7">
+      <div className="grid grid-cols-2 gap-x-5 gap-y-5 border-t border-line/25 pt-5 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] md:gap-0 md:pt-6">
+        <div className="col-span-2 flex items-start gap-4 md:col-span-1 md:pr-7">
           <Database className="mt-0.5 h-5 w-5 shrink-0 text-warm" aria-hidden="true" />
           <div className="flex flex-col gap-1">
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

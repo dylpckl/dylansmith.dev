@@ -9,24 +9,23 @@ import { RESUME_PATH as RESUME_HREF } from "@/lib/site";
 
 export function Hero() {
   return (
-    <Canvas className="flex flex-col gap-6 pt-2 md:gap-8">
+    <Canvas className="flex flex-col gap-5 md:gap-8 md:pt-2">
       <h1 className="text-5xl font-bold tracking-tight text-ink lg:text-7xl">
         Dylan Smith
       </h1>
 
-      <div className="max-w-3xl text-lg font-medium leading-loose text-ink-2 lg:text-2xl">
-        Designing &amp; developing{" "}
+      <div className="max-w-[30ch] text-xl font-medium leading-snug text-ink-2 lg:text-3xl lg:leading-snug">
+        I design{" "}
         <Ruler as="span" className="inline-block w-fit align-baseline">
           <Ruler.Guideline edge="bottom" />
           <Ruler.Guideline edge="right" />
           <Ruler.Target edge="top" />
-          pixel-perfect
+          interfaces
         </Ruler>{" "}
-        interfaces. Building reusable and scalable systems for the people who
-        use them.
+        and build the systems under them.
       </div>
 
-      <div className="text-lg font-normal text-ink-2">
+      <div className="text-base text-ink-3 lg:text-lg">
         Leading design at{" "}
         <a
           href="https://www.smartadvocate.com/"
@@ -34,7 +33,7 @@ export function Hero() {
           rel="noreferrer"
           className="group relative underline decoration-accent hover:decoration-accent-ink"
         >
-          <span className="relative z-20 transition-colors duration-500 ease-in-out group-hover:text-accent-ink">
+          <span className="relative z-20 text-ink transition-colors duration-500 ease-in-out group-hover:text-accent-ink">
             SmartAdvocate.
           </span>
           <span

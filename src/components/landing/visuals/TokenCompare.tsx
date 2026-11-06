@@ -42,6 +42,8 @@ export function TokenCompare() {
   return (
     <figure className="m-0 flex flex-col gap-3">
       <BeforeAfterReveal
+        // Full bleed on phones: cancel the workspace gutter.
+        className="max-md:-mx-5 max-md:w-auto"
         beforeLabel="Legacy"
         afterLabel="Token layer on"
         initial={42}
