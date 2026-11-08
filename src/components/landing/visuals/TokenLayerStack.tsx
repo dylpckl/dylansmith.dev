@@ -139,13 +139,10 @@ export function TokenLayerStack() {
         </div>
       </div>
 
-      {/* phones: the same three layers as a top-down list */}
-      <ol className="m-0 flex list-none flex-col gap-3 p-0 md:hidden">
+      {/* phones: the same three layers as a flat top-down list, no boxes */}
+      <ol className="m-0 flex list-none flex-col border-t border-dashed border-line/30 p-0 md:hidden">
         {LAYERS.map((l) => (
-          <li
-            key={l.step}
-            className={`flex flex-col gap-2 rounded-lg border p-4 ${l.accent ? "border-accent/40 bg-accent/5" : "border-line/25"}`}
-          >
+          <li key={l.step} className="flex flex-col gap-2 border-b border-dashed border-line/30 py-4">
             <span className={`font-mono text-[10px] uppercase tracking-[0.16em] ${l.accent ? "text-accent" : "text-ink-3"}`}>
               {l.step}
             </span>

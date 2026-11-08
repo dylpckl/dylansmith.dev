@@ -9,8 +9,6 @@ import { Workspace } from "@/components/workspace/Workspace";
 import { Frame } from "@/components/workspace/Frame";
 
 import { Hero } from "./Hero";
-import { Principles } from "./Principles";
-import { Outcomes } from "./Outcomes";
 import { Work } from "./Work";
 // Writing frame is hidden for now. To bring it back: load posts in
 // app/page.tsx (getAllPosts → PostSummary[]) and pass them here as `posts`,
@@ -27,16 +25,12 @@ export function Landing() {
   const [activeSection, setActiveSection] = useState("intro");
 
   const introRef = useRef<HTMLElement>(null);
-  const principlesRef = useRef<HTMLElement>(null);
-  const outcomesRef = useRef<HTMLElement>(null);
   const workRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const refs = [
       introRef,
-      principlesRef,
-      outcomesRef,
       workRef,
       projectsRef,
     ];
@@ -67,16 +61,6 @@ export function Landing() {
           <Workspace>
             <Frame id="intro" label="Intro" sectionRef={introRef}>
               <Hero />
-            </Frame>
-            <Frame
-              id="principles"
-              label="Principles"
-              sectionRef={principlesRef}
-            >
-              <Principles />
-            </Frame>
-            <Frame id="outcomes" label="Outcomes" sectionRef={outcomesRef}>
-              <Outcomes />
             </Frame>
             <Frame id="work" label="Work" sectionRef={workRef}>
               <Work />

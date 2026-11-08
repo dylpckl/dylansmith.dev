@@ -32,11 +32,9 @@ src/
         opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
     landing/                  # one file per landing frame
-      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
-      Hero.tsx                # Intro frame content
-      Principles.tsx          # three numbered principles + a plain-text tools line
-      Outcomes.tsx            # SmartAdvocate token-layer story: claim, TokenLayerStack, TokenCompare slider, supporting row
-      Work.tsx                # case studies as flat articles (title + MDS link, blurb, drag/tap reveal)
+      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + three Frames + Footer
+      Hero.tsx                # Intro: name, one sentence (with the px Ruler), "how I work" one-liners, links row (below lg)
+      Work.tsx                # one Company block per employer: SmartAdvocate (bullets, TokenLayerStack, TokenCompare) then MDS (Bank Rec, RapidPay reveals)
       Writing.tsx             # post list for the Writing frame (hidden for now; see Landing.tsx)
       SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
       projects/               # side-project cards — see "Side-project cards" below
@@ -72,9 +70,9 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are a numbered list (no cards, no quote, no blog links). Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case studies; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+Section flow on the landing page: **Intro → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). The principles live in the Intro as three one-liners (they were their own frame). Work is grouped by employer: company name as the heading, project as the subtitle. SmartAdvocate (token-layer diagram + before/after slider, no pins) comes first, then MDS (Bank Reconciliation, RapidPay). Projects is the side-project cards.
 
-- **Outcomes copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
+- **SmartAdvocate copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 
 ## Materials (theming)
 

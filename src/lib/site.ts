@@ -12,8 +12,6 @@ export const BLOG_ENABLED = false;
 /** Landing frames, in page order — drives the sidebar, the footer and the scroll-spy. */
 export const SECTIONS = [
   { id: "intro", label: "Intro" },
-  { id: "principles", label: "Principles" },
-  { id: "outcomes", label: "Outcomes" },
   { id: "work", label: "Work" },
   { id: "projects", label: "Projects" },
   // { id: "writing", label: "Writing" }, — hidden for now (see Landing.tsx)
