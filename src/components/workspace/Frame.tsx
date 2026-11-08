@@ -39,7 +39,9 @@ export function Frame({
       id={id}
       aria-labelledby={`${id}-heading`}
       className={cn(
-        "relative scroll-mt-16 border border-frame/50 bg-frame-fill px-6 py-10 md:px-10 md:py-12 lg:scroll-mt-10",
+        // Below md a frame is just a labeled section on the page: no border,
+        // fill or inner padding, so content gets the full column width.
+        "relative scroll-mt-20 md:border md:border-frame/50 md:bg-frame-fill md:px-10 md:py-12 lg:scroll-mt-10",
         className,
       )}
     >
@@ -47,14 +49,16 @@ export function Frame({
         {label}
       </h2>
 
-      {/* Label chip, sitting on the top border like a frame name. */}
+      {/* Label chip: sits on the top border like a frame name from md up;
+          below md it's an inline label with a hairline running to the edge. */}
       <span
         aria-hidden="true"
-        className="absolute -top-2.5 left-4 flex items-center gap-2 bg-paper px-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-accent md:left-8"
+        className="mb-6 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-accent md:absolute md:-top-2.5 md:left-8 md:mb-0 md:gap-2 md:bg-paper md:px-1.5 md:text-[10px] md:tracking-[0.18em]"
       >
         {label}
+        <span className="h-px flex-1 bg-line/30 md:hidden" />
         {width > 0 && (
-          <span className="normal-case tracking-[0.04em] text-ink-3">
+          <span className="hidden normal-case tracking-[0.04em] text-ink-3 md:inline">
             {Math.round(width)} × {Math.round(height)}
           </span>
         )}
@@ -76,7 +80,7 @@ function Corner({ className }: { className: string }) {
     <span
       aria-hidden="true"
       className={cn(
-        "absolute h-1.5 w-1.5 border border-accent bg-paper",
+        "absolute hidden h-1.5 w-1.5 border border-accent bg-paper md:block",
         className,
       )}
     />

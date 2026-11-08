@@ -1,6 +1,6 @@
 import { ArrowUp, FileText, Mail } from "lucide-react";
 import { Button } from "@/components/Button";
-import { EMAIL, RESUME_PATH, SECTIONS } from "@/lib/site";
+import { BLOG_ENABLED, EMAIL, RESUME_PATH, SECTIONS } from "@/lib/site";
 
 const link =
   "w-fit text-panel-ink-2 transition hover:text-panel-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-panel-accent";
@@ -66,9 +66,11 @@ export default function Footer() {
                 <span className="text-xs uppercase tracking-widest text-panel-ink-3">
                   Elsewhere
                 </span>
-                <a href="/blog" className={link}>
-                  Blog
-                </a>
+                {BLOG_ENABLED && (
+                  <a href="/blog" className={link}>
+                    Blog
+                  </a>
+                )}
                 <a
                   href="https://github.com/dylpckl"
                   target="_blank"

@@ -124,7 +124,7 @@ export function FighterCard() {
             16×16 sprite, and then it fights a ghost that someone else built.
           </p>
 
-          <dl className="flex flex-col gap-3 border border-[#2a2a31] bg-[#141417] p-4">
+          <dl className="flex flex-col gap-3 border-y border-[#2a2a31] py-4">
             <div className="flex gap-2.5 text-sm leading-relaxed">
               <span className="text-[#d9503c]" aria-hidden="true">▶</span>
               <div>

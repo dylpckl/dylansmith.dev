@@ -32,11 +32,9 @@ src/
         opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
     landing/                  # one file per landing frame
-      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
-      Hero.tsx                # Intro frame content
-      Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
-      Outcomes.tsx            # SmartAdvocate token-layer story: claim, TokenLayerStack, TokenCompare slider, supporting row
-      Work.tsx                # case-study tiles (drag reveals); every tile ends in a link row
+      Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + three Frames + Footer
+      Hero.tsx                # Intro: name, one sentence (with the px Ruler), "how I work" one-liners, links row (below lg)
+      Work.tsx                # one Company block per employer: SmartAdvocate (line, TokenCompare slider, bullets) then MDS (Bank Rec, RapidPay reveals)
       Writing.tsx             # post list for the Writing frame (hidden for now; see Landing.tsx)
       SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
       projects/               # side-project cards — see "Side-project cards" below
@@ -46,7 +44,7 @@ src/
         PixelSprite.tsx       #   prompt-fighter 16×16 sprite → canvas
         fonts.ts              #   next/font instances + system stacks shared by each card and its demo
         useFinePointer.ts     #   gate for cursor effects (hovering mouse, no reduced motion)
-      visuals/                # inline graphics (TokenLayerStack, TokenCompare, ScatteredFiles)
+      visuals/                # inline graphics (TokenCompare, ScatteredFiles)
     workspace/                # the "design canvas" furniture
       Workspace.tsx           # canvas column + edge rulers
       Frame.tsx               # labeled, bordered section; chip shows live W × H
@@ -72,9 +70,9 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are three short cards with an "in practice" proof link each. Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case-study tiles; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+Section flow on the landing page: **Intro → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). The principles live in the Intro as three one-liners (they were their own frame). Work is grouped by employer: company name as the heading, project as the subtitle. SmartAdvocate (before/after slider first, then bullets; the token-layer diagram was cut as redundant) comes first, then MDS (Bank Reconciliation, RapidPay). Projects is the side-project cards.
 
-- **Outcomes copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
+- **SmartAdvocate copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 
 ## Materials (theming)
 
@@ -90,6 +88,8 @@ Two materials share one layout: **Slate** (dark, default) and **Paper** (light n
 - **Tags/chips:** always use [`Tag`](src/components/Tag.tsx) (`intent: default|teal|orange`, `size: xs|sm|md`, `variant: solid|tinted`) and `TagGroup` for arrays. Don't add new inline tag styles.
 - **Tile:** [`Tile`](src/components/bento/Tile.tsx) takes optional `label`, `labelIcon`, `tags`, plus a discriminated variant (`href`, `onClickModal`, or `decorative`). Header collapses entirely when neither label nor tags are passed. Use `decorative` for non-clickable tiles.
 - **Brand logos:** drop SVGs from [simpleicons.org](https://simpleicons.org) (CC0) into `public/logos/` named with the simple-icons slug (e.g. `nextdotjs.svg`). Render via `<TechLogo name="..." label="..." brandColor="#XXXXXX" />`. Default render is monochrome `currentColor`; brand color shows on hover.
+- **Blog is hidden** (`BLOG_ENABLED = false` in `lib/site.ts`): no links to it, out of the sitemap, and `app/blog/layout.tsx` 404s every `/blog` route. Gate any new blog link on the flag.
+- **Mobile is flat.** Below `md` a `Frame` has no border, fill, corners or padding; its chip becomes an inline label + hairline. Don't nest cards inside frames. Media and side-project cards run edge to edge on phones via `max-md:-mx-5` (the workspace gutter is `px-5`).
 - **Frames:** every landing section is `<Frame id label sectionRef>` from `@/components/workspace/Frame`. `Landing.tsx` owns the refs and the `IntersectionObserver` (band-based `rootMargin`, so the top of the page reads as Intro). Section components (`Hero`, `Principles`, `Work`, `Writing`) render content only; no section wrappers, no `VerticalText`/`SectionLabel`.
 - **Rulers are furniture.** `TopRuler`/`LeftRuler` are `aria-hidden`, desktop-only, and purely decorative. Don't hang behavior on them.
 - **Dimension annotations:** use `<Canvas>` + `<Ruler>` from `@/components/canvas`. `Canvas` provides the coordinate space guidelines extend across; `Ruler` wraps the annotated element and exposes `Ruler.Guideline` (dashed alignment line, requires `Canvas` ancestor) and `Ruler.Target` (px bracket). Both share dims via React context — no prop drilling.

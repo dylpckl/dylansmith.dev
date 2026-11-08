@@ -19,7 +19,7 @@ export function Workspace({ children }: WorkspaceProps) {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopRuler />
         <div
-          className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-4 pb-16 pt-8 md:px-8 md:pb-24 lg:gap-16 lg:px-10 lg:pt-10"
+          className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-5 pb-16 pt-10 md:gap-12 md:px-8 md:pb-24 lg:gap-16 lg:px-10 lg:pt-10"
         >
           {children}
         </div>
