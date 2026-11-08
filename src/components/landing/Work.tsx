@@ -3,7 +3,6 @@
 import type { ReactNode } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { BeforeAfterReveal } from "@/components/bento/BeforeAfterReveal";
-import { TokenLayerStack } from "./visuals/TokenLayerStack";
 import { TokenCompare } from "./visuals/TokenCompare";
 
 import bankRecLegacy from "/public/case-studies/bank-rec/legacy.png";
@@ -89,15 +88,13 @@ export function Work() {
         <p className={body}>
           A CSS token layer integrated into a legacy ASP.NET codebase.
         </p>
+        {/* Screenshot first: it's the proof; the bullets explain it. */}
+        <TokenCompare />
         <ul className={`${body} list-disc space-y-1.5 pl-5 marker:text-ink-4`}>
           <li>Text contrast meets WCAG AA.</li>
           <li>Every screen restyled, with no rewrite and no regressions.</li>
           <li>Documented in 100+ pages.</li>
         </ul>
-        <div className="py-2">
-          <TokenLayerStack />
-        </div>
-        <TokenCompare />
         <p className={body}>
           Data migrations went from 3 months to 2 weeks, with a standard
           project structure and a Python CLI to run them.

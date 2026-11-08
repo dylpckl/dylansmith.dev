@@ -34,7 +34,7 @@ src/
     landing/                  # one file per landing frame
       Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + three Frames + Footer
       Hero.tsx                # Intro: name, one sentence (with the px Ruler), "how I work" one-liners, links row (below lg)
-      Work.tsx                # one Company block per employer: SmartAdvocate (bullets, TokenLayerStack, TokenCompare) then MDS (Bank Rec, RapidPay reveals)
+      Work.tsx                # one Company block per employer: SmartAdvocate (line, TokenCompare slider, bullets) then MDS (Bank Rec, RapidPay reveals)
       Writing.tsx             # post list for the Writing frame (hidden for now; see Landing.tsx)
       SideProjects.tsx        # Projects frame: lede + three side-project cards, each with a live demo
       projects/               # side-project cards — see "Side-project cards" below
@@ -44,7 +44,7 @@ src/
         PixelSprite.tsx       #   prompt-fighter 16×16 sprite → canvas
         fonts.ts              #   next/font instances + system stacks shared by each card and its demo
         useFinePointer.ts     #   gate for cursor effects (hovering mouse, no reduced motion)
-      visuals/                # inline graphics (TokenLayerStack, TokenCompare, ScatteredFiles)
+      visuals/                # inline graphics (TokenCompare, ScatteredFiles)
     workspace/                # the "design canvas" furniture
       Workspace.tsx           # canvas column + edge rulers
       Frame.tsx               # labeled, bordered section; chip shows live W × H
@@ -70,7 +70,7 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). The principles live in the Intro as three one-liners (they were their own frame). Work is grouped by employer: company name as the heading, project as the subtitle. SmartAdvocate (token-layer diagram + before/after slider, no pins) comes first, then MDS (Bank Reconciliation, RapidPay). Projects is the side-project cards.
+Section flow on the landing page: **Intro → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). The principles live in the Intro as three one-liners (they were their own frame). Work is grouped by employer: company name as the heading, project as the subtitle. SmartAdvocate (before/after slider first, then bullets; the token-layer diagram was cut as redundant) comes first, then MDS (Bank Reconciliation, RapidPay). Projects is the side-project cards.
 
 - **SmartAdvocate copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 
