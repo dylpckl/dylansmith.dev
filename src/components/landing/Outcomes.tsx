@@ -24,12 +24,11 @@ export function Outcomes() {
             <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-3">UI refresh</span>
           </div>
           <h3 className="max-w-[24ch] text-3xl font-bold leading-[1.08] tracking-tight text-ink [text-wrap:balance] md:text-4xl">
-            I restyled every screen of SmartAdvocate without rewriting it.
+            A CSS token layer for a legacy ASP.NET app.
           </h3>
           <p className="max-w-[52ch] text-base leading-relaxed text-ink-2">
-            It&apos;s an ASP.NET app built on DevExpress controls. Instead of rebuilding it, I wrote a CSS token
-            system that sits on top of the existing styles, so the whole product changed at once. Contrast went
-            up to WCAG AA, and nothing broke.
+            SmartAdvocate is built on DevExpress controls. I wrote a CSS token layer that sits on top of the
+            existing styles and applied it to every screen. Contrast meets WCAG AA. No rewrite, no regressions.
           </p>
         </div>
         <TokenLayerStack />
