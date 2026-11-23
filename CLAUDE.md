@@ -22,7 +22,8 @@ npm run build      # NOT while `npm run dev` is running — both write .next and
 ```
 src/
   app/
-    page.tsx                  # server: loads posts, renders <Landing>
+    page.tsx                  # renders <Studio> (the canvas landing page)
+    classic/page.tsx          # the previous scrolling <Landing>, noindex; delete once the canvas ships
     layout.tsx                # fonts, ThemeProvider (materials), mountain photo (Slate only)
     sitemap.ts                # XML sitemap (root + /blog + each post)
     blog/
@@ -31,7 +32,11 @@ src/
         page.tsx              # /blog/[slug] — single post
         opengraph-image.tsx   # auto-generated OG image (Next ImageResponse)
   components/
-    landing/                  # one file per landing frame
+    studio/                   # the landing page as a design file — see "Studio (canvas landing)" below
+      Studio.tsx              #   client shell: toolbar, layers, canvas + camera, properties, phone layer strip
+      frames.tsx              #   ROWS / FRAMES registry: id, label, width, links, content element
+      LinkFrames.tsx          #   frames with no live demo (Stack Up, bkd, Contact)
+    landing/                  # frame content (and the classic composer)
       Landing.tsx             # client composer: refs + IntersectionObserver, Header + Workspace + six Frames + Footer
       Hero.tsx                # Intro frame content
       Principles.tsx          # quote + three principle cards (proof link each) + tools/skills
@@ -72,7 +77,19 @@ public/
   logos/<simple-icons-name>.svg                    # CC0 brand SVGs
 ```
 
-Section flow on the landing page: **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are three short cards with an "in practice" proof link each. Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case-study tiles; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
+## Studio (canvas landing)
+
+`/` is a design file: frames in rows (**Intro**: Intro, Principles, Contact · **After hours**: Stack Up, rarebrew.gg, prompt fighter, crosscheck, bkd · **Day job**: SmartAdvocate, MDS). One DOM serves both layouts.
+
+- **lg and up:** a pannable, zoomable canvas. `Studio.tsx` measures frame heights, lays rows out left to right, and moves a camera (`scale() translate()` on the world). Clicking a frame or its layer flies to it and writes `#id`; drag or wheel pans; ctrl/⌘ + wheel zooms at the cursor.
+- **Below lg:** the same frames in one column with native scroll, a sticky top bar and a layer strip pinned to the bottom (scroll-spy picks the active chip).
+- **Positions are CSS variables** (`--x`, `--y`, `--w`, `--cam`) consumed by `lg:` utilities, so the server render and the phone layout need no JS. Don't move them into inline `left`/`top`.
+- **Only the selected frame is live.** The others are `inert` under a "Go to …" button, so dragging the canvas never fights with a demo. A pointerdown inside the selected frame never pans; wheel inside it goes to its own scroll containers (the phone screens) first.
+- **Frame content is created once at module scope** in `frames.tsx`. Camera state changes re-render the shell only, which is what keeps the demos' autoplay and cursor effects from restarting. Don't build content elements inside `Studio`'s render.
+- **Adding a frame:** add an entry to `ROWS` (width in px; `bare: true` if the content brings its own surface, like the side-project cards). Layers, the phone strip, hash links and the layout all derive from it.
+- Frame widths are fixed px on the canvas, and content still uses viewport breakpoints, so a frame must be wide enough for its `lg:` layout (the side-project cards need ~1180).
+
+Section flow on the classic landing page (`/classic`): **Intro → Principles → Outcomes → Work → Projects**, each a `Frame`, then the footer (Writing is hidden for now). Principles are three short cards with an "in practice" proof link each. Outcomes is the SmartAdvocate legacy-modernization story (token-layer diagram + before/after slider with token pins); Work is the two MDS case-study tiles; Projects is the side-project cards. (Folding Outcomes into Principles was tried and rejected as too crowded.)
 
 - **Outcomes copy uses verified facts only** (every screen, one CSS token system, WCAG AA contrast, no regressions, no rewrite, 100+ pages of docs; migrations 3 months → 2 weeks). It's a skin over ASP.NET/DevExpress, not a design system other teams adopted — don't claim adoption, "2 design systems", or "60%".
 

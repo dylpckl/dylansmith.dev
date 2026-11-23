@@ -145,3 +145,25 @@ body {
   animation-timeline: scroll(block nearest);
   animation-duration: auto;
 }
+
+/* ------------------------------------------------------------------ */
+/* Studio canvas grid                                                  */
+/* Same dots (Slate) / graph paper (Paper) as .ws-grid, but it lives   */
+/* inside the canvas viewport and follows the camera: Studio.tsx sets  */
+/* --gs (cell size) and --gx / --gy (offset) as it pans and zooms.     */
+/* ------------------------------------------------------------------ */
+
+.studio-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgb(var(--m-grid)) 1px, transparent 1px);
+  background-size: var(--gs, 24px) var(--gs, 24px);
+  background-position: var(--gx, 0) var(--gy, 0);
+}
+
+[data-material="paper"] .studio-grid {
+  background-image:
+    linear-gradient(rgb(var(--m-grid) / 0.11) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--m-grid) / 0.11) 1px, transparent 1px);
+}
