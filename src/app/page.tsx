@@ -1,7 +1,7 @@
-import { Landing } from "@/components/landing/Landing";
+import { Studio } from "@/components/studio/Studio";
 
-// The Writing frame is hidden for now, so the landing page doesn't load posts.
-// To bring it back, restore getAllPosts() here (see Landing.tsx).
+// The landing page is a design file: frames on a canvas (see Studio.tsx).
+// The previous scrolling layout is still at /classic for comparison.
 export default function Home() {
-  return <Landing />;
+  return <Studio />;
 }
